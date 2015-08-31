@@ -7,11 +7,14 @@
 //
 
 #import "ItemViewController.h"
-#import "CPUImageFilterUtil.h"
+
 #import <OpenGLES/EAGL.h>
 #import <GLKit/GLKit.h>
+#import <AVFoundation/AVFoundation.h>
+#import <AssetsLibrary/AssetsLibrary.h>
 
 #import "GPUImage.h"
+#import "CPUImageFilterUtil.h"
 
 typedef NS_ENUM(NSInteger, enumDemoImageFilter) {
     demoCPUImageFilter = 0,
@@ -19,9 +22,10 @@ typedef NS_ENUM(NSInteger, enumDemoImageFilter) {
     demoCoreImageFilterMultiple,
     demoGLKCoreImageFilter,
     demoGPUImageSepiaFilter,
+    demoCameraSimple,
 };
 
-@interface ItemViewController ()
+@interface ItemViewController () <UIImagePickerControllerDelegate>
 
 @property (nonatomic) NSArray *demosImageFilter;
 
@@ -49,7 +53,7 @@ typedef NS_ENUM(NSInteger, enumDemoImageFilter) {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    self.demosImageFilter = @[@"CPU Image Filter", @"CoreImage Filter", @"CoreImage Filter Multiple", @"GLKView and CoreImage Filter", @"GPUImage Sepia Filter"];
+    self.demosImageFilter = @[@"CPU Image Filter", @"CoreImage Filter", @"CoreImage Filter Multiple", @"GLKView and CoreImage Filter", @"GPUImage Sepia Filter", @"Simple Camera"];
     [self demosFilter];
 }
 
@@ -60,13 +64,13 @@ typedef NS_ENUM(NSInteger, enumDemoImageFilter) {
 
 #pragma mark - display origin image
 
-- (void)displayOriginImage {
+- (void)displayOriginImage:(UIImage *)image {
     _lbOriginalImage = [[UILabel alloc] initWithFrame:CGRectMake(10, 70, self.view.frame.size.width - 20, 30)];
     _lbOriginalImage.text = @"Original image...";
     _lbOriginalImage.textAlignment = NSTextAlignmentCenter;
     [self.view addSubview:_lbOriginalImage];
     
-    _originImage = [UIImage imageNamed:@"testImage"];
+    _originImage = image ? image : [UIImage imageNamed:@"testImage"];
     _originImageView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 100, self.view.frame.size.width - 20, 200)];
     _originImageView.image = _originImage;
     [self.view addSubview:_originImageView];
@@ -81,7 +85,7 @@ typedef NS_ENUM(NSInteger, enumDemoImageFilter) {
 }
 
 - (void)demosFilter {
-    // self.demosImageFilter = @[@"CPU Image Filter", @"CoreImage Filter", @"CoreImage Filter Multiple", @"GLKView and CoreImage Filter", @"GPUImage Sepia Filter"];
+    // self.demosImageFilter = @[@"CPU Image Filter", @"CoreImage Filter", @"CoreImage Filter Multiple", @"GLKView and CoreImage Filter", @"GPUImage Sepia Filter", @"Simple Camera"];
     switch ([self.demosImageFilter indexOfObject:self.item]) {
         case demoCPUImageFilter:
             [self demoCPUImageFilter];
@@ -98,6 +102,9 @@ typedef NS_ENUM(NSInteger, enumDemoImageFilter) {
         case demoGPUImageSepiaFilter:
             [self demoGPUImageSepiaFilter];
             break;
+        case demoCameraSimple:
+            [self demoCameraSimple];
+            break;
         default:
             break;
     }
@@ -106,7 +113,7 @@ typedef NS_ENUM(NSInteger, enumDemoImageFilter) {
 #pragma mark - CPU Image Filter
 
 - (void)demoCPUImageFilter {
-    [self displayOriginImage];
+    [self displayOriginImage:nil];
     
     UIScrollView *scrollerView = [[UIScrollView alloc] initWithFrame:CGRectMake(10, self.view.frame.size.height - 100, self.view.frame.size.width - 20, 80)];
     scrollerView.indicatorStyle = UIScrollViewIndicatorStyleBlack;
@@ -230,7 +237,7 @@ typedef NS_ENUM(NSInteger, enumDemoImageFilter) {
 #pragma mark - Core Image Filter
 
 - (void)demoCoreImageFilter {
-    [self displayOriginImage];
+    [self displayOriginImage:nil];
     
     // 导入CIImage
     CIImage *ciInputImage = [[CIImage alloc] initWithImage:self.originImage];
@@ -256,7 +263,7 @@ typedef NS_ENUM(NSInteger, enumDemoImageFilter) {
 }
 
 - (void)demoCoreImageFilterMultiple {
-    [self displayOriginImage];
+    [self displayOriginImage:nil];
     
     // 导入CIImage
     CIImage *ciInputImage = [[CIImage alloc] initWithImage:self.originImage];
@@ -292,7 +299,7 @@ typedef NS_ENUM(NSInteger, enumDemoImageFilter) {
 #pragma mark - GLKView and CoreImage Filter
 
 - (void)demoGLKCoreImageFilter {
-    [self displayOriginImage];
+    [self displayOriginImage:nil];
     
     _eaglContext = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES2];
     [EAGLContext setCurrentContext:_eaglContext];
@@ -335,7 +342,7 @@ typedef NS_ENUM(NSInteger, enumDemoImageFilter) {
 #pragma mark - GPUImage filter
 
 - (void)demoGPUImageSepiaFilter {
-    [self displayOriginImage];
+    [self displayOriginImage:nil];
 
     GPUImageSepiaFilter *filter = [[GPUImageSepiaFilter alloc] init];
     _filteredImage = [filter imageByFilteringImage:_originImage];
@@ -348,6 +355,75 @@ typedef NS_ENUM(NSInteger, enumDemoImageFilter) {
 //    [gpuImagePic processImage];
 //    _filteredImage = [gpuSepiaFilter imageFromCurrentFramebuffer];
 //    _filteredImageView.image = _filteredImage;
+}
+
+#pragma mark - Camera
+
+- (void)demoCameraSimple {
+    if (![UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera] || ![UIImagePickerController isCameraDeviceAvailable:UIImagePickerControllerCameraDeviceRear]) {
+        UILabel *lb = [[UILabel alloc] initWithFrame:CGRectMake(10, 200, self.view.frame.size.width - 20, 40)];
+        lb.lineBreakMode = NSLineBreakByWordWrapping;
+        lb.text = @"This device doesn't have camera...";
+        [self.view addSubview:lb];
+        return;
+    }
+    AVAuthorizationStatus status = [AVCaptureDevice authorizationStatusForMediaType:AVMediaTypeVideo];
+    if (status == AVAuthorizationStatusNotDetermined) {
+        [AVCaptureDevice requestAccessForMediaType:AVMediaTypeVideo completionHandler:^(BOOL granted) {
+            UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
+            imagePicker.sourceType = UIImagePickerControllerSourceTypeCamera;
+            imagePicker.allowsEditing = YES;
+            imagePicker.delegate = self;
+            [self presentViewController:imagePicker animated:YES completion:nil];
+        }];
+    } else if (status == AVAuthorizationStatusAuthorized) {
+        UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
+        imagePicker.sourceType = UIImagePickerControllerSourceTypeCamera;
+        imagePicker.allowsEditing = YES;
+        imagePicker.delegate = self;
+        [self presentViewController:imagePicker animated:YES completion:nil];
+    } else {
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil
+                                                            message:@"请在iPhone的\"设置-隐私-相机\"选项中, 允许ImageFilterDemo访问你的相机"
+                                                           delegate:nil
+                                                  cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+        [alertView show];
+    }
+}
+
+#pragma mark - UIImagePickerControllerDelegate
+
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
+    UIImage *originalImage = [info valueForKey:UIImagePickerControllerOriginalImage];
+    UIImage *editedImage = [info valueForKey:UIImagePickerControllerEditedImage];
+    UIImage *savedImage = editedImage ? editedImage : originalImage;
+    UIImageWriteToSavedPhotosAlbum(savedImage, nil, nil, nil); // 保存到系统相册
+    
+    [picker dismissViewControllerAnimated:YES completion:^{
+        [self displayOriginImage:savedImage];
+        [self displayAssetsLibraryCover];
+    }];
+}
+
+- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
+    [picker dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)displayAssetsLibraryCover {
+    ALAssetsLibrary *assetsLibrary = [[ALAssetsLibrary alloc] init];
+    [assetsLibrary enumerateGroupsWithTypes:ALAssetsGroupAll usingBlock:^(ALAssetsGroup *group, BOOL *stop) {
+        if (group) {
+            UIImage *cover = [[UIImage alloc] initWithCGImage:[group posterImage]];
+            self.lbProcessedImage.text = @"Cover of assets library...";
+            self.filteredImage = cover;
+            self.filteredImageView.image = self.filteredImage;
+        }
+    } failureBlock:^(NSError *error) {
+        self.lbProcessedImage.text = @"Failed to get assets library...";
+        NSLog(@"%@", self.lbProcessedImage.text);
+        self.filteredImage = _originImage;
+        self.filteredImageView.image = self.filteredImage;
+    }];
 }
 
 @end
