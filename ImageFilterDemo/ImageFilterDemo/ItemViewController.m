@@ -11,11 +11,14 @@
 #import <OpenGLES/EAGL.h>
 #import <GLKit/GLKit.h>
 
+#import "GPUImage.h"
+
 typedef NS_ENUM(NSInteger, enumDemoImageFilter) {
     demoCPUImageFilter = 0,
     demoCoreImageFilter,
     demoCoreImageFilterMultiple,
     demoGLKCoreImageFilter,
+    demoGPUImageSepiaFilter,
 };
 
 @interface ItemViewController ()
@@ -46,7 +49,7 @@ typedef NS_ENUM(NSInteger, enumDemoImageFilter) {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    self.demosImageFilter = @[@"CPU Image Filter", @"CoreImage Filter", @"CoreImage Filter Multiple", @"GLKView and CoreImage Filter"];
+    self.demosImageFilter = @[@"CPU Image Filter", @"CoreImage Filter", @"CoreImage Filter Multiple", @"GLKView and CoreImage Filter", @"GPUImage Sepia Filter"];
     [self demosFilter];
 }
 
@@ -78,7 +81,7 @@ typedef NS_ENUM(NSInteger, enumDemoImageFilter) {
 }
 
 - (void)demosFilter {
-    // self.demosImageFilter = @[@"CPU Image Filter", @"CoreImage Filter", @"CoreImage Filter Multiple", @"GLKView and CoreImage Filter"];
+    // self.demosImageFilter = @[@"CPU Image Filter", @"CoreImage Filter", @"CoreImage Filter Multiple", @"GLKView and CoreImage Filter", @"GPUImage Sepia Filter"];
     switch ([self.demosImageFilter indexOfObject:self.item]) {
         case demoCPUImageFilter:
             [self demoCPUImageFilter];
@@ -91,6 +94,9 @@ typedef NS_ENUM(NSInteger, enumDemoImageFilter) {
             break;
         case demoGLKCoreImageFilter:
             [self demoGLKCoreImageFilter];
+            break;
+        case demoGPUImageSepiaFilter:
+            [self demoGPUImageSepiaFilter];
             break;
         default:
             break;
@@ -324,6 +330,24 @@ typedef NS_ENUM(NSInteger, enumDemoImageFilter) {
     
     [_ciContext drawImage:[_ciFilter outputImage] inRect:CGRectMake(0, 0, _glkView.drawableWidth, _glkView.drawableHeight) fromRect:[_ciImage extent]];
     [_glkView display];
+}
+
+#pragma mark - GPUImage filter
+
+- (void)demoGPUImageSepiaFilter {
+    [self displayOriginImage];
+
+    GPUImageSepiaFilter *filter = [[GPUImageSepiaFilter alloc] init];
+    _filteredImage = [filter imageByFilteringImage:_originImage];
+    _filteredImageView.image = _filteredImage;
+    
+//    GPUImagePicture *gpuImagePic = [[GPUImagePicture alloc] initWithImage:_originImage];
+//    GPUImageSepiaFilter *gpuSepiaFilter = [[GPUImageSepiaFilter alloc] init];
+//    [gpuImagePic addTarget:gpuSepiaFilter];
+//    [gpuImagePic useNextFrameForImageCapture];
+//    [gpuImagePic processImage];
+//    _filteredImage = [gpuSepiaFilter imageFromCurrentFramebuffer];
+//    _filteredImageView.image = _filteredImage;
 }
 
 @end

@@ -24,7 +24,7 @@
     self.navigationItem.title = @"Image Filter Demos";
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     
-    self.demosImageFilter = @[@"CPU Image Filter", @"CoreImage Filter", @"CoreImage Filter Multiple", @"GLKView and CoreImage Filter"];
+    self.demosImageFilter = @[@"CPU Image Filter", @"CoreImage Filter", @"CoreImage Filter Multiple", @"GLKView and CoreImage Filter", @"GPUImage Sepia Filter"];
 }
 
 #pragma mark - Table view data source
