@@ -16,6 +16,8 @@
 		836B74C31B92DC1C004A845C /* RootTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 836B74C21B92DC1C004A845C /* RootTableViewController.m */; };
 		836B74C61B92DC52004A845C /* ItemViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 836B74C51B92DC52004A845C /* ItemViewController.m */; };
 		836B74C81B92F80A004A845C /* testImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 836B74C71B92F80A004A845C /* testImage.png */; };
+		A405861C1B93FE40004DD437 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A405861B1B93FE40004DD437 /* OpenGLES.framework */; };
+		A405861E1B93FE4E004DD437 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A405861D1B93FE4E004DD437 /* CoreGraphics.framework */; };
 		A4E14D681B93EC0D00496FA8 /* CPUImageFilterUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = A4E14D671B93EC0D00496FA8 /* CPUImageFilterUtil.m */; };
 /* End PBXBuildFile section */
 
@@ -46,6 +48,8 @@
 		836B74C41B92DC52004A845C /* ItemViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ItemViewController.h; sourceTree = "<group>"; };
 		836B74C51B92DC52004A845C /* ItemViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ItemViewController.m; sourceTree = "<group>"; };
 		836B74C71B92F80A004A845C /* testImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = testImage.png; sourceTree = "<group>"; };
+		A405861B1B93FE40004DD437 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
+		A405861D1B93FE4E004DD437 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		A4E14D661B93EC0D00496FA8 /* CPUImageFilterUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CPUImageFilterUtil.h; sourceTree = "<group>"; };
 		A4E14D671B93EC0D00496FA8 /* CPUImageFilterUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CPUImageFilterUtil.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -55,6 +59,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A405861E1B93FE4E004DD437 /* CoreGraphics.framework in Frameworks */,
+				A405861C1B93FE40004DD437 /* OpenGLES.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -71,6 +77,8 @@
 		834C52E31B92DABE000690FD = {
 			isa = PBXGroup;
 			children = (
+				A405861D1B93FE4E004DD437 /* CoreGraphics.framework */,
+				A405861B1B93FE40004DD437 /* OpenGLES.framework */,
 				834C52EE1B92DABE000690FD /* ImageFilterDemo */,
 				834C53081B92DABE000690FD /* ImageFilterDemoTests */,
 				834C52ED1B92DABE000690FD /* Products */,

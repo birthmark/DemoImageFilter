@@ -8,11 +8,14 @@
 
 #import "ItemViewController.h"
 #import "CPUImageFilterUtil.h"
+#import <OpenGLES/EAGL.h>
+#import <GLKit/GLKit.h>
 
 typedef NS_ENUM(NSInteger, enumDemoImageFilter) {
     demoCPUImageFilter = 0,
     demoCoreImageFilter,
     demoCoreImageFilterMultiple,
+    demoGLKCoreImageFilter,
 };
 
 @interface ItemViewController ()
@@ -28,6 +31,13 @@ typedef NS_ENUM(NSInteger, enumDemoImageFilter) {
 @property (nonatomic) UIImage *filteredImage;
 @property (nonatomic) UIImageView *filteredImageView;
 
+
+@property (nonatomic) EAGLContext *eaglContext;
+@property (nonatomic) CIContext *ciContext;
+@property (nonatomic) CIFilter *ciFilter;
+@property (nonatomic) CIImage *ciImage;
+@property (nonatomic) GLKView *glkView;
+
 @end
 
 @implementation ItemViewController
@@ -36,7 +46,7 @@ typedef NS_ENUM(NSInteger, enumDemoImageFilter) {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    self.demosImageFilter = @[@"CPU Image Filter", @"CoreImage Filter", @"CoreImage Filter Multiple"];
+    self.demosImageFilter = @[@"CPU Image Filter", @"CoreImage Filter", @"CoreImage Filter Multiple", @"GLKView and CoreImage Filter"];
     [self demosFilter];
 }
 
@@ -68,7 +78,7 @@ typedef NS_ENUM(NSInteger, enumDemoImageFilter) {
 }
 
 - (void)demosFilter {
-    // self.demosImageFilter = @[@"CPU Image Filter", @"CoreImage Filter", @"CoreImage Filter Multiple"];
+    // self.demosImageFilter = @[@"CPU Image Filter", @"CoreImage Filter", @"CoreImage Filter Multiple", @"GLKView and CoreImage Filter"];
     switch ([self.demosImageFilter indexOfObject:self.item]) {
         case demoCPUImageFilter:
             [self demoCPUImageFilter];
@@ -78,6 +88,9 @@ typedef NS_ENUM(NSInteger, enumDemoImageFilter) {
             break;
         case demoCoreImageFilterMultiple:
             [self demoCoreImageFilterMultiple];
+            break;
+        case demoGLKCoreImageFilter:
+            [self demoGLKCoreImageFilter];
             break;
         default:
             break;
@@ -268,6 +281,49 @@ typedef NS_ENUM(NSInteger, enumDemoImageFilter) {
     CGImageRelease(cgImage);
     
     _filteredImageView.image = _filteredImage;
+}
+
+#pragma mark - GLKView and CoreImage Filter
+
+- (void)demoGLKCoreImageFilter {
+    [self displayOriginImage];
+    
+    _eaglContext = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES2];
+    [EAGLContext setCurrentContext:_eaglContext];
+    
+    // 创建GLKView, 要调用bindDrawable和display. 类似viewPort.
+    _glkView = [[GLKView alloc] initWithFrame:CGRectMake(10, 340, self.view.frame.size.width - 20, 200) context:_eaglContext];
+    [_glkView bindDrawable];
+    [self.view addSubview:_glkView];
+    
+    // 创建CIContext
+    _ciContext = [CIContext contextWithEAGLContext:_eaglContext options:@{kCIContextWorkingColorSpace:[NSNull null]}];
+    
+    // CoreImage设置
+    _ciImage = [[CIImage alloc] initWithImage:_originImage];
+    _ciFilter = [CIFilter filterWithName:@"CISepiaTone"];
+    [_ciFilter setValue:_ciImage forKey:kCIInputImageKey];
+    [_ciFilter setValue:@(0) forKey:kCIInputIntensityKey];
+    
+    // 开始渲染
+    [_ciContext drawImage:[_ciFilter outputImage] inRect:CGRectMake(0, 0, _glkView.drawableWidth, _glkView.drawableHeight) fromRect:[_ciImage extent]];
+    [_glkView display];
+    
+    _lbProcessedImage.text = @"Slide to change the filter effect...";
+    // 使用UISlider进行动态渲染
+    UISlider *slider = [[UISlider alloc] initWithFrame:CGRectMake(10, self.view.frame.size.height - 50, self.view.frame.size.width - 20, 64)];
+    slider.minimumValue = 0.0f;
+    slider.maximumValue = 5.0f;
+    [slider addTarget:self action:@selector(glkSliderValueChanged:) forControlEvents:UIControlEventValueChanged];
+    [self.view addSubview:slider];
+}
+
+- (void)glkSliderValueChanged:(UISlider *)sender {
+    [_ciFilter setValue:_ciImage forKey:kCIInputImageKey];
+    [_ciFilter setValue:@(sender.value) forKey:kCIInputIntensityKey];
+    
+    [_ciContext drawImage:[_ciFilter outputImage] inRect:CGRectMake(0, 0, _glkView.drawableWidth, _glkView.drawableHeight) fromRect:[_ciImage extent]];
+    [_glkView display];
 }
 
 @end
