@@ -7,9 +7,11 @@
 //
 
 #import "ItemViewController.h"
+#import "CPUImageFilterUtil.h"
 
 typedef NS_ENUM(NSInteger, enumDemoImageFilter) {
-    demoCoreImageFilter = 0,
+    demoCPUImageFilter = 0,
+    demoCoreImageFilter,
     demoCoreImageFilterMultiple,
 };
 
@@ -34,7 +36,7 @@ typedef NS_ENUM(NSInteger, enumDemoImageFilter) {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    self.demosImageFilter = @[@"CoreImage Filter", @"CoreImage Filter Multiple"];
+    self.demosImageFilter = @[@"CPU Image Filter", @"CoreImage Filter", @"CoreImage Filter Multiple"];
     [self demosFilter];
 }
 
@@ -66,8 +68,11 @@ typedef NS_ENUM(NSInteger, enumDemoImageFilter) {
 }
 
 - (void)demosFilter {
-    // self.demosImageFilter = @[@"CoreImage Filter", @"CoreImage Filter Multiple"];
+    // self.demosImageFilter = @[@"CPU Image Filter", @"CoreImage Filter", @"CoreImage Filter Multiple"];
     switch ([self.demosImageFilter indexOfObject:self.item]) {
+        case demoCPUImageFilter:
+            [self demoCPUImageFilter];
+            break;
         case demoCoreImageFilter:
             [self demoCoreImageFilter];
             break;
@@ -77,6 +82,24 @@ typedef NS_ENUM(NSInteger, enumDemoImageFilter) {
         default:
             break;
     }
+}
+
+- (void)demoCPUImageFilter {
+    [self displayOriginImage];
+    
+    NSArray *filters = [NSArray arrayWithObjects:
+                    @"原图",@"LOMO",@"黑白",@"复古",@"哥特",
+                    @"锐色",@"淡雅",@"酒红",@"青柠",@"浪漫",
+                    @"光晕",@"蓝调",@"梦幻",@"夜色", nil];
+    
+    const float *colorMatrix = NULL;
+    NSString *cpuImageFilterKey = @"";
+    
+    colorMatrix = colormatrix_lomo;
+    cpuImageFilterKey = @"lomo";
+    
+    _filteredImage = [CPUImageFilterUtil imageWithImage:_originImage withColorMatrix:colorMatrix];
+    _filteredImageView.image = _filteredImage;
 }
 
 - (void)demoCoreImageFilter {

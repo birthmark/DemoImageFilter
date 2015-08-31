@@ -16,6 +16,7 @@
 		836B74C31B92DC1C004A845C /* RootTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 836B74C21B92DC1C004A845C /* RootTableViewController.m */; };
 		836B74C61B92DC52004A845C /* ItemViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 836B74C51B92DC52004A845C /* ItemViewController.m */; };
 		836B74C81B92F80A004A845C /* testImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 836B74C71B92F80A004A845C /* testImage.png */; };
+		A4E14D681B93EC0D00496FA8 /* CPUImageFilterUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = A4E14D671B93EC0D00496FA8 /* CPUImageFilterUtil.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -45,6 +46,8 @@
 		836B74C41B92DC52004A845C /* ItemViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ItemViewController.h; sourceTree = "<group>"; };
 		836B74C51B92DC52004A845C /* ItemViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ItemViewController.m; sourceTree = "<group>"; };
 		836B74C71B92F80A004A845C /* testImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = testImage.png; sourceTree = "<group>"; };
+		A4E14D661B93EC0D00496FA8 /* CPUImageFilterUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CPUImageFilterUtil.h; sourceTree = "<group>"; };
+		A4E14D671B93EC0D00496FA8 /* CPUImageFilterUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CPUImageFilterUtil.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -86,6 +89,7 @@
 		834C52EE1B92DABE000690FD /* ImageFilterDemo */ = {
 			isa = PBXGroup;
 			children = (
+				A4E14D691B93EC1800496FA8 /* Tools */,
 				836B74CA1B931427004A845C /* Resource */,
 				836B74C91B93140C004A845C /* ViewController */,
 				834C52F31B92DABE000690FD /* AppDelegate.h */,
@@ -141,6 +145,15 @@
 				836B74C71B92F80A004A845C /* testImage.png */,
 			);
 			name = Resource;
+			sourceTree = "<group>";
+		};
+		A4E14D691B93EC1800496FA8 /* Tools */ = {
+			isa = PBXGroup;
+			children = (
+				A4E14D661B93EC0D00496FA8 /* CPUImageFilterUtil.h */,
+				A4E14D671B93EC0D00496FA8 /* CPUImageFilterUtil.m */,
+			);
+			name = Tools;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -248,6 +261,7 @@
 				836B74C61B92DC52004A845C /* ItemViewController.m in Sources */,
 				834C52F51B92DABE000690FD /* AppDelegate.m in Sources */,
 				834C52F21B92DABE000690FD /* main.m in Sources */,
+				A4E14D681B93EC0D00496FA8 /* CPUImageFilterUtil.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
