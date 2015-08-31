@@ -84,23 +84,131 @@ typedef NS_ENUM(NSInteger, enumDemoImageFilter) {
     }
 }
 
+#pragma mark - CPU Image Filter
+
 - (void)demoCPUImageFilter {
     [self displayOriginImage];
     
+    UIScrollView *scrollerView = [[UIScrollView alloc] initWithFrame:CGRectMake(10, self.view.frame.size.height - 100, self.view.frame.size.width - 20, 80)];
+    scrollerView.indicatorStyle = UIScrollViewIndicatorStyleBlack;
+    scrollerView.showsHorizontalScrollIndicator = NO;
+    scrollerView.showsVerticalScrollIndicator = NO;
+    scrollerView.bounces = NO;
+    [self.view addSubview:scrollerView];
+    
     NSArray *filters = [NSArray arrayWithObjects:
-                    @"原图",@"LOMO",@"黑白",@"复古",@"哥特",
-                    @"锐色",@"淡雅",@"酒红",@"青柠",@"浪漫",
-                    @"光晕",@"蓝调",@"梦幻",@"夜色", nil];
+                        @"原图",@"LOMO",@"黑白",@"复古",@"哥特",
+                        @"锐色",@"淡雅",@"酒红",@"青柠",@"浪漫",
+                        @"光晕",@"蓝调",@"梦幻",@"夜色", nil];
+    CGFloat x = 0;
+    for(NSInteger i=0; i<filters.count; i++)
+    {
+        x = 10 + 50*i;
+        UITapGestureRecognizer *recognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(chooseCPUImageFilterStyle:)];
+        recognizer.numberOfTouchesRequired = 1;
+        recognizer.numberOfTapsRequired = 1;
+        recognizer.delegate = self;
+        
+        UIImageView *bgImageView = [[UIImageView alloc]initWithFrame:CGRectMake(x, 10, 40, 40)];
+        [bgImageView setTag:i];
+        [bgImageView addGestureRecognizer:recognizer];
+        [bgImageView setUserInteractionEnabled:YES];
+        bgImageView.image = [self cpuImageFilteredImage:_originImage filterIndex:i];
+        [scrollerView addSubview:bgImageView];
+        
+        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(x, 50, 40, 20)];
+        [label setText:[filters objectAtIndex:i]];
+        [label setTextAlignment:NSTextAlignmentCenter];
+        [label setFont:[UIFont systemFontOfSize:13.0f]];
+        [label setTextColor:[UIColor blackColor]];
+        [label setUserInteractionEnabled:NO];
+        [scrollerView addSubview:label];
+    }
+    scrollerView.contentSize = CGSizeMake(x + 50, 80);
     
-    const float *colorMatrix = NULL;
-    NSString *cpuImageFilterKey = @"";
-    
-    colorMatrix = colormatrix_lomo;
-    cpuImageFilterKey = @"lomo";
-    
-    _filteredImage = [CPUImageFilterUtil imageWithImage:_originImage withColorMatrix:colorMatrix];
+    [self setCPUImageFilter:_originImage filterIndex:0];
+}
+
+- (IBAction)chooseCPUImageFilterStyle:(UITapGestureRecognizer *)sender {
+    [self setCPUImageFilter:_originImage filterIndex:sender.view.tag];
+}
+
+- (void)setCPUImageFilter:(UIImage *)image filterIndex:(NSInteger)index {
+    _filteredImage = [self cpuImageFilteredImage:image filterIndex:index];
     _filteredImageView.image = _filteredImage;
 }
+
+- (UIImage *)cpuImageFilteredImage:(UIImage *)image filterIndex:(NSInteger)index {
+    UIImage *retImage;
+    const float *colorMatrix = NULL;
+    NSString *filterKey = @"";
+    switch (index) {
+        case 0:
+            filterKey = @"origin";
+            return image;
+            break;
+        case 1:
+            colorMatrix = colormatrix_lomo;
+            filterKey = @"lomo";
+            break;
+        case 2:
+            colorMatrix = colormatrix_heibai;
+            filterKey = @"heibai";
+            break;
+        case 3:
+            colorMatrix = colormatrix_huajiu;
+            filterKey = @"huajiu";
+            break;
+        case 4:
+            colorMatrix = colormatrix_gete;
+            filterKey = @"gete";
+            break;
+        case 5:
+            colorMatrix = colormatrix_ruise;
+            filterKey = @"ruise";
+            break;
+        case 6:
+            colorMatrix = colormatrix_danya;
+            filterKey = @"danya";
+            break;
+        case 7:
+            colorMatrix = colormatrix_jiuhong;
+            filterKey = @"jiuhong";
+            break;
+        case 8:
+            colorMatrix = colormatrix_qingning;
+            filterKey = @"qingning";
+            break;
+        case 9:
+            colorMatrix = colormatrix_langman;
+            filterKey = @"langman";
+            break;
+        case 10:
+            colorMatrix = colormatrix_guangyun;
+            filterKey = @"guangyun";
+            break;
+        case 11:
+            colorMatrix = colormatrix_landiao;
+            filterKey = @"landiao";
+            break;
+        case 12:
+            colorMatrix = colormatrix_menghuan;
+            filterKey = @"menghuan";
+            break;
+        case 13:
+            colorMatrix = colormatrix_yese;
+            filterKey = @"yese";
+            break;
+        default:
+            filterKey = @"origin";
+            break;
+    }
+    
+    retImage = [CPUImageFilterUtil imageWithImage:image withColorMatrix:colorMatrix];
+    return retImage;
+}
+
+#pragma mark - Core Image Filter
 
 - (void)demoCoreImageFilter {
     [self displayOriginImage];
