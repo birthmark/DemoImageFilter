@@ -335,11 +335,13 @@ typedef NS_ENUM(NSInteger, enumDemoImageFilter) {
     [_ciFilter setValue:_ciImage forKey:kCIInputImageKey];
     [_ciFilter setValue:@(sender.value) forKey:kCIInputIntensityKey];
     
+    [_glkView deleteDrawable];
+    [_glkView bindDrawable];
     [_ciContext drawImage:[_ciFilter outputImage] inRect:CGRectMake(0, 0, _glkView.drawableWidth, _glkView.drawableHeight) fromRect:[_ciImage extent]];
     [_glkView display];
 }
 
-#pragma mark - GPUImage filter
+#pragma mark - GPUImage Filter
 
 - (void)demoGPUImageSepiaFilter {
     [self displayOriginImage:nil];
@@ -408,6 +410,8 @@ typedef NS_ENUM(NSInteger, enumDemoImageFilter) {
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
     [picker dismissViewControllerAnimated:YES completion:nil];
 }
+
+#pragma mark - Assets Library Operations
 
 - (void)displayAssetsLibraryCover {
     ALAssetsLibrary *assetsLibrary = [[ALAssetsLibrary alloc] init];
