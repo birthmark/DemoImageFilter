@@ -54,6 +54,8 @@ typedef NS_ENUM(NSInteger, enumDemoImageFilter) {
 {
     // GPUImageStillCamera要放在成员变量或属性中. 否则GPUImageView显示空白.
     GPUImageStillCamera *stillCamera;
+    GPUImageVideoCamera *videoCamera;
+    GPUImageMovieWriter *movieWriter;
 }
 
 - (void)viewDidLoad {
@@ -405,6 +407,44 @@ typedef NS_ENUM(NSInteger, enumDemoImageFilter) {
 #pragma mark - GPUImage Video Camera
 
 - (void)demoGPUImageVideoCamera {
+    videoCamera = [[GPUImageVideoCamera alloc] initWithSessionPreset:AVCaptureSessionPreset640x480 cameraPosition:AVCaptureDevicePositionBack];
+    videoCamera.outputImageOrientation = UIInterfaceOrientationPortrait;
+    videoCamera.horizontallyMirrorFrontFacingCamera = NO;
+    videoCamera.horizontallyMirrorRearFacingCamera = NO;
+    
+    GPUImageEmbossFilter *filter = [[GPUImageEmbossFilter alloc] init];
+    [videoCamera addTarget:filter];
+    
+    // GPUImageView *filterView = (GPUImageView *)self.view;
+    GPUImageView *filterView = [[GPUImageView alloc] initWithFrame:self.view.frame];
+    [self.view addSubview:filterView];
+    [filter addTarget:filterView];
+    
+    NSString *pathToMovie = [NSHomeDirectory() stringByAppendingString:@"/Documents/Movie.m4v"];
+    unlink([pathToMovie UTF8String]);
+    NSURL *movieURL = [NSURL fileURLWithPath:pathToMovie];
+    
+    movieWriter = [[GPUImageMovieWriter alloc] initWithMovieURL:movieURL size:CGSizeMake(480, 640)];
+    movieWriter.encodingLiveVideo = YES;
+    [filter addTarget:movieWriter];
+    
+    [videoCamera startCameraCapture];
+
+    dispatch_time_t startTime = dispatch_time(DISPATCH_TIME_NOW, 1.0 * NSEC_PER_SEC);
+    dispatch_after(startTime, dispatch_get_main_queue(), ^{
+        NSLog(@"Start recording...");
+        videoCamera.audioEncodingTarget = movieWriter;
+        movieWriter.shouldPassthroughAudio = YES;
+        [movieWriter startRecording];
+        
+        dispatch_time_t stopTime = dispatch_time(DISPATCH_TIME_NOW, 10.0 * NSEC_PER_SEC);
+        dispatch_after(stopTime, dispatch_get_main_queue(), ^{
+            [filter removeTarget:movieWriter];
+            videoCamera.audioEncodingTarget = nil;
+            [movieWriter finishRecording];
+            NSLog(@"Stop recording...");
+        });
+    });
 }
 
 #pragma mark - Camera Simple Demo
