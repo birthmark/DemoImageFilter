@@ -52,6 +52,7 @@ typedef NS_ENUM(NSInteger, enumDemoImageFilter) {
 
 @implementation ItemViewController
 {
+    // GPUImageStillCamera要放在成员变量或属性中. 否则GPUImageView显示空白.
     GPUImageStillCamera *stillCamera;
 }
 
