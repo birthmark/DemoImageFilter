@@ -20,6 +20,7 @@
 		A405861C1B93FE40004DD437 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A405861B1B93FE40004DD437 /* OpenGLES.framework */; };
 		A405861E1B93FE4E004DD437 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A405861D1B93FE4E004DD437 /* CoreGraphics.framework */; };
 		A40586201B940EA6004DD437 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A405861F1B940EA6004DD437 /* QuartzCore.framework */; };
+		A49107C71B948BC600F6309E /* GPUImageCustomFilter.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A49107C61B948BC600F6309E /* GPUImageCustomFilter.fsh */; };
 		A4E14D681B93EC0D00496FA8 /* CPUImageFilterUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = A4E14D671B93EC0D00496FA8 /* CPUImageFilterUtil.m */; };
 /* End PBXBuildFile section */
 
@@ -54,6 +55,7 @@
 		A405861B1B93FE40004DD437 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		A405861D1B93FE4E004DD437 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		A405861F1B940EA6004DD437 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		A49107C61B948BC600F6309E /* GPUImageCustomFilter.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = GPUImageCustomFilter.fsh; sourceTree = "<group>"; };
 		A4E14D661B93EC0D00496FA8 /* CPUImageFilterUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CPUImageFilterUtil.h; sourceTree = "<group>"; };
 		A4E14D671B93EC0D00496FA8 /* CPUImageFilterUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CPUImageFilterUtil.m; sourceTree = "<group>"; };
 		A6F843A432C2E791DD049C6B /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -161,6 +163,7 @@
 			isa = PBXGroup;
 			children = (
 				836B74C71B92F80A004A845C /* testImage.png */,
+				A49107C61B948BC600F6309E /* GPUImageCustomFilter.fsh */,
 			);
 			name = Resource;
 			sourceTree = "<group>";
@@ -274,6 +277,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A49107C71B948BC600F6309E /* GPUImageCustomFilter.fsh in Resources */,
 				834C52FB1B92DABE000690FD /* Main.storyboard in Resources */,
 				834C53001B92DABE000690FD /* LaunchScreen.xib in Resources */,
 				834C52FD1B92DABE000690FD /* Images.xcassets in Resources */,

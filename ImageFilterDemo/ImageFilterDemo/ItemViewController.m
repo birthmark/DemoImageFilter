@@ -22,6 +22,9 @@ typedef NS_ENUM(NSInteger, enumDemoImageFilter) {
     demoCoreImageFilterMultiple,
     demoGLKCoreImageFilter,
     demoGPUImageSepiaFilter,
+    demoGPUImageCustomFilter,
+    demoGPUImageStillCamera,
+    demoGPUImageVideoCamera,
     demoCameraSimple,
 };
 
@@ -53,7 +56,7 @@ typedef NS_ENUM(NSInteger, enumDemoImageFilter) {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    self.demosImageFilter = @[@"CPU Image Filter", @"CoreImage Filter", @"CoreImage Filter Multiple", @"GLKView and CoreImage Filter", @"GPUImage Sepia Filter", @"Simple Camera"];
+    self.demosImageFilter = @[@"CPU Image Filter", @"CoreImage Filter", @"CoreImage Filter Multiple", @"GLKView and CoreImage Filter", @"GPUImage Sepia Filter", @"GPUImage Custom Filter", @"GPUImage Still Camera", @"GPUImage Video Camera", @"Simple Camera"];
     [self demosFilter];
 }
 
@@ -85,7 +88,7 @@ typedef NS_ENUM(NSInteger, enumDemoImageFilter) {
 }
 
 - (void)demosFilter {
-    // self.demosImageFilter = @[@"CPU Image Filter", @"CoreImage Filter", @"CoreImage Filter Multiple", @"GLKView and CoreImage Filter", @"GPUImage Sepia Filter", @"Simple Camera"];
+    // self.demosImageFilter = @[@"CPU Image Filter", @"CoreImage Filter", @"CoreImage Filter Multiple", @"GLKView and CoreImage Filter", @"GPUImage Sepia Filter", @"GPUImage Custom Filter", @"GPUImage Still Camera", @"GPUImage Video Camera", @"Simple Camera"];
     switch ([self.demosImageFilter indexOfObject:self.item]) {
         case demoCPUImageFilter:
             [self demoCPUImageFilter];
@@ -101,6 +104,15 @@ typedef NS_ENUM(NSInteger, enumDemoImageFilter) {
             break;
         case demoGPUImageSepiaFilter:
             [self demoGPUImageSepiaFilter];
+            break;
+        case demoGPUImageCustomFilter:
+            [self demoGPUImageCustomFilter];
+            break;
+        case demoGPUImageStillCamera:
+            [self demoGPUImageStillCamera];
+            break;
+        case demoGPUImageVideoCamera:
+            [self demoGPUImageVideoCamera];
             break;
         case demoCameraSimple:
             [self demoCameraSimple];
@@ -359,7 +371,25 @@ typedef NS_ENUM(NSInteger, enumDemoImageFilter) {
 //    _filteredImageView.image = _filteredImage;
 }
 
-#pragma mark - Camera
+- (void)demoGPUImageCustomFilter {
+    [self displayOriginImage:nil];
+    
+    GPUImageFilter *customFilter = [[GPUImageFilter alloc] initWithFragmentShaderFromFile:@"GPUImageCustomFilter"];
+    _filteredImage = [customFilter imageByFilteringImage:_originImage];
+    _filteredImageView.image = _filteredImage;
+}
+
+#pragma mark - GPUImage Still Camera
+
+- (void)demoGPUImageStillCamera {
+}
+
+#pragma mark - GPUImage Video Camera
+
+- (void)demoGPUImageVideoCamera {
+}
+
+#pragma mark - Camera Simple Demo
 
 - (void)demoCameraSimple {
     if (![UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera] || ![UIImagePickerController isCameraDeviceAvailable:UIImagePickerControllerCameraDeviceRear]) {
