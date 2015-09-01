@@ -51,6 +51,9 @@ typedef NS_ENUM(NSInteger, enumDemoImageFilter) {
 @end
 
 @implementation ItemViewController
+{
+    GPUImageStillCamera *stillCamera;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -382,6 +385,20 @@ typedef NS_ENUM(NSInteger, enumDemoImageFilter) {
 #pragma mark - GPUImage Still Camera
 
 - (void)demoGPUImageStillCamera {
+    stillCamera = [[GPUImageStillCamera alloc] init];
+    stillCamera.outputImageOrientation = UIInterfaceOrientationPortrait;
+    
+    GPUImageSepiaFilter *sepiafilter = [[GPUImageSepiaFilter alloc] init];
+    [stillCamera addTarget:sepiafilter];
+    
+    GPUImageView *filterView = [[GPUImageView alloc] initWithFrame:self.view.frame];
+    [self.view addSubview:filterView];
+    
+    [sepiafilter addTarget:filterView];
+    
+//    [stillCamera addTarget:filterView];
+
+    [stillCamera startCameraCapture];
 }
 
 #pragma mark - GPUImage Video Camera
