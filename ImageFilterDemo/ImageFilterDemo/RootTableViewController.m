@@ -27,7 +27,7 @@
     self.demosImageFilter = @[
         @"CPU Image Filter", @"CoreImage Filter", @"CoreImage Filter Multiple", @"GLKView and CoreImage Filter",
         @"GPUImage Sepia Filter", @"GPUImage Custom Filter", @"GPUImage Still Camera", @"GPUImage Video Camera",
-        @"Simple Camera", @"Custom Camera"
+        @"Simple PhotoLibrary", @"Simple Camera", @"Custom Camera"
     ];
 }
 

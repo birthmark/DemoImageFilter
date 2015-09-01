@@ -27,6 +27,7 @@ typedef NS_ENUM(NSInteger, enumDemoImageFilter) {
     demoGPUImageStillCamera,
     demoGPUImageVideoCamera,
     
+    demoPhotoLibrarySimple,
     demoCameraSimple,
     demoCameraCustom,
 };
@@ -68,7 +69,7 @@ typedef NS_ENUM(NSInteger, enumDemoImageFilter) {
     self.demosImageFilter = @[
         @"CPU Image Filter", @"CoreImage Filter", @"CoreImage Filter Multiple", @"GLKView and CoreImage Filter",
         @"GPUImage Sepia Filter", @"GPUImage Custom Filter", @"GPUImage Still Camera", @"GPUImage Video Camera",
-        @"Simple Camera", @"Custom Camera"
+        @"Simple PhotoLibrary", @"Simple Camera", @"Custom Camera"
     ];
     [self demosFilter];
 }
@@ -105,7 +106,7 @@ typedef NS_ENUM(NSInteger, enumDemoImageFilter) {
     self.demosImageFilter = @[
         @"CPU Image Filter", @"CoreImage Filter", @"CoreImage Filter Multiple", @"GLKView and CoreImage Filter",
         @"GPUImage Sepia Filter", @"GPUImage Custom Filter", @"GPUImage Still Camera", @"GPUImage Video Camera",
-        @"Simple Camera", @"Custom Camera"
+        @"Simple PhotoLibrary", @"Simple Camera", @"Custom Camera"
     ];
     */
     switch ([self.demosImageFilter indexOfObject:self.item]) {
@@ -135,6 +136,9 @@ typedef NS_ENUM(NSInteger, enumDemoImageFilter) {
             [self demoGPUImageVideoCamera];
             break;
             
+        case demoPhotoLibrarySimple:
+            [self demoPhotoLibrarySimple];
+            break;
         case demoCameraSimple:
             [self demoCameraSimple];
             break;
@@ -465,6 +469,16 @@ typedef NS_ENUM(NSInteger, enumDemoImageFilter) {
     });
 }
 
+#pragma mark - PhotoLibrary Demo
+
+- (void)demoPhotoLibrarySimple {
+    UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
+    imagePicker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+    imagePicker.allowsEditing = YES;
+    imagePicker.delegate = self;
+    [self presentViewController:imagePicker animated:YES completion:nil];
+}
+
 #pragma mark - Camera Simple Demo
 
 - (void)demoCameraSimple {
@@ -505,7 +519,9 @@ typedef NS_ENUM(NSInteger, enumDemoImageFilter) {
     UIImage *originalImage = [info valueForKey:UIImagePickerControllerOriginalImage];
     UIImage *editedImage = [info valueForKey:UIImagePickerControllerEditedImage];
     UIImage *savedImage = editedImage ? editedImage : originalImage;
-    UIImageWriteToSavedPhotosAlbum(savedImage, nil, nil, nil); // 保存到系统相册
+    if (picker.sourceType == UIImagePickerControllerSourceTypeCamera) {
+        UIImageWriteToSavedPhotosAlbum(savedImage, nil, nil, nil); // 保存到系统相册
+    }
     
     [picker dismissViewControllerAnimated:YES completion:^{
         [self displayOriginImage:savedImage];
