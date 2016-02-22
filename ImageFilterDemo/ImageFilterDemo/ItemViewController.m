@@ -32,7 +32,11 @@ typedef NS_ENUM(NSInteger, enumDemoImageFilter) {
     demoCameraCustom,
 };
 
-@interface ItemViewController () <UIImagePickerControllerDelegate>
+@interface ItemViewController () <
+
+    UIGestureRecognizerDelegate,
+    UIImagePickerControllerDelegate
+>
 
 @property (nonatomic) NSArray *demosImageFilter;
 
@@ -87,8 +91,8 @@ typedef NS_ENUM(NSInteger, enumDemoImageFilter) {
     _lbOriginalImage.textAlignment = NSTextAlignmentCenter;
     [self.view addSubview:_lbOriginalImage];
     
-    _originImage = image ? image : [UIImage imageNamed:@"testImage"];
-    _originImageView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 100, self.view.frame.size.width - 20, 200)];
+    _originImage = image ? image : [UIImage imageNamed:@"Model"];
+    _originImageView = [[UIImageView alloc] initWithFrame:CGRectMake((self.view.frame.size.width - 150) / 2, 100, 150, 200)];
     _originImageView.image = _originImage;
     [self.view addSubview:_originImageView];
     
@@ -97,7 +101,7 @@ typedef NS_ENUM(NSInteger, enumDemoImageFilter) {
     _lbProcessedImage.textAlignment = NSTextAlignmentCenter;
     [self.view addSubview:_lbProcessedImage];
     
-    _filteredImageView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 340, self.view.frame.size.width - 20, 200)];
+    _filteredImageView = [[UIImageView alloc] initWithFrame:CGRectMake((self.view.frame.size.width - 150) / 2, 340, 150, 200)];
     [self.view addSubview:_filteredImageView];
 }
 
@@ -155,7 +159,7 @@ typedef NS_ENUM(NSInteger, enumDemoImageFilter) {
 - (void)demoCPUImageFilter {
     [self displayOriginImage:nil];
     
-    UIScrollView *scrollerView = [[UIScrollView alloc] initWithFrame:CGRectMake(10, self.view.frame.size.height - 100, self.view.frame.size.width - 20, 80)];
+    UIScrollView *scrollerView = [[UIScrollView alloc] initWithFrame:CGRectMake(10, self.view.frame.size.height - 80, self.view.frame.size.width - 20, 80)];
     scrollerView.indicatorStyle = UIScrollViewIndicatorStyleBlack;
     scrollerView.showsHorizontalScrollIndicator = NO;
     scrollerView.showsVerticalScrollIndicator = NO;

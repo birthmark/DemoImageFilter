@@ -16,7 +16,7 @@
 		834C530C1B92DABE000690FD /* ImageFilterDemoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 834C530B1B92DABE000690FD /* ImageFilterDemoTests.m */; };
 		836B74C31B92DC1C004A845C /* RootTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 836B74C21B92DC1C004A845C /* RootTableViewController.m */; };
 		836B74C61B92DC52004A845C /* ItemViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 836B74C51B92DC52004A845C /* ItemViewController.m */; };
-		836B74C81B92F80A004A845C /* testImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 836B74C71B92F80A004A845C /* testImage.png */; };
+		836B74C81B92F80A004A845C /* Model.png in Resources */ = {isa = PBXBuildFile; fileRef = 836B74C71B92F80A004A845C /* Model.png */; };
 		A405861C1B93FE40004DD437 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A405861B1B93FE40004DD437 /* OpenGLES.framework */; };
 		A405861E1B93FE4E004DD437 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A405861D1B93FE4E004DD437 /* CoreGraphics.framework */; };
 		A40586201B940EA6004DD437 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A405861F1B940EA6004DD437 /* QuartzCore.framework */; };
@@ -51,7 +51,7 @@
 		836B74C21B92DC1C004A845C /* RootTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RootTableViewController.m; sourceTree = "<group>"; };
 		836B74C41B92DC52004A845C /* ItemViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ItemViewController.h; sourceTree = "<group>"; };
 		836B74C51B92DC52004A845C /* ItemViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ItemViewController.m; sourceTree = "<group>"; };
-		836B74C71B92F80A004A845C /* testImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = testImage.png; sourceTree = "<group>"; };
+		836B74C71B92F80A004A845C /* Model.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Model.png; sourceTree = "<group>"; };
 		A405861B1B93FE40004DD437 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		A405861D1B93FE4E004DD437 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		A405861F1B940EA6004DD437 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
@@ -162,7 +162,7 @@
 		836B74CA1B931427004A845C /* Resource */ = {
 			isa = PBXGroup;
 			children = (
-				836B74C71B92F80A004A845C /* testImage.png */,
+				836B74C71B92F80A004A845C /* Model.png */,
 				A49107C61B948BC600F6309E /* GPUImageCustomFilter.fsh */,
 			);
 			name = Resource;
@@ -281,7 +281,7 @@
 				834C52FB1B92DABE000690FD /* Main.storyboard in Resources */,
 				834C53001B92DABE000690FD /* LaunchScreen.xib in Resources */,
 				834C52FD1B92DABE000690FD /* Images.xcassets in Resources */,
-				836B74C81B92F80A004A845C /* testImage.png in Resources */,
+				836B74C81B92F80A004A845C /* Model.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
