@@ -35,6 +35,7 @@ typedef NS_ENUM(NSInteger, enumDemoImageFilter) {
 @interface ItemViewController () <
 
     UIGestureRecognizerDelegate,
+    UINavigationControllerDelegate,
     UIImagePickerControllerDelegate
 >
 
@@ -486,7 +487,6 @@ typedef NS_ENUM(NSInteger, enumDemoImageFilter) {
 - (void)demoPhotoLibrarySimple {
     UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
     imagePicker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
-    imagePicker.allowsEditing = YES;
     imagePicker.delegate = self;
     [self presentViewController:imagePicker animated:YES completion:nil];
 }
@@ -501,11 +501,13 @@ typedef NS_ENUM(NSInteger, enumDemoImageFilter) {
         [self.view addSubview:lb];
         return;
     }
+    
     AVAuthorizationStatus status = [AVCaptureDevice authorizationStatusForMediaType:AVMediaTypeVideo];
     if (status == AVAuthorizationStatusNotDetermined) {
         [AVCaptureDevice requestAccessForMediaType:AVMediaTypeVideo completionHandler:^(BOOL granted) {
             UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
             imagePicker.sourceType = UIImagePickerControllerSourceTypeCamera;
+            imagePicker.cameraFlashMode = UIImagePickerControllerCameraFlashModeAuto;
             imagePicker.allowsEditing = YES;
             imagePicker.delegate = self;
             [self presentViewController:imagePicker animated:YES completion:nil];
