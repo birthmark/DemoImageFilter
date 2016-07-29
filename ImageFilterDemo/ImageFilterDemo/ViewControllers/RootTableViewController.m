@@ -25,10 +25,18 @@
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     
     self.demosImageFilter = @[
-        @"CPU Image Filter", @"CoreImage Filter", @"CoreImage Filter Multiple", @"GLKView and CoreImage Filter",
-        @"GPUImage Sepia Filter", @"GPUImage Custom Filter", @"GPUImage Still Camera", @"GPUImage Video Camera",
-        @"Simple PhotoLibrary", @"Simple Camera", @"Custom Camera"
-    ];
+                              @"CPU Image Filter",
+                              @"CoreImage Filter",
+                              @"CoreImage Filter Multiple",
+                              @"GLKView and CoreImage Filter",
+                              @"GPUImage Sepia Filter",
+                              @"GPUImage Custom Filter",
+                              @"GPUImage Still Camera",
+                              @"GPUImage Video Camera",
+                              @"Simple PhotoLibrary",
+                              @"Simple Camera",
+                              @"Custom Camera",
+                              ];
 }
 
 #pragma mark - Table view data source

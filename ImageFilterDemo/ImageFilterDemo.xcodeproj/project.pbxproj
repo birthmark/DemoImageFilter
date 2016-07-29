@@ -14,14 +14,14 @@
 		834C52FD1B92DABE000690FD /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 834C52FC1B92DABE000690FD /* Images.xcassets */; };
 		834C53001B92DABE000690FD /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 834C52FE1B92DABE000690FD /* LaunchScreen.xib */; };
 		834C530C1B92DABE000690FD /* ImageFilterDemoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 834C530B1B92DABE000690FD /* ImageFilterDemoTests.m */; };
-		836B74C31B92DC1C004A845C /* RootTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 836B74C21B92DC1C004A845C /* RootTableViewController.m */; };
-		836B74C61B92DC52004A845C /* ItemViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 836B74C51B92DC52004A845C /* ItemViewController.m */; };
-		836B74C81B92F80A004A845C /* Model.png in Resources */ = {isa = PBXBuildFile; fileRef = 836B74C71B92F80A004A845C /* Model.png */; };
 		A405861C1B93FE40004DD437 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A405861B1B93FE40004DD437 /* OpenGLES.framework */; };
 		A405861E1B93FE4E004DD437 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A405861D1B93FE4E004DD437 /* CoreGraphics.framework */; };
 		A40586201B940EA6004DD437 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A405861F1B940EA6004DD437 /* QuartzCore.framework */; };
-		A49107C71B948BC600F6309E /* GPUImageCustomFilter.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A49107C61B948BC600F6309E /* GPUImageCustomFilter.fsh */; };
-		A4E14D681B93EC0D00496FA8 /* CPUImageFilterUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = A4E14D671B93EC0D00496FA8 /* CPUImageFilterUtil.m */; };
+		A44EB7301D4B2B0C00EF5F8E /* CPUImageFilterUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = A44EB7261D4B2B0C00EF5F8E /* CPUImageFilterUtil.m */; };
+		A44EB7311D4B2B0C00EF5F8E /* Model.png in Resources */ = {isa = PBXBuildFile; fileRef = A44EB7281D4B2B0C00EF5F8E /* Model.png */; };
+		A44EB7321D4B2B0C00EF5F8E /* GPUImageCustomFilter.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A44EB72A1D4B2B0C00EF5F8E /* GPUImageCustomFilter.fsh */; };
+		A44EB7331D4B2B0C00EF5F8E /* ItemViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A44EB72D1D4B2B0C00EF5F8E /* ItemViewController.m */; };
+		A44EB7341D4B2B0C00EF5F8E /* RootTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A44EB72F1D4B2B0C00EF5F8E /* RootTableViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,17 +47,17 @@
 		834C53051B92DABE000690FD /* ImageFilterDemoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ImageFilterDemoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		834C530A1B92DABE000690FD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		834C530B1B92DABE000690FD /* ImageFilterDemoTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ImageFilterDemoTests.m; sourceTree = "<group>"; };
-		836B74C11B92DC1C004A845C /* RootTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RootTableViewController.h; sourceTree = "<group>"; };
-		836B74C21B92DC1C004A845C /* RootTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RootTableViewController.m; sourceTree = "<group>"; };
-		836B74C41B92DC52004A845C /* ItemViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ItemViewController.h; sourceTree = "<group>"; };
-		836B74C51B92DC52004A845C /* ItemViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ItemViewController.m; sourceTree = "<group>"; };
-		836B74C71B92F80A004A845C /* Model.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Model.png; sourceTree = "<group>"; };
 		A405861B1B93FE40004DD437 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		A405861D1B93FE4E004DD437 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		A405861F1B940EA6004DD437 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
-		A49107C61B948BC600F6309E /* GPUImageCustomFilter.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = GPUImageCustomFilter.fsh; sourceTree = "<group>"; };
-		A4E14D661B93EC0D00496FA8 /* CPUImageFilterUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CPUImageFilterUtil.h; sourceTree = "<group>"; };
-		A4E14D671B93EC0D00496FA8 /* CPUImageFilterUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CPUImageFilterUtil.m; sourceTree = "<group>"; };
+		A44EB7251D4B2B0C00EF5F8E /* CPUImageFilterUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CPUImageFilterUtil.h; sourceTree = "<group>"; };
+		A44EB7261D4B2B0C00EF5F8E /* CPUImageFilterUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CPUImageFilterUtil.m; sourceTree = "<group>"; };
+		A44EB7281D4B2B0C00EF5F8E /* Model.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Model.png; sourceTree = "<group>"; };
+		A44EB72A1D4B2B0C00EF5F8E /* GPUImageCustomFilter.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = GPUImageCustomFilter.fsh; sourceTree = "<group>"; };
+		A44EB72C1D4B2B0C00EF5F8E /* ItemViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ItemViewController.h; sourceTree = "<group>"; };
+		A44EB72D1D4B2B0C00EF5F8E /* ItemViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ItemViewController.m; sourceTree = "<group>"; };
+		A44EB72E1D4B2B0C00EF5F8E /* RootTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RootTableViewController.h; sourceTree = "<group>"; };
+		A44EB72F1D4B2B0C00EF5F8E /* RootTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RootTableViewController.m; sourceTree = "<group>"; };
 		A6F843A432C2E791DD049C6B /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		C752A151CB3ABBAAA2273FB3 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -109,9 +109,10 @@
 		834C52EE1B92DABE000690FD /* ImageFilterDemo */ = {
 			isa = PBXGroup;
 			children = (
-				A4E14D691B93EC1800496FA8 /* Tools */,
-				836B74CA1B931427004A845C /* Resource */,
-				836B74C91B93140C004A845C /* ViewController */,
+				A44EB7241D4B2B0C00EF5F8E /* CPUImageFilterUtil */,
+				A44EB7271D4B2B0C00EF5F8E /* Images */,
+				A44EB7291D4B2B0C00EF5F8E /* Shaders */,
+				A44EB72B1D4B2B0C00EF5F8E /* ViewControllers */,
 				834C52F31B92DABE000690FD /* AppDelegate.h */,
 				834C52F41B92DABE000690FD /* AppDelegate.m */,
 				834C52F91B92DABE000690FD /* Main.storyboard */,
@@ -148,26 +149,6 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		836B74C91B93140C004A845C /* ViewController */ = {
-			isa = PBXGroup;
-			children = (
-				836B74C11B92DC1C004A845C /* RootTableViewController.h */,
-				836B74C21B92DC1C004A845C /* RootTableViewController.m */,
-				836B74C41B92DC52004A845C /* ItemViewController.h */,
-				836B74C51B92DC52004A845C /* ItemViewController.m */,
-			);
-			name = ViewController;
-			sourceTree = "<group>";
-		};
-		836B74CA1B931427004A845C /* Resource */ = {
-			isa = PBXGroup;
-			children = (
-				836B74C71B92F80A004A845C /* Model.png */,
-				A49107C61B948BC600F6309E /* GPUImageCustomFilter.fsh */,
-			);
-			name = Resource;
-			sourceTree = "<group>";
-		};
 		9974907C63373BA9209589F3 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -177,13 +158,40 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		A4E14D691B93EC1800496FA8 /* Tools */ = {
+		A44EB7241D4B2B0C00EF5F8E /* CPUImageFilterUtil */ = {
 			isa = PBXGroup;
 			children = (
-				A4E14D661B93EC0D00496FA8 /* CPUImageFilterUtil.h */,
-				A4E14D671B93EC0D00496FA8 /* CPUImageFilterUtil.m */,
+				A44EB7251D4B2B0C00EF5F8E /* CPUImageFilterUtil.h */,
+				A44EB7261D4B2B0C00EF5F8E /* CPUImageFilterUtil.m */,
 			);
-			name = Tools;
+			path = CPUImageFilterUtil;
+			sourceTree = "<group>";
+		};
+		A44EB7271D4B2B0C00EF5F8E /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				A44EB7281D4B2B0C00EF5F8E /* Model.png */,
+			);
+			path = Images;
+			sourceTree = "<group>";
+		};
+		A44EB7291D4B2B0C00EF5F8E /* Shaders */ = {
+			isa = PBXGroup;
+			children = (
+				A44EB72A1D4B2B0C00EF5F8E /* GPUImageCustomFilter.fsh */,
+			);
+			path = Shaders;
+			sourceTree = "<group>";
+		};
+		A44EB72B1D4B2B0C00EF5F8E /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				A44EB72C1D4B2B0C00EF5F8E /* ItemViewController.h */,
+				A44EB72D1D4B2B0C00EF5F8E /* ItemViewController.m */,
+				A44EB72E1D4B2B0C00EF5F8E /* RootTableViewController.h */,
+				A44EB72F1D4B2B0C00EF5F8E /* RootTableViewController.m */,
+			);
+			path = ViewControllers;
 			sourceTree = "<group>";
 		};
 		EFDE6DBC0037B94E7514FF8D /* Pods */ = {
@@ -277,11 +285,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A49107C71B948BC600F6309E /* GPUImageCustomFilter.fsh in Resources */,
 				834C52FB1B92DABE000690FD /* Main.storyboard in Resources */,
+				A44EB7321D4B2B0C00EF5F8E /* GPUImageCustomFilter.fsh in Resources */,
+				A44EB7311D4B2B0C00EF5F8E /* Model.png in Resources */,
 				834C53001B92DABE000690FD /* LaunchScreen.xib in Resources */,
 				834C52FD1B92DABE000690FD /* Images.xcassets in Resources */,
-				836B74C81B92F80A004A845C /* Model.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -332,11 +340,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				836B74C31B92DC1C004A845C /* RootTableViewController.m in Sources */,
-				836B74C61B92DC52004A845C /* ItemViewController.m in Sources */,
+				A44EB7341D4B2B0C00EF5F8E /* RootTableViewController.m in Sources */,
 				834C52F51B92DABE000690FD /* AppDelegate.m in Sources */,
+				A44EB7331D4B2B0C00EF5F8E /* ItemViewController.m in Sources */,
+				A44EB7301D4B2B0C00EF5F8E /* CPUImageFilterUtil.m in Sources */,
 				834C52F21B92DABE000690FD /* main.m in Sources */,
-				A4E14D681B93EC0D00496FA8 /* CPUImageFilterUtil.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -414,7 +422,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -451,7 +459,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
