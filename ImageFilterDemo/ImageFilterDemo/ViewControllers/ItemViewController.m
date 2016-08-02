@@ -16,6 +16,9 @@
 #import "GPUImage.h"
 #import "CPUImageFilterUtil.h"
 
+#import "CameraViewController.h"
+#import "VideoViewController.h"
+
 typedef NS_ENUM(NSInteger, enumDemoImageFilter) {
     demoCPUImageFilter = 0,
     demoCoreImageFilter,
@@ -115,13 +118,6 @@ typedef NS_ENUM(NSInteger, enumDemoImageFilter) {
 }
 
 - (void)demosFilter {
-    /*
-    self.demosImageFilter = @[
-        @"CPU Image Filter", @"CoreImage Filter", @"CoreImage Filter Multiple", @"GLKView and CoreImage Filter",
-        @"GPUImage Sepia Filter", @"GPUImage Custom Filter", @"GPUImage Still Camera", @"GPUImage Video Camera",
-        @"Simple PhotoLibrary", @"Simple Camera", @"Custom Camera"
-    ];
-    */
     switch ([self.demosImageFilter indexOfObject:self.item]) {
         case demoCPUImageFilter:
             [self demoCPUImageFilter];
@@ -494,37 +490,8 @@ typedef NS_ENUM(NSInteger, enumDemoImageFilter) {
 #pragma mark - Camera Simple Demo
 
 - (void)demoCameraSimple {
-    if (![UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera] || ![UIImagePickerController isCameraDeviceAvailable:UIImagePickerControllerCameraDeviceRear]) {
-        UILabel *lb = [[UILabel alloc] initWithFrame:CGRectMake(10, 200, self.view.frame.size.width - 20, 40)];
-        lb.lineBreakMode = NSLineBreakByWordWrapping;
-        lb.text = @"This device doesn't have camera...";
-        [self.view addSubview:lb];
-        return;
-    }
-    
-    AVAuthorizationStatus status = [AVCaptureDevice authorizationStatusForMediaType:AVMediaTypeVideo];
-    if (status == AVAuthorizationStatusNotDetermined) {
-        [AVCaptureDevice requestAccessForMediaType:AVMediaTypeVideo completionHandler:^(BOOL granted) {
-            UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
-            imagePicker.sourceType = UIImagePickerControllerSourceTypeCamera;
-            imagePicker.cameraFlashMode = UIImagePickerControllerCameraFlashModeAuto;
-            imagePicker.allowsEditing = YES;
-            imagePicker.delegate = self;
-            [self presentViewController:imagePicker animated:YES completion:nil];
-        }];
-    } else if (status == AVAuthorizationStatusAuthorized) {
-        UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
-        imagePicker.sourceType = UIImagePickerControllerSourceTypeCamera;
-        imagePicker.allowsEditing = YES;
-        imagePicker.delegate = self;
-        [self presentViewController:imagePicker animated:YES completion:nil];
-    } else {
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil
-                                                            message:@"请在iPhone的\"设置-隐私-相机\"选项中, 允许ImageFilterDemo访问你的相机"
-                                                           delegate:nil
-                                                  cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
-        [alertView show];
-    }
+    CameraViewController *camera = [[CameraViewController alloc] init];
+    [self presentViewController:camera animated:YES completion:nil];
 }
 
 #pragma mark - UIImagePickerControllerDelegate

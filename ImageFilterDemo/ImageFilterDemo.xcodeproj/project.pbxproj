@@ -22,6 +22,8 @@
 		A44EB7321D4B2B0C00EF5F8E /* GPUImageCustomFilter.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A44EB72A1D4B2B0C00EF5F8E /* GPUImageCustomFilter.fsh */; };
 		A44EB7331D4B2B0C00EF5F8E /* ItemViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A44EB72D1D4B2B0C00EF5F8E /* ItemViewController.m */; };
 		A44EB7341D4B2B0C00EF5F8E /* RootTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A44EB72F1D4B2B0C00EF5F8E /* RootTableViewController.m */; };
+		A4D8AEBD1D50456600060E5F /* CameraViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A4D8AEBC1D50456600060E5F /* CameraViewController.m */; };
+		A4D8AEC01D50457200060E5F /* VideoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A4D8AEBF1D50457200060E5F /* VideoViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -58,6 +60,10 @@
 		A44EB72D1D4B2B0C00EF5F8E /* ItemViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ItemViewController.m; sourceTree = "<group>"; };
 		A44EB72E1D4B2B0C00EF5F8E /* RootTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RootTableViewController.h; sourceTree = "<group>"; };
 		A44EB72F1D4B2B0C00EF5F8E /* RootTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RootTableViewController.m; sourceTree = "<group>"; };
+		A4D8AEBB1D50456600060E5F /* CameraViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CameraViewController.h; sourceTree = "<group>"; };
+		A4D8AEBC1D50456600060E5F /* CameraViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CameraViewController.m; sourceTree = "<group>"; };
+		A4D8AEBE1D50457200060E5F /* VideoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VideoViewController.h; sourceTree = "<group>"; };
+		A4D8AEBF1D50457200060E5F /* VideoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VideoViewController.m; sourceTree = "<group>"; };
 		A6F843A432C2E791DD049C6B /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		C752A151CB3ABBAAA2273FB3 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -113,6 +119,8 @@
 				A44EB7271D4B2B0C00EF5F8E /* Images */,
 				A44EB7291D4B2B0C00EF5F8E /* Shaders */,
 				A44EB72B1D4B2B0C00EF5F8E /* ViewControllers */,
+				A4D8AEB91D50453400060E5F /* Camera */,
+				A4D8AEBA1D50453400060E5F /* Video */,
 				834C52F31B92DABE000690FD /* AppDelegate.h */,
 				834C52F41B92DABE000690FD /* AppDelegate.m */,
 				834C52F91B92DABE000690FD /* Main.storyboard */,
@@ -192,6 +200,24 @@
 				A44EB72F1D4B2B0C00EF5F8E /* RootTableViewController.m */,
 			);
 			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		A4D8AEB91D50453400060E5F /* Camera */ = {
+			isa = PBXGroup;
+			children = (
+				A4D8AEBB1D50456600060E5F /* CameraViewController.h */,
+				A4D8AEBC1D50456600060E5F /* CameraViewController.m */,
+			);
+			path = Camera;
+			sourceTree = "<group>";
+		};
+		A4D8AEBA1D50453400060E5F /* Video */ = {
+			isa = PBXGroup;
+			children = (
+				A4D8AEBE1D50457200060E5F /* VideoViewController.h */,
+				A4D8AEBF1D50457200060E5F /* VideoViewController.m */,
+			);
+			path = Video;
 			sourceTree = "<group>";
 		};
 		EFDE6DBC0037B94E7514FF8D /* Pods */ = {
@@ -343,6 +369,8 @@
 				A44EB7341D4B2B0C00EF5F8E /* RootTableViewController.m in Sources */,
 				834C52F51B92DABE000690FD /* AppDelegate.m in Sources */,
 				A44EB7331D4B2B0C00EF5F8E /* ItemViewController.m in Sources */,
+				A4D8AEBD1D50456600060E5F /* CameraViewController.m in Sources */,
+				A4D8AEC01D50457200060E5F /* VideoViewController.m in Sources */,
 				A44EB7301D4B2B0C00EF5F8E /* CPUImageFilterUtil.m in Sources */,
 				834C52F21B92DABE000690FD /* main.m in Sources */,
 			);
