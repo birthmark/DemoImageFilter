@@ -13,6 +13,8 @@
 
 #import <AssetsLibrary/AssetsLibrary.h>
 
+#import <Photos/Photos.h>
+
 @interface VideoViewController () <
 
     UINavigationControllerDelegate,
@@ -103,10 +105,25 @@
         player.moviePlayer.controlStyle = MPMovieControlStyleEmbedded;
         
         
-        // 保存使用ALAssetsLibrary
-        ALAssetsLibrary *assetsLibrary = [[ALAssetsLibrary alloc] init];
-        [assetsLibrary writeVideoAtPathToSavedPhotosAlbum:videoURL completionBlock:^(NSURL *assetURL, NSError *error) {
-            
+//        // 保存使用ALAssetsLibrary
+//        ALAssetsLibrary *assetsLibrary = [[ALAssetsLibrary alloc] init];
+//        [assetsLibrary writeVideoAtPathToSavedPhotosAlbum:videoURL completionBlock:^(NSURL *assetURL, NSError *error) {
+//            
+//            if (error == nil) {
+//                NSLog(@"video saved ...");
+//            }
+//            
+//            [picker dismissViewControllerAnimated:YES completion:^{
+//                [self presentMoviePlayerViewControllerAnimated:player];
+//            }];
+//        }];
+        
+        
+        // 推荐保存使用PhotoKit
+        PHPhotoLibrary *photoLibrary = [PHPhotoLibrary sharedPhotoLibrary];
+        [photoLibrary performChanges:^{
+            [PHAssetChangeRequest creationRequestForAssetFromVideoAtFileURL:videoURL];
+        } completionHandler:^(BOOL success, NSError * _Nullable error) {
             if (error == nil) {
                 NSLog(@"video saved ...");
             }
