@@ -8,13 +8,14 @@
 
 /* Begin PBXBuildFile section */
 		5CE82EC7D14491315AA786A1 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A6F843A432C2E791DD049C6B /* libPods.a */; };
+		832A2EA31D50E82600203BC8 /* CSAlbumViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 832A2EA21D50E82600203BC8 /* CSAlbumViewController.m */; };
+		832A2EA91D50EFA100203BC8 /* CSCameraViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 832A2EA81D50EFA100203BC8 /* CSCameraViewController.m */; };
 		834C52F21B92DABE000690FD /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 834C52F11B92DABE000690FD /* main.m */; };
 		834C52F51B92DABE000690FD /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 834C52F41B92DABE000690FD /* AppDelegate.m */; };
 		834C52FB1B92DABE000690FD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 834C52F91B92DABE000690FD /* Main.storyboard */; };
 		834C52FD1B92DABE000690FD /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 834C52FC1B92DABE000690FD /* Images.xcassets */; };
 		834C53001B92DABE000690FD /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 834C52FE1B92DABE000690FD /* LaunchScreen.xib */; };
 		834C530C1B92DABE000690FD /* ImageFilterDemoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 834C530B1B92DABE000690FD /* ImageFilterDemoTests.m */; };
-		83D321FE1D50CEE3008485B2 /* CSCameraView.m in Sources */ = {isa = PBXBuildFile; fileRef = 83D321FD1D50CEE3008485B2 /* CSCameraView.m */; };
 		A405861C1B93FE40004DD437 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A405861B1B93FE40004DD437 /* OpenGLES.framework */; };
 		A405861E1B93FE4E004DD437 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A405861D1B93FE4E004DD437 /* CoreGraphics.framework */; };
 		A40586201B940EA6004DD437 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A405861F1B940EA6004DD437 /* QuartzCore.framework */; };
@@ -25,7 +26,7 @@
 		A4D8AEBD1D50456600060E5F /* CameraViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A4D8AEBC1D50456600060E5F /* CameraViewController.m */; };
 		A4D8AEC01D50457200060E5F /* VideoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A4D8AEBF1D50457200060E5F /* VideoViewController.m */; };
 		A4D8AEC41D50918F00060E5F /* GPUImageCustomFilter.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A4D8AEC31D50918F00060E5F /* GPUImageCustomFilter.fsh */; };
-		A4D8AEC71D5091A700060E5F /* GPUImageCameraViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A4D8AEC61D5091A700060E5F /* GPUImageCameraViewController.m */; };
+		A4D8AEC71D5091A700060E5F /* DemoGPUImageCameraViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A4D8AEC61D5091A700060E5F /* DemoGPUImageCameraViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,6 +41,10 @@
 
 /* Begin PBXFileReference section */
 		7B22F29F9389979952073F8A /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+		832A2EA11D50E82600203BC8 /* CSAlbumViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSAlbumViewController.h; sourceTree = "<group>"; };
+		832A2EA21D50E82600203BC8 /* CSAlbumViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSAlbumViewController.m; sourceTree = "<group>"; };
+		832A2EA71D50EFA100203BC8 /* CSCameraViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSCameraViewController.h; sourceTree = "<group>"; };
+		832A2EA81D50EFA100203BC8 /* CSCameraViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSCameraViewController.m; sourceTree = "<group>"; };
 		834C52EC1B92DABE000690FD /* ImageFilterDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ImageFilterDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		834C52F01B92DABE000690FD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		834C52F11B92DABE000690FD /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -51,8 +56,6 @@
 		834C53051B92DABE000690FD /* ImageFilterDemoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ImageFilterDemoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		834C530A1B92DABE000690FD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		834C530B1B92DABE000690FD /* ImageFilterDemoTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ImageFilterDemoTests.m; sourceTree = "<group>"; };
-		83D321FC1D50CEE3008485B2 /* CSCameraView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSCameraView.h; sourceTree = "<group>"; };
-		83D321FD1D50CEE3008485B2 /* CSCameraView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSCameraView.m; sourceTree = "<group>"; };
 		A405861B1B93FE40004DD437 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		A405861D1B93FE4E004DD437 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		A405861F1B940EA6004DD437 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
@@ -68,8 +71,8 @@
 		A4D8AEBE1D50457200060E5F /* VideoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VideoViewController.h; sourceTree = "<group>"; };
 		A4D8AEBF1D50457200060E5F /* VideoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VideoViewController.m; sourceTree = "<group>"; };
 		A4D8AEC31D50918F00060E5F /* GPUImageCustomFilter.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = GPUImageCustomFilter.fsh; sourceTree = "<group>"; };
-		A4D8AEC51D5091A700060E5F /* GPUImageCameraViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GPUImageCameraViewController.h; sourceTree = "<group>"; };
-		A4D8AEC61D5091A700060E5F /* GPUImageCameraViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GPUImageCameraViewController.m; sourceTree = "<group>"; };
+		A4D8AEC51D5091A700060E5F /* DemoGPUImageCameraViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DemoGPUImageCameraViewController.h; sourceTree = "<group>"; };
+		A4D8AEC61D5091A700060E5F /* DemoGPUImageCameraViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DemoGPUImageCameraViewController.m; sourceTree = "<group>"; };
 		A6F843A432C2E791DD049C6B /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		C752A151CB3ABBAAA2273FB3 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -96,6 +99,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		832A2EA01D50E7C200203BC8 /* Album */ = {
+			isa = PBXGroup;
+			children = (
+				832A2EA11D50E82600203BC8 /* CSAlbumViewController.h */,
+				832A2EA21D50E82600203BC8 /* CSAlbumViewController.m */,
+			);
+			path = Album;
+			sourceTree = "<group>";
+		};
 		834C52E31B92DABE000690FD = {
 			isa = PBXGroup;
 			children = (
@@ -125,6 +137,7 @@
 				A44EB7241D4B2B0C00EF5F8E /* CPUImageFilterUtil */,
 				A44EB7271D4B2B0C00EF5F8E /* Images */,
 				A44EB72B1D4B2B0C00EF5F8E /* ViewControllers */,
+				832A2EA01D50E7C200203BC8 /* Album */,
 				A4D8AEB91D50453400060E5F /* Camera */,
 				A4D8AEBA1D50453400060E5F /* Video */,
 				834C52F31B92DABE000690FD /* AppDelegate.h */,
@@ -203,6 +216,8 @@
 		A4D8AEB91D50453400060E5F /* Camera */ = {
 			isa = PBXGroup;
 			children = (
+				832A2EA71D50EFA100203BC8 /* CSCameraViewController.h */,
+				832A2EA81D50EFA100203BC8 /* CSCameraViewController.m */,
 				A4D8AEBB1D50456600060E5F /* CameraViewController.h */,
 				A4D8AEBC1D50456600060E5F /* CameraViewController.m */,
 			);
@@ -222,10 +237,8 @@
 			isa = PBXGroup;
 			children = (
 				A4D8AEC21D50918F00060E5F /* Shaders */,
-				A4D8AEC51D5091A700060E5F /* GPUImageCameraViewController.h */,
-				A4D8AEC61D5091A700060E5F /* GPUImageCameraViewController.m */,
-				83D321FC1D50CEE3008485B2 /* CSCameraView.h */,
-				83D321FD1D50CEE3008485B2 /* CSCameraView.m */,
+				A4D8AEC51D5091A700060E5F /* DemoGPUImageCameraViewController.h */,
+				A4D8AEC61D5091A700060E5F /* DemoGPUImageCameraViewController.m */,
 			);
 			path = GPUImage;
 			sourceTree = "<group>";
@@ -293,7 +306,7 @@
 		834C52E41B92DABE000690FD /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0640;
+				LastUpgradeCheck = 0730;
 				ORGANIZATIONNAME = icetime17;
 				TargetAttributes = {
 					834C52EB1B92DABE000690FD = {
@@ -384,13 +397,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A4D8AEC71D5091A700060E5F /* GPUImageCameraViewController.m in Sources */,
+				A4D8AEC71D5091A700060E5F /* DemoGPUImageCameraViewController.m in Sources */,
 				A44EB7341D4B2B0C00EF5F8E /* RootTableViewController.m in Sources */,
-				83D321FE1D50CEE3008485B2 /* CSCameraView.m in Sources */,
 				834C52F51B92DABE000690FD /* AppDelegate.m in Sources */,
+				832A2EA31D50E82600203BC8 /* CSAlbumViewController.m in Sources */,
 				A44EB7331D4B2B0C00EF5F8E /* ItemViewController.m in Sources */,
 				A4D8AEBD1D50456600060E5F /* CameraViewController.m in Sources */,
 				A4D8AEC01D50457200060E5F /* VideoViewController.m in Sources */,
+				832A2EA91D50EFA100203BC8 /* CSCameraViewController.m in Sources */,
 				A44EB7301D4B2B0C00EF5F8E /* CPUImageFilterUtil.m in Sources */,
 				834C52F21B92DABE000690FD /* main.m in Sources */,
 			);
@@ -455,6 +469,7 @@
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -521,6 +536,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = ImageFilterDemo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "icetime17.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -532,6 +548,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = ImageFilterDemo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "icetime17.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -550,6 +567,7 @@
 				);
 				INFOPLIST_FILE = ImageFilterDemoTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "icetime17.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ImageFilterDemo.app/ImageFilterDemo";
 			};
@@ -565,6 +583,7 @@
 				);
 				INFOPLIST_FILE = ImageFilterDemoTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "icetime17.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ImageFilterDemo.app/ImageFilterDemo";
 			};

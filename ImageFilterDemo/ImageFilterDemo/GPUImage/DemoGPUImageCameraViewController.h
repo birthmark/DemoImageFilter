@@ -1,5 +1,5 @@
 //
-//  GPUImageCameraViewController.h
+//  DemoGPUImageCameraViewController.h
 //  ImageFilterDemo
 //
 //  Created by Chris Hu on 16/8/2.
@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface GPUImageCameraViewController : UIViewController
+@interface DemoGPUImageCameraViewController : UIViewController
 
 @end

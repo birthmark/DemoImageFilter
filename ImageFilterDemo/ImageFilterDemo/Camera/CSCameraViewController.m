@@ -1,47 +1,44 @@
 //
-//  CSCameraView.m
+//  CSCameraViewController.m
 //  ImageFilterDemo
 //
 //  Created by Chris Hu on 16/8/2.
 //  Copyright © 2016年 icetime17. All rights reserved.
 //
 
-#import "CSCameraView.h"
+#import "CSCameraViewController.h"
+
 #import "GPUImage.h"
 
-@interface CSCameraView () <
+@interface CSCameraViewController () <
 
     GPUImageVideoCameraDelegate
 >
 
-
 @end
 
-@implementation CSCameraView {
-
+@implementation CSCameraViewController {
+    
     GPUImageStillCamera *stillCamera;
     
     GPUImageFilter *filter;
 }
 
-- (instancetype)initWithFrame:(CGRect)frame
-{
-    self = [super initWithFrame:frame];
-    if (self) {
-        [self initCameraView];
-        
-        [self initTopBar];
-        [self initToolBar];
-    }
-    return self;
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    
+    [self initCameraView];
+    
+    [self initTopBar];
+    [self initToolBar];
 }
 
 #pragma mark - Top Bar
 
 - (void)initTopBar {
-    UIView *topBar = [[UIView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.frame), 60)];
+    UIView *topBar = [[UIView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.frame), 60)];
     topBar.backgroundColor = [UIColor whiteColor];
-    [self addSubview:topBar];
+    [self.view addSubview:topBar];
     
     UIButton *btnSettings = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 80, 30)];
     [btnSettings setTitle:@"Settings" forState:UIControlStateNormal];
@@ -57,7 +54,7 @@
     [btnClose addTarget:self action:@selector(actionClose:) forControlEvents:UIControlEventTouchUpInside];
     [topBar addSubview:btnClose];
     
-    UIButton *btnRotate = [[UIButton alloc] initWithFrame:CGRectMake(CGRectGetWidth(self.frame) - 60, 0, 60, 30)];
+    UIButton *btnRotate = [[UIButton alloc] initWithFrame:CGRectMake(CGRectGetWidth(topBar.frame) - 60, 0, 60, 30)];
     [btnRotate setTitle:@"Rotate" forState:UIControlStateNormal];
     [btnRotate setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
     [btnRotate setTitleColor:[UIColor redColor] forState:UIControlStateHighlighted];
@@ -70,11 +67,11 @@
 }
 
 - (void)actionClose:(UIButton *)sender {
-    [self removeFromSuperview];
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)actionSettings:(UIButton *)sender {
-    [self actionCapture:nil];
+    
 }
 
 - (void)actionRotate:(UIButton *)sender {
@@ -84,9 +81,9 @@
 #pragma mark - Tool Bar
 
 - (void)initToolBar {
-    UIView *toolBar = [[UIView alloc] initWithFrame:CGRectMake(0, CGRectGetHeight(self.frame) - 75, CGRectGetWidth(self.frame), 75)];
+    UIView *toolBar = [[UIView alloc] initWithFrame:CGRectMake(0, CGRectGetHeight(self.view.frame) - 75, CGRectGetWidth(self.view.frame), 75)];
     toolBar.backgroundColor = [UIColor whiteColor];
-    [self addSubview:toolBar];
+    [self.view addSubview:toolBar];
     
     UIButton *btnCapture = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 100, 30)];
     [btnCapture setTitle:@"Capture" forState:UIControlStateNormal];
@@ -95,15 +92,36 @@
     [btnCapture addTarget:self action:@selector(actionCapture:) forControlEvents:UIControlEventTouchUpInside];
     [toolBar addSubview:btnCapture];
     
-    btnCapture.center = CGPointMake(toolBar.center.x, CGRectGetHeight(toolBar.frame) / 2);
+    UIButton *btnAlbum = [[UIButton alloc] initWithFrame:CGRectMake(10, 0, 50, 50)];
+    [btnAlbum setBackgroundImage:[UIImage imageNamed:@"Model.png"] forState:UIControlStateNormal];
+    [btnAlbum addTarget:self action:@selector(actionAlbum:) forControlEvents:UIControlEventTouchUpInside];
+    [toolBar addSubview:btnAlbum];
+    
+    btnCapture.center   = CGPointMake(toolBar.center.x, CGRectGetHeight(toolBar.frame) / 2);
+    btnAlbum.center     = CGPointMake(btnAlbum.center.x, btnCapture.center.y);
+    
 }
 
 - (void)actionCapture:(UIButton *)sender {
     [stillCamera capturePhotoAsImageProcessedUpToFilter:filter withOrientation:UIImageOrientationUp withCompletionHandler:^(UIImage *processedImage, NSError *error) {
         if (error == nil) {
-            NSLog(@"complete");
-            
             UIImageWriteToSavedPhotosAlbum(processedImage, nil, nil, nil);
+            
+            [self dismissViewControllerAnimated:YES completion:^{
+                
+                if (_delegate && [_delegate respondsToSelector:@selector(CSCameraViewControllerDelegateDoneWithImage:)]) {
+                    [_delegate CSCameraViewControllerDelegateDoneWithImage:processedImage];
+                }
+                
+            }];
+        }
+    }];
+}
+
+- (void)actionAlbum:(UIButton *)sender {
+    [self dismissViewControllerAnimated:YES completion:^{
+        if (_delegate && [_delegate respondsToSelector:@selector(CSCameraViewControllerDelegateActionAlbum)]) {
+            [_delegate CSCameraViewControllerDelegateActionAlbum];
         }
     }];
 }
@@ -111,17 +129,17 @@
 #pragma mark - Camera View
 
 - (void)initCameraView {
-    GPUImageView *previewView = [[GPUImageView alloc] initWithFrame:self.frame];
+    GPUImageView *previewView = [[GPUImageView alloc] initWithFrame:self.view.frame];
     previewView.backgroundColor = [UIColor whiteColor];
     previewView.fillMode = kGPUImageFillModePreserveAspectRatio;
-    [self insertSubview:previewView atIndex:0];
-
+    [self.view insertSubview:previewView atIndex:0];
+    
     stillCamera = [[GPUImageStillCamera alloc] initWithSessionPreset:AVCaptureSessionPresetPhoto cameraPosition:AVCaptureDevicePositionBack];
     stillCamera.outputImageOrientation = UIInterfaceOrientationPortrait;
     stillCamera.delegate = self;
-
+    
     // 不加滤镜
-//    [stillCamera addTarget:previewView];
+    //    [stillCamera addTarget:previewView];
     //
     
     // 添加滤镜
@@ -130,7 +148,7 @@
     
     [stillCamera addTarget:filter];
     //
-
+    
     [stillCamera startCameraCapture];
 }
 
