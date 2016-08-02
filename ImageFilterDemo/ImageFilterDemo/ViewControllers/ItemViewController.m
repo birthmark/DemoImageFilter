@@ -19,6 +19,8 @@
 #import "CameraViewController.h"
 #import "VideoViewController.h"
 
+#import "GPUImageCameraViewController.h"
+
 typedef NS_ENUM(NSInteger, enumDemoImageFilter) {
     demoCPUImageFilter = 0,
     demoCoreImageFilter,
@@ -434,6 +436,11 @@ typedef NS_ENUM(NSInteger, enumDemoImageFilter) {
 #pragma mark - GPUImage Still Camera
 
 - (void)demoGPUImageStillCamera {
+    GPUImageCameraViewController *camera = [[GPUImageCameraViewController alloc] init];
+    [self presentViewController:camera animated:YES completion:nil];
+    
+    return;
+    
     stillCamera = [[GPUImageStillCamera alloc] init];
     stillCamera.outputImageOrientation = UIInterfaceOrientationPortrait;
     
