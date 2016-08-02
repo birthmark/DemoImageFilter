@@ -34,6 +34,8 @@ typedef NS_ENUM(NSInteger, enumDemoImageFilter) {
     demoCustomAlbum,
     demoSimpleCamera,
     demoCustomCamera,
+    demoSimpleVideo,
+    demoCustomVideo,
 };
 
 @interface ItemViewController () <
@@ -88,6 +90,8 @@ typedef NS_ENUM(NSInteger, enumDemoImageFilter) {
                               @"Custom Album",
                               @"Simple Camera",
                               @"Custom Camera",
+                              @"Simple Video",
+                              @"Custom Video",
                               ];
     [self demosFilter];
 }
@@ -158,6 +162,12 @@ typedef NS_ENUM(NSInteger, enumDemoImageFilter) {
             break;
         case demoCustomCamera:
             [self demoCustomCamera];
+            break;
+        case demoSimpleVideo:
+            [self demoSimpleVideo];
+            break;
+        case demoCustomVideo:
+            [self demoCustomVideo];
             break;
         default:
             break;
@@ -505,10 +515,23 @@ typedef NS_ENUM(NSInteger, enumDemoImageFilter) {
     [self presentViewController:camera animated:YES completion:nil];
 }
 
-#pragma mark - Camera Custom
+#pragma mark - Custom Camera Demo
 
 - (void)demoCustomCamera {
     
+}
+
+#pragma mark - Simple Video Demo
+
+- (void)demoSimpleVideo {
+    VideoViewController *video = [[VideoViewController alloc] init];
+    [self presentViewController:video animated:YES completion:nil];
+}
+
+#pragma mark - Custom Video Demo
+
+- (void)demoCustomVideo {
+
 }
 
 #pragma mark - UIImagePickerControllerDelegate

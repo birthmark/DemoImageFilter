@@ -37,6 +37,8 @@
                               @"Custom Album",
                               @"Simple Camera",
                               @"Custom Camera",
+                              @"Simple Video",
+                              @"Custom Video",
                               ];
 }
 
