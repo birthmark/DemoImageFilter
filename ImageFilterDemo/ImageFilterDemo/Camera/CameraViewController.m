@@ -9,6 +9,9 @@
 #import "CameraViewController.h"
 
 #import <AVFoundation/AVFoundation.h>
+#import <MobileCoreServices/MobileCoreServices.h>
+
+#import <Photos/Photos.h>
 
 @interface CameraViewController () <
 
@@ -86,6 +89,10 @@
         [AVCaptureDevice requestAccessForMediaType:AVMediaTypeVideo completionHandler:^(BOOL granted) {
             UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
             imagePicker.sourceType = UIImagePickerControllerSourceTypeCamera;
+            // 需要引入MobileCoreServices
+            // 设置mediaTypes
+            NSString *mediaTypes = (__bridge NSString *)kUTTypeImage;
+            imagePicker.mediaTypes = @[mediaTypes];
             imagePicker.cameraFlashMode = UIImagePickerControllerCameraFlashModeAuto;
             imagePicker.allowsEditing = YES;
             imagePicker.delegate = self;
@@ -112,8 +119,22 @@
     UIImage *originalImage = [info valueForKey:UIImagePickerControllerOriginalImage];
     UIImage *editedImage = [info valueForKey:UIImagePickerControllerEditedImage];
     UIImage *savedImage = editedImage ? editedImage : originalImage;
-    if (picker.sourceType == UIImagePickerControllerSourceTypeCamera) {
+    
+    NSString *mediaType = [info objectForKey:UIImagePickerControllerMediaType];
+    if ([mediaType isEqualToString:(__bridge NSString *)kUTTypeImage]) {
         UIImageWriteToSavedPhotosAlbum(savedImage, nil, nil, nil); // 保存到系统相册
+        
+        NSURL *imageURL = [info objectForKey:UIImagePickerControllerMediaURL];
+        NSLog(@"imageURL : %@", imageURL);
+        
+        // 保存也可以使用PhotoKit
+        /*
+        [[PHPhotoLibrary sharedPhotoLibrary] performChanges:^{
+            [PHAssetChangeRequest creationRequestForAssetFromImage:savedImage];
+        } completionHandler:^(BOOL success, NSError * _Nullable error) {
+            NSLog(@"image saved ...");
+        }];
+         */
     }
     
     [picker dismissViewControllerAnimated:YES completion:^{

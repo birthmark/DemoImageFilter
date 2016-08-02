@@ -98,6 +98,7 @@
     if ([type isEqualToString:(__bridge NSString *)kUTTypeMovie]) {
         NSDictionary *metadata = [info objectForKey:UIImagePickerControllerMediaMetadata];
         NSURL *videoURL = [info objectForKey:UIImagePickerControllerMediaURL];
+        NSLog(@"videoURL : %@", videoURL);
         
         // 播放使用MPMoviePlayerViewController
         __block MPMoviePlayerViewController *player = [[MPMoviePlayerViewController alloc] initWithContentURL:videoURL];
