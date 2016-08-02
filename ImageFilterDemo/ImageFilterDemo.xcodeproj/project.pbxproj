@@ -14,6 +14,7 @@
 		834C52FD1B92DABE000690FD /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 834C52FC1B92DABE000690FD /* Images.xcassets */; };
 		834C53001B92DABE000690FD /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 834C52FE1B92DABE000690FD /* LaunchScreen.xib */; };
 		834C530C1B92DABE000690FD /* ImageFilterDemoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 834C530B1B92DABE000690FD /* ImageFilterDemoTests.m */; };
+		83D321FE1D50CEE3008485B2 /* CSCameraView.m in Sources */ = {isa = PBXBuildFile; fileRef = 83D321FD1D50CEE3008485B2 /* CSCameraView.m */; };
 		A405861C1B93FE40004DD437 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A405861B1B93FE40004DD437 /* OpenGLES.framework */; };
 		A405861E1B93FE4E004DD437 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A405861D1B93FE4E004DD437 /* CoreGraphics.framework */; };
 		A40586201B940EA6004DD437 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A405861F1B940EA6004DD437 /* QuartzCore.framework */; };
@@ -50,6 +51,8 @@
 		834C53051B92DABE000690FD /* ImageFilterDemoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ImageFilterDemoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		834C530A1B92DABE000690FD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		834C530B1B92DABE000690FD /* ImageFilterDemoTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ImageFilterDemoTests.m; sourceTree = "<group>"; };
+		83D321FC1D50CEE3008485B2 /* CSCameraView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSCameraView.h; sourceTree = "<group>"; };
+		83D321FD1D50CEE3008485B2 /* CSCameraView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSCameraView.m; sourceTree = "<group>"; };
 		A405861B1B93FE40004DD437 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		A405861D1B93FE4E004DD437 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		A405861F1B940EA6004DD437 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
@@ -221,6 +224,8 @@
 				A4D8AEC21D50918F00060E5F /* Shaders */,
 				A4D8AEC51D5091A700060E5F /* GPUImageCameraViewController.h */,
 				A4D8AEC61D5091A700060E5F /* GPUImageCameraViewController.m */,
+				83D321FC1D50CEE3008485B2 /* CSCameraView.h */,
+				83D321FD1D50CEE3008485B2 /* CSCameraView.m */,
 			);
 			path = GPUImage;
 			sourceTree = "<group>";
@@ -381,6 +386,7 @@
 			files = (
 				A4D8AEC71D5091A700060E5F /* GPUImageCameraViewController.m in Sources */,
 				A44EB7341D4B2B0C00EF5F8E /* RootTableViewController.m in Sources */,
+				83D321FE1D50CEE3008485B2 /* CSCameraView.m in Sources */,
 				834C52F51B92DABE000690FD /* AppDelegate.m in Sources */,
 				A44EB7331D4B2B0C00EF5F8E /* ItemViewController.m in Sources */,
 				A4D8AEBD1D50456600060E5F /* CameraViewController.m in Sources */,

@@ -8,20 +8,15 @@
 
 #import "GPUImageCameraViewController.h"
 
-#import "GPUImage.h"
+#import "CSCameraView.h"
 
-@interface GPUImageCameraViewController () <
-
-    GPUImageVideoCameraDelegate
->
+@interface GPUImageCameraViewController ()
 
 @end
 
 @implementation GPUImageCameraViewController {
     
     UIImageView *imageView;
-    
-    GPUImageStillCamera *stillCamera;
 }
 
 - (void)viewDidLoad {
@@ -63,7 +58,8 @@
 }
 
 - (void)actionCamera:(UIButton *)sender {
-    [self initCamera];
+    CSCameraView *cameraView = [[CSCameraView alloc] initWithFrame:self.view.frame];
+    [self.view addSubview:cameraView];
 }
 
 - (void)addUIImageView {
@@ -71,33 +67,6 @@
     imageView.contentMode = UIViewContentModeScaleAspectFit;
     imageView.center = self.view.center;
     [self.view addSubview:imageView];
-}
-
-- (void)initCamera {
-    GPUImageView *previewView = [[GPUImageView alloc] initWithFrame:self.view.frame];
-    previewView.fillMode = kGPUImageFillModePreserveAspectRatio;
-    [self.view addSubview:previewView];
-    
-    stillCamera = [[GPUImageStillCamera alloc] initWithSessionPreset:AVCaptureSessionPreset640x480 cameraPosition:AVCaptureDevicePositionBack];
-    stillCamera.outputImageOrientation = UIInterfaceOrientationPortrait;
-    stillCamera.delegate = self;
-
-    [stillCamera addTarget:previewView];
-    
-    /*
-    GPUImageSepiaFilter *filter = [[GPUImageSepiaFilter alloc] init];
-    [filter addTarget:previewView];
-    
-    [stillCamera addTarget:filter];
-    */
-    
-    [stillCamera startCameraCapture];
-}
-
-#pragma mark - GPUImageVideoCameraDelegate
-
-- (void)willOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer {
-    
 }
 
 @end
