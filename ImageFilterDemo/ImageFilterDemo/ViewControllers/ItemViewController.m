@@ -30,9 +30,10 @@ typedef NS_ENUM(NSInteger, enumDemoImageFilter) {
     demoGPUImageStillCamera,
     demoGPUImageVideoCamera,
     
-    demoPhotoLibrarySimple,
-    demoCameraSimple,
-    demoCameraCustom,
+    demoSimpleAlbum,
+    demoCustomAlbum,
+    demoSimpleCamera,
+    demoCustomCamera,
 };
 
 @interface ItemViewController () <
@@ -83,7 +84,8 @@ typedef NS_ENUM(NSInteger, enumDemoImageFilter) {
                               @"GPUImage Custom Filter",
                               @"GPUImage Still Camera",
                               @"GPUImage Video Camera",
-                              @"Simple PhotoLibrary",
+                              @"Simple Album",
+                              @"Custom Album",
                               @"Simple Camera",
                               @"Custom Camera",
                               ];
@@ -145,14 +147,17 @@ typedef NS_ENUM(NSInteger, enumDemoImageFilter) {
             [self demoGPUImageVideoCamera];
             break;
             
-        case demoPhotoLibrarySimple:
-            [self demoPhotoLibrarySimple];
+        case demoSimpleAlbum:
+            [self demoSimpleAlbum];
             break;
-        case demoCameraSimple:
-            [self demoCameraSimple];
+        case demoCustomAlbum:
+            
             break;
-        case demoCameraCustom:
-            [self demoCameraCustom];
+        case demoSimpleCamera:
+            [self demoSimpleCamera];
+            break;
+        case demoCustomCamera:
+            [self demoCustomCamera];
             break;
         default:
             break;
@@ -354,7 +359,7 @@ typedef NS_ENUM(NSInteger, enumDemoImageFilter) {
     [EAGLContext setCurrentContext:_eaglContext];
     
     // 创建GLKView, 要调用bindDrawable和display. 类似viewPort.
-    _glkView = [[GLKView alloc] initWithFrame:CGRectMake(10, 340, self.view.frame.size.width - 20, 200) context:_eaglContext];
+    _glkView = [[GLKView alloc] initWithFrame:_filteredImageView.frame context:_eaglContext];
     [_glkView bindDrawable];
     [self.view addSubview:_glkView];
     
@@ -478,20 +483,32 @@ typedef NS_ENUM(NSInteger, enumDemoImageFilter) {
     });
 }
 
-#pragma mark - PhotoLibrary Demo
+#pragma mark - Simple Album Demo
 
-- (void)demoPhotoLibrarySimple {
+- (void)demoSimpleAlbum {
     UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
     imagePicker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
     imagePicker.delegate = self;
     [self presentViewController:imagePicker animated:YES completion:nil];
 }
 
-#pragma mark - Camera Simple Demo
+#pragma mark - Custom Album Demo
 
-- (void)demoCameraSimple {
+- (void)demoCustomAlbum {
+
+}
+
+#pragma mark - Simple Camera Demo
+
+- (void)demoSimpleCamera {
     CameraViewController *camera = [[CameraViewController alloc] init];
     [self presentViewController:camera animated:YES completion:nil];
+}
+
+#pragma mark - Camera Custom
+
+- (void)demoCustomCamera {
+    
 }
 
 #pragma mark - UIImagePickerControllerDelegate
@@ -533,12 +550,6 @@ typedef NS_ENUM(NSInteger, enumDemoImageFilter) {
         self.filteredImage = _originImage;
         self.filteredImageView.image = self.filteredImage;
     }];
-}
-
-#pragma mark - Camera Custom
-
-- (void)demoCameraCustom {
-
 }
 
 @end

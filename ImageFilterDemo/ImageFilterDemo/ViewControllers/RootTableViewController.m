@@ -33,7 +33,8 @@
                               @"GPUImage Custom Filter",
                               @"GPUImage Still Camera",
                               @"GPUImage Video Camera",
-                              @"Simple PhotoLibrary",
+                              @"Simple Album",
+                              @"Custom Album",
                               @"Simple Camera",
                               @"Custom Camera",
                               ];
