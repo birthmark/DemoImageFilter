@@ -8,6 +8,9 @@
 
 #import "DemoGPUImageVideoCameraViewController.h"
 
+#import <MobileCoreServices/MobileCoreServices.h>
+#import <MediaPlayer/MediaPlayer.h>
+
 #import "CSVideoCameraViewController.h"
 
 @interface DemoGPUImageVideoCameraViewController () <
@@ -22,6 +25,10 @@
 @implementation DemoGPUImageVideoCameraViewController {
 
     UIImageView *imageView;
+    
+    UIButton *btnPlayVideo;
+    
+    NSString *recentVideoPath;
 }
 
 - (void)viewDidLoad {
@@ -64,12 +71,33 @@
     btn.layer.borderColor = [UIColor redColor].CGColor;
     btn.layer.borderWidth = 2.0f;
     [self.view addSubview:btn];
+    
+    btnPlayVideo = [[UIButton alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height - 40, self.view.frame.size.width, 40)];
+    [btnPlayVideo setTitle:@"Play" forState:UIControlStateNormal];
+    [btnPlayVideo setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
+    [btnPlayVideo setTitleColor:[UIColor redColor] forState:UIControlStateHighlighted];
+    [btnPlayVideo addTarget:self action:@selector(actionPlayVideo:) forControlEvents:UIControlEventTouchUpInside];
+    btnPlayVideo.layer.borderColor = [UIColor redColor].CGColor;
+    btnPlayVideo.layer.borderWidth = 2.0f;
+    [self.view addSubview:btnPlayVideo];
+    btnPlayVideo.hidden = YES;
 }
 
 - (void)actionVideo:(UIButton *)sender {
     CSVideoCameraViewController *cameraVC = [[CSVideoCameraViewController alloc] init];
     cameraVC.delegate = self;
     [self presentViewController:cameraVC animated:YES completion:nil];
+}
+
+- (void)actionPlayVideo:(UIButton *)sender {
+    if (recentVideoPath) {
+        NSURL *movieURL = [NSURL fileURLWithPath:recentVideoPath];
+        MPMoviePlayerViewController *player = [[MPMoviePlayerViewController alloc] initWithContentURL:movieURL];
+        player.moviePlayer.scalingMode = MPMovieScalingModeAspectFit;
+        player.moviePlayer.controlStyle = MPMovieControlStyleEmbedded;
+        
+        [self presentMoviePlayerViewControllerAnimated:player];
+    }
 }
 
 - (void)actionAlbum:(UIButton *)sender {
@@ -88,8 +116,12 @@
 
 #pragma mark - <CSVideoCameraViewControllerDelegate>
 
-- (void)CSVideoCameraViewControllerDelegateDoneWithImage:(UIImage *)image; {
-    imageView.image = image;
+- (void)CSVideoCameraViewControllerDelegateDoneWithVideoPath:(NSString *)videoPath {
+    recentVideoPath = videoPath;
+    
+    if (recentVideoPath) {
+        btnPlayVideo.hidden = NO;
+    }
 }
 
 - (void)CSVideoCameraViewControllerDelegateActionAlbum {

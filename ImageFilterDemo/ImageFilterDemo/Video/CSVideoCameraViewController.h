@@ -10,7 +10,7 @@
 
 @protocol CSVideoCameraViewControllerDelegate <NSObject>
 
-- (void)CSVideoCameraViewControllerDelegateDoneWithImage:(UIImage *)image;
+- (void)CSVideoCameraViewControllerDelegateDoneWithVideoPath:(NSString *)videoPath;
 
 - (void)CSVideoCameraViewControllerDelegateActionAlbum;
 

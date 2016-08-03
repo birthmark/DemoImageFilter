@@ -99,7 +99,11 @@
         [self stopVideoCapture];
     }
     
-    [self dismissViewControllerAnimated:YES completion:nil];
+    [self dismissViewControllerAnimated:YES completion:^{
+        if (_delegate && [_delegate respondsToSelector:@selector(CSVideoCameraViewControllerDelegateDoneWithVideoPath:)]) {
+            [_delegate CSVideoCameraViewControllerDelegateDoneWithVideoPath:videoPath];
+        }
+    }];
 }
 
 - (void)actionRotate:(UIButton *)sender {
