@@ -1,25 +1,25 @@
 //
-//  DemoGPUImageVideoViewController.m
+//  DemoGPUImageVideoCameraViewController.m
 //  ImageFilterDemo
 //
 //  Created by Chris Hu on 16/8/3.
 //  Copyright © 2016年 icetime17. All rights reserved.
 //
 
-#import "DemoGPUImageVideoViewController.h"
+#import "DemoGPUImageVideoCameraViewController.h"
 
-#import "CSVideoViewController.h"
+#import "CSVideoCameraViewController.h"
 
-@interface DemoGPUImageVideoViewController () <
+@interface DemoGPUImageVideoCameraViewController () <
 
     UINavigationControllerDelegate,
     UIImagePickerControllerDelegate,
-    CSVideoViewControllerDelegate
+    CSVideoCameraViewControllerDelegate
 >
 
 @end
 
-@implementation DemoGPUImageVideoViewController {
+@implementation DemoGPUImageVideoCameraViewController {
 
     UIImageView *imageView;
 }
@@ -67,7 +67,7 @@
 }
 
 - (void)actionVideo:(UIButton *)sender {
-    CSVideoViewController *cameraVC = [[CSVideoViewController alloc] init];
+    CSVideoCameraViewController *cameraVC = [[CSVideoCameraViewController alloc] init];
     cameraVC.delegate = self;
     [self presentViewController:cameraVC animated:YES completion:nil];
 }
@@ -86,13 +86,13 @@
     [self.view addSubview:imageView];
 }
 
-#pragma mark - <CSVideoViewControllerDelegate>
+#pragma mark - <CSVideoCameraViewControllerDelegate>
 
-- (void)CSVideoViewControllerDelegateDoneWithImage:(UIImage *)image; {
+- (void)CSVideoCameraViewControllerDelegateDoneWithImage:(UIImage *)image; {
     imageView.image = image;
 }
 
-- (void)CSVideoViewControllerDelegateActionAlbum {
+- (void)CSVideoCameraViewControllerDelegateActionAlbum {
     [self actionAlbum:nil];
 }
 

@@ -20,7 +20,7 @@
 #import "VideoViewController.h"
 
 #import "DemoGPUImageCameraViewController.h"
-#import "DemoGPUImageVideoViewController.h"
+#import "DemoGPUImageVideoCameraViewController.h"
 
 typedef NS_ENUM(NSInteger, enumDemoImageFilter) {
     demoCPUImageFilter = 0,
@@ -461,7 +461,7 @@ typedef NS_ENUM(NSInteger, enumDemoImageFilter) {
 #pragma mark - GPUImage Video Camera
 
 - (void)demoGPUImageVideoCamera {
-    DemoGPUImageVideoViewController *videoVC = [[DemoGPUImageVideoViewController alloc] init];
+    DemoGPUImageVideoCameraViewController *videoVC = [[DemoGPUImageVideoCameraViewController alloc] init];
     [self presentViewController:videoVC animated:YES completion:nil];
     
     return;

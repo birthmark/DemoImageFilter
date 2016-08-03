@@ -27,9 +27,9 @@
 		A4D8AEC01D50457200060E5F /* VideoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A4D8AEBF1D50457200060E5F /* VideoViewController.m */; };
 		A4D8AEC41D50918F00060E5F /* GPUImageCustomFilter.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A4D8AEC31D50918F00060E5F /* GPUImageCustomFilter.fsh */; };
 		A4D8AEC71D5091A700060E5F /* DemoGPUImageCameraViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A4D8AEC61D5091A700060E5F /* DemoGPUImageCameraViewController.m */; };
-		A4D8AECA1D51A8D500060E5F /* CSVideoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A4D8AEC91D51A8D500060E5F /* CSVideoViewController.m */; };
-		A4D8AECD1D51A96200060E5F /* DemoGPUImageVideoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A4D8AECC1D51A96200060E5F /* DemoGPUImageVideoViewController.m */; };
-		A4D8AED01D51BD0500060E5F /* CSViewVideoDuration.m in Sources */ = {isa = PBXBuildFile; fileRef = A4D8AECF1D51BD0500060E5F /* CSViewVideoDuration.m */; };
+		A4D8AECA1D51A8D500060E5F /* CSVideoCameraViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A4D8AEC91D51A8D500060E5F /* CSVideoCameraViewController.m */; };
+		A4D8AECD1D51A96200060E5F /* DemoGPUImageVideoCameraViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A4D8AECC1D51A96200060E5F /* DemoGPUImageVideoCameraViewController.m */; };
+		A4D8AED01D51BD0500060E5F /* CSViewVideoCameraDuration.m in Sources */ = {isa = PBXBuildFile; fileRef = A4D8AECF1D51BD0500060E5F /* CSViewVideoCameraDuration.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -76,12 +76,12 @@
 		A4D8AEC31D50918F00060E5F /* GPUImageCustomFilter.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = GPUImageCustomFilter.fsh; sourceTree = "<group>"; };
 		A4D8AEC51D5091A700060E5F /* DemoGPUImageCameraViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DemoGPUImageCameraViewController.h; sourceTree = "<group>"; };
 		A4D8AEC61D5091A700060E5F /* DemoGPUImageCameraViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DemoGPUImageCameraViewController.m; sourceTree = "<group>"; };
-		A4D8AEC81D51A8D500060E5F /* CSVideoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSVideoViewController.h; sourceTree = "<group>"; };
-		A4D8AEC91D51A8D500060E5F /* CSVideoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSVideoViewController.m; sourceTree = "<group>"; };
-		A4D8AECB1D51A96200060E5F /* DemoGPUImageVideoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DemoGPUImageVideoViewController.h; sourceTree = "<group>"; };
-		A4D8AECC1D51A96200060E5F /* DemoGPUImageVideoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DemoGPUImageVideoViewController.m; sourceTree = "<group>"; };
-		A4D8AECE1D51BD0500060E5F /* CSViewVideoDuration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSViewVideoDuration.h; sourceTree = "<group>"; };
-		A4D8AECF1D51BD0500060E5F /* CSViewVideoDuration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSViewVideoDuration.m; sourceTree = "<group>"; };
+		A4D8AEC81D51A8D500060E5F /* CSVideoCameraViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSVideoCameraViewController.h; sourceTree = "<group>"; };
+		A4D8AEC91D51A8D500060E5F /* CSVideoCameraViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSVideoCameraViewController.m; sourceTree = "<group>"; };
+		A4D8AECB1D51A96200060E5F /* DemoGPUImageVideoCameraViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DemoGPUImageVideoCameraViewController.h; sourceTree = "<group>"; };
+		A4D8AECC1D51A96200060E5F /* DemoGPUImageVideoCameraViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DemoGPUImageVideoCameraViewController.m; sourceTree = "<group>"; };
+		A4D8AECE1D51BD0500060E5F /* CSViewVideoCameraDuration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSViewVideoCameraDuration.h; sourceTree = "<group>"; };
+		A4D8AECF1D51BD0500060E5F /* CSViewVideoCameraDuration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSViewVideoCameraDuration.m; sourceTree = "<group>"; };
 		A6F843A432C2E791DD049C6B /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		C752A151CB3ABBAAA2273FB3 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -236,10 +236,10 @@
 		A4D8AEBA1D50453400060E5F /* Video */ = {
 			isa = PBXGroup;
 			children = (
-				A4D8AEC81D51A8D500060E5F /* CSVideoViewController.h */,
-				A4D8AEC91D51A8D500060E5F /* CSVideoViewController.m */,
-				A4D8AECE1D51BD0500060E5F /* CSViewVideoDuration.h */,
-				A4D8AECF1D51BD0500060E5F /* CSViewVideoDuration.m */,
+				A4D8AEC81D51A8D500060E5F /* CSVideoCameraViewController.h */,
+				A4D8AEC91D51A8D500060E5F /* CSVideoCameraViewController.m */,
+				A4D8AECE1D51BD0500060E5F /* CSViewVideoCameraDuration.h */,
+				A4D8AECF1D51BD0500060E5F /* CSViewVideoCameraDuration.m */,
 				A4D8AEBE1D50457200060E5F /* VideoViewController.h */,
 				A4D8AEBF1D50457200060E5F /* VideoViewController.m */,
 			);
@@ -252,8 +252,8 @@
 				A4D8AEC21D50918F00060E5F /* Shaders */,
 				A4D8AEC51D5091A700060E5F /* DemoGPUImageCameraViewController.h */,
 				A4D8AEC61D5091A700060E5F /* DemoGPUImageCameraViewController.m */,
-				A4D8AECB1D51A96200060E5F /* DemoGPUImageVideoViewController.h */,
-				A4D8AECC1D51A96200060E5F /* DemoGPUImageVideoViewController.m */,
+				A4D8AECB1D51A96200060E5F /* DemoGPUImageVideoCameraViewController.h */,
+				A4D8AECC1D51A96200060E5F /* DemoGPUImageVideoCameraViewController.m */,
 			);
 			path = GPUImage;
 			sourceTree = "<group>";
@@ -416,11 +416,11 @@
 				A44EB7341D4B2B0C00EF5F8E /* RootTableViewController.m in Sources */,
 				834C52F51B92DABE000690FD /* AppDelegate.m in Sources */,
 				832A2EA31D50E82600203BC8 /* CSAlbumViewController.m in Sources */,
-				A4D8AECA1D51A8D500060E5F /* CSVideoViewController.m in Sources */,
+				A4D8AECA1D51A8D500060E5F /* CSVideoCameraViewController.m in Sources */,
 				A44EB7331D4B2B0C00EF5F8E /* ItemViewController.m in Sources */,
-				A4D8AECD1D51A96200060E5F /* DemoGPUImageVideoViewController.m in Sources */,
+				A4D8AECD1D51A96200060E5F /* DemoGPUImageVideoCameraViewController.m in Sources */,
 				A4D8AEBD1D50456600060E5F /* CameraViewController.m in Sources */,
-				A4D8AED01D51BD0500060E5F /* CSViewVideoDuration.m in Sources */,
+				A4D8AED01D51BD0500060E5F /* CSViewVideoCameraDuration.m in Sources */,
 				A4D8AEC01D50457200060E5F /* VideoViewController.m in Sources */,
 				832A2EA91D50EFA100203BC8 /* CSCameraViewController.m in Sources */,
 				A44EB7301D4B2B0C00EF5F8E /* CPUImageFilterUtil.m in Sources */,

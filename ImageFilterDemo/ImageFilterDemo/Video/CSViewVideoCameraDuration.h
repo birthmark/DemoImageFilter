@@ -1,5 +1,5 @@
 //
-//  CSViewVideoDuration.h
+//  CSViewVideoCameraDuration.h
 //  ImageFilterDemo
 //
 //  Created by Chris Hu on 16/8/3.
@@ -11,7 +11,7 @@
 #define MAX_VIDEO_DURATION 60 * 10
 
 
-@interface CSViewVideoDuration : UIView
+@interface CSViewVideoCameraDuration : UIView
 
 - (void)startVideoCapture;
 

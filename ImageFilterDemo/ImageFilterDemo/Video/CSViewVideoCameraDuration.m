@@ -1,14 +1,14 @@
 //
-//  CSViewVideoDuration.m
+//  CSViewVideoCameraDuration.m
 //  ImageFilterDemo
 //
 //  Created by Chris Hu on 16/8/3.
 //  Copyright © 2016年 icetime17. All rights reserved.
 //
 
-#import "CSViewVideoDuration.h"
+#import "CSViewVideoCameraDuration.h"
 
-@implementation CSViewVideoDuration {
+@implementation CSViewVideoCameraDuration {
 
     NSInteger videoDuration;
     

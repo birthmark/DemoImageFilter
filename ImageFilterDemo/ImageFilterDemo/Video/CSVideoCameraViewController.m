@@ -1,26 +1,26 @@
 //
-//  CSVideoViewController.m
+//  CSVideoCameraViewController.m
 //  ImageFilterDemo
 //
 //  Created by Chris Hu on 16/8/3.
 //  Copyright © 2016年 icetime17. All rights reserved.
 //
 
-#import "CSVideoViewController.h"
+#import "CSVideoCameraViewController.h"
 
-#import "CSViewVideoDuration.h"
+#import "CSViewVideoCameraDuration.h"
 
 #import "GPUImage.h"
 
 
-@interface CSVideoViewController () <
+@interface CSVideoCameraViewController () <
 
     GPUImageVideoCameraDelegate
 >
 
 @end
 
-@implementation CSVideoViewController {
+@implementation CSVideoCameraViewController {
     
     GPUImageView *previewView;
     GPUImageVideoCamera *videoCamera;
@@ -31,7 +31,7 @@
     
     NSString *videoPath;
     
-    CSViewVideoDuration *viewVideoDuration;
+    CSViewVideoCameraDuration *viewVideoDuration;
     
     UIView *topBar;
     UIView *toolBar;
@@ -48,6 +48,12 @@
     [self initToolBar];
     
     [self initVideoTimeLabel];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    
+    previewView.center = CGPointMake(previewView.center.x, previewView.center.y + 30);
 }
 
 - (BOOL)prefersStatusBarHidden {
@@ -192,8 +198,8 @@
 
 - (void)actionAlbum:(UIButton *)sender {
     [self dismissViewControllerAnimated:YES completion:^{
-        if (_delegate && [_delegate respondsToSelector:@selector(CSVideoViewControllerDelegateActionAlbum)]) {
-            [_delegate CSVideoViewControllerDelegateActionAlbum];
+        if (_delegate && [_delegate respondsToSelector:@selector(CSVideoCameraViewControllerDelegateActionAlbum)]) {
+            [_delegate CSVideoCameraViewControllerDelegateActionAlbum];
         }
     }];
 }
@@ -209,7 +215,7 @@
 #pragma mark - Video Timer
 
 - (void)initVideoTimeLabel {
-    viewVideoDuration = [[CSViewVideoDuration alloc] initWithFrame:CGRectMake(0, CGRectGetHeight(topBar.frame), CGRectGetWidth(previewView.frame), 30)];
+    viewVideoDuration = [[CSViewVideoCameraDuration alloc] initWithFrame:CGRectMake(0, CGRectGetHeight(topBar.frame), CGRectGetWidth(previewView.frame), 30)];
     [self.view addSubview:viewVideoDuration];
 }
 
