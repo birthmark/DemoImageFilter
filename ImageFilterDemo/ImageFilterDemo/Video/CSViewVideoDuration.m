@@ -51,6 +51,9 @@
 - (void)stopVideoCapture {
     [videoTimer invalidate];
     videoTimer = nil;
+    
+    videoDuration = 0;
+    [self updateVideoDuration:videoDuration];
 }
 
 - (void)actionVideoTimer:(NSTimer *)sender {
@@ -59,7 +62,7 @@
         return;
     }
     
-    NSLog(@"videoDuration : %ld", (long)videoDuration);
+//    NSLog(@"videoDuration : %ld", (long)videoDuration);
     [self updateVideoDuration:videoDuration];
 }
 

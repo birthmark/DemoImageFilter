@@ -29,10 +29,14 @@
     
     GPUImageFilter *filter;
     
+    NSString *videoPath;
+    
     CSViewVideoDuration *viewVideoDuration;
     
     UIView *topBar;
     UIView *toolBar;
+    
+    BOOL isCapturingVideo;
 }
 
 - (void)viewDidLoad {
@@ -137,19 +141,53 @@
 }
 
 - (void)actionCapture:(UIButton *)sender {
+    isCapturingVideo = !isCapturingVideo;
+    
+    if (isCapturingVideo) {
+    
+    } else {
+        [self stopVideoCapture];
+        return;
+    }
+    
+    [self startVideoCapture];
+    
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)((MAX_VIDEO_DURATION - 1) * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        
+        [self stopVideoCapture];
+    });
+}
+
+- (void)startVideoCapture {
     [viewVideoDuration startVideoCapture];
+    
+    // MovieWriter
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd h:m:s"];
+    NSString *videoName = [dateFormatter stringFromDate:[NSDate date]];
+    
+    videoPath = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).lastObject;
+    videoPath = [videoPath stringByAppendingString:[NSString stringWithFormat:@"/%@.mp4", videoName]];
+//    unlink([videoPath UTF8String]); // 先释放该路径的文件
+    NSURL *movieURL = [NSURL fileURLWithPath:videoPath];
+    
+    movieWriter = [[GPUImageMovieWriter alloc] initWithMovieURL:movieURL size:CGSizeMake(480, 640)];
+    movieWriter.encodingLiveVideo = YES;
+    [filter addTarget:movieWriter];
     
     videoCamera.audioEncodingTarget = movieWriter;
     movieWriter.shouldPassthroughAudio = YES;
     [movieWriter startRecording];
+}
+
+- (void)stopVideoCapture {
+    isCapturingVideo = NO;
     
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)((MAX_VIDEO_DURATION - 1) * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [filter removeTarget:movieWriter];
-        videoCamera.audioEncodingTarget = nil;
-        [movieWriter finishRecording];
-        
-        [viewVideoDuration stopVideoCapture];
-    });
+    [viewVideoDuration stopVideoCapture];
+    
+    [filter removeTarget:movieWriter];
+    videoCamera.audioEncodingTarget = nil;
+    [movieWriter finishRecording];
 }
 
 - (void)actionAlbum:(UIButton *)sender {
@@ -201,16 +239,6 @@
 
     [videoCamera addTarget:filter];
     //
-    
-    // MovieWriter
-    NSString *path = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).lastObject;
-    path = [path stringByAppendingString:@"/video.mp4"];
-    unlink([path UTF8String]); // 先释放该路径的文件
-    NSURL *movieURL = [NSURL fileURLWithPath:path];
-    
-    movieWriter = [[GPUImageMovieWriter alloc] initWithMovieURL:movieURL size:CGSizeMake(480, 640)];
-    movieWriter.encodingLiveVideo = YES;
-    [filter addTarget:movieWriter];
     
     [videoCamera startCameraCapture];
 }
