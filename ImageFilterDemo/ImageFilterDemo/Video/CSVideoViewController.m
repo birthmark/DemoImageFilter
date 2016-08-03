@@ -1,37 +1,49 @@
 //
-//  CSCameraViewController.m
+//  CSVideoViewController.m
 //  ImageFilterDemo
 //
-//  Created by Chris Hu on 16/8/2.
+//  Created by Chris Hu on 16/8/3.
 //  Copyright © 2016年 icetime17. All rights reserved.
 //
 
-#import "CSCameraViewController.h"
+#import "CSVideoViewController.h"
+
+#import "CSViewVideoDuration.h"
 
 #import "GPUImage.h"
 
-@interface CSCameraViewController () <
+
+@interface CSVideoViewController () <
 
     GPUImageVideoCameraDelegate
 >
 
 @end
 
-@implementation CSCameraViewController {
+@implementation CSVideoViewController {
     
     GPUImageView *previewView;
-    GPUImageStillCamera *stillCamera;
+    GPUImageVideoCamera *videoCamera;
+    
+    GPUImageMovieWriter *movieWriter;
     
     GPUImageFilter *filter;
+    
+    CSViewVideoDuration *viewVideoDuration;
+    
+    UIView *topBar;
+    UIView *toolBar;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [self initCameraView];
+    [self initVideoCameraView];
     
     [self initTopBar];
     [self initToolBar];
+    
+    [self initVideoTimeLabel];
 }
 
 - (BOOL)prefersStatusBarHidden {
@@ -41,7 +53,7 @@
 #pragma mark - Top Bar
 
 - (void)initTopBar {
-    UIView *topBar = [[UIView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.frame), 40)];
+    topBar = [[UIView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.frame), 40)];
     topBar.backgroundColor = [UIColor blackColor];
     [self.view addSubview:topBar];
     
@@ -77,13 +89,13 @@
 }
 
 - (void)actionRotate:(UIButton *)sender {
-    [stillCamera rotateCamera];
+    [videoCamera rotateCamera];
 }
 
 #pragma mark - Tool Bar
 
 - (void)initToolBar {
-    UIView *toolBar = [[UIView alloc] initWithFrame:CGRectMake(0, CGRectGetHeight(self.view.frame) - 100, CGRectGetWidth(self.view.frame), 100)];
+    toolBar = [[UIView alloc] initWithFrame:CGRectMake(0, CGRectGetHeight(self.view.frame) - 100, CGRectGetWidth(self.view.frame), 100)];
     toolBar.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:toolBar];
     
@@ -125,40 +137,47 @@
 }
 
 - (void)actionCapture:(UIButton *)sender {
-    [stillCamera capturePhotoAsImageProcessedUpToFilter:filter withOrientation:UIImageOrientationUp withCompletionHandler:^(UIImage *processedImage, NSError *error) {
-        if (error == nil) {
-            UIImageWriteToSavedPhotosAlbum(processedImage, nil, nil, nil);
-            
-            [self dismissViewControllerAnimated:YES completion:^{
-                
-                if (_delegate && [_delegate respondsToSelector:@selector(CSCameraViewControllerDelegateDoneWithImage:)]) {
-                    [_delegate CSCameraViewControllerDelegateDoneWithImage:processedImage];
-                }
-                
-            }];
-        }
-    }];
+    [viewVideoDuration startVideoCapture];
+    
+    videoCamera.audioEncodingTarget = movieWriter;
+    movieWriter.shouldPassthroughAudio = YES;
+    [movieWriter startRecording];
+    
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)((MAX_VIDEO_DURATION - 1) * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [filter removeTarget:movieWriter];
+        videoCamera.audioEncodingTarget = nil;
+        [movieWriter finishRecording];
+        
+        [viewVideoDuration stopVideoCapture];
+    });
 }
 
 - (void)actionAlbum:(UIButton *)sender {
     [self dismissViewControllerAnimated:YES completion:^{
-        if (_delegate && [_delegate respondsToSelector:@selector(CSCameraViewControllerDelegateActionAlbum)]) {
-            [_delegate CSCameraViewControllerDelegateActionAlbum];
+        if (_delegate && [_delegate respondsToSelector:@selector(CSVideoViewControllerDelegateActionAlbum)]) {
+            [_delegate CSVideoViewControllerDelegateActionAlbum];
         }
     }];
 }
 
 - (void)actionProportion:(UIButton *)sender {
-
+    
 }
 
 - (void)actionFilter:(UIButton *)sender {
     
 }
 
-#pragma mark - Camera View
+#pragma mark - Video Timer
 
-- (void)initCameraView {
+- (void)initVideoTimeLabel {
+    viewVideoDuration = [[CSViewVideoDuration alloc] initWithFrame:CGRectMake(0, CGRectGetHeight(topBar.frame), CGRectGetWidth(previewView.frame), 30)];
+    [self.view addSubview:viewVideoDuration];
+}
+
+#pragma mark - VideoCamera View
+
+- (void)initVideoCameraView {
     previewView = [[GPUImageView alloc] initWithFrame:self.view.frame];
     // 保持与iOS系统相机的位置一致。
     previewView.center = CGPointMake(previewView.center.x, previewView.center.y - 30);
@@ -166,22 +185,34 @@
     previewView.fillMode = kGPUImageFillModePreserveAspectRatio;
     [self.view insertSubview:previewView atIndex:0];
     
-    stillCamera = [[GPUImageStillCamera alloc] initWithSessionPreset:AVCaptureSessionPresetPhoto cameraPosition:AVCaptureDevicePositionBack];
-    stillCamera.outputImageOrientation = UIInterfaceOrientationPortrait;
-    stillCamera.delegate = self;
+    videoCamera = [[GPUImageVideoCamera alloc] initWithSessionPreset:AVCaptureSessionPreset640x480 cameraPosition:AVCaptureDevicePositionBack];
+    videoCamera.outputImageOrientation = UIInterfaceOrientationPortrait;
+    videoCamera.horizontallyMirrorFrontFacingCamera = NO;
+    videoCamera.horizontallyMirrorRearFacingCamera = NO;
+    videoCamera.delegate = self;
     
     // 不加滤镜
-//        [stillCamera addTarget:previewView];
+//    [stillCamera addTarget:previewView];
     //
     
     // 添加滤镜
     filter = [[GPUImageSepiaFilter alloc] init];
     [filter addTarget:previewView];
 
-    [stillCamera addTarget:filter];
+    [videoCamera addTarget:filter];
     //
     
-    [stillCamera startCameraCapture];
+    // MovieWriter
+    NSString *path = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).lastObject;
+    path = [path stringByAppendingString:@"/video.mp4"];
+    unlink([path UTF8String]); // 先释放该路径的文件
+    NSURL *movieURL = [NSURL fileURLWithPath:path];
+    
+    movieWriter = [[GPUImageMovieWriter alloc] initWithMovieURL:movieURL size:CGSizeMake(480, 640)];
+    movieWriter.encodingLiveVideo = YES;
+    [filter addTarget:movieWriter];
+    
+    [videoCamera startCameraCapture];
 }
 
 #pragma mark - GPUImageVideoCameraDelegate

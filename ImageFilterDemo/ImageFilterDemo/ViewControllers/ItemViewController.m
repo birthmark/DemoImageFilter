@@ -20,6 +20,7 @@
 #import "VideoViewController.h"
 
 #import "DemoGPUImageCameraViewController.h"
+#import "DemoGPUImageVideoViewController.h"
 
 typedef NS_ENUM(NSInteger, enumDemoImageFilter) {
     demoCPUImageFilter = 0,
@@ -460,6 +461,11 @@ typedef NS_ENUM(NSInteger, enumDemoImageFilter) {
 #pragma mark - GPUImage Video Camera
 
 - (void)demoGPUImageVideoCamera {
+    DemoGPUImageVideoViewController *videoVC = [[DemoGPUImageVideoViewController alloc] init];
+    [self presentViewController:videoVC animated:YES completion:nil];
+    
+    return;
+    
     videoCamera = [[GPUImageVideoCamera alloc] initWithSessionPreset:AVCaptureSessionPreset640x480 cameraPosition:AVCaptureDevicePositionBack];
     videoCamera.outputImageOrientation = UIInterfaceOrientationPortrait;
     videoCamera.horizontallyMirrorFrontFacingCamera = NO;
