@@ -38,6 +38,10 @@
     [self addUIImageView];
 }
 
+- (BOOL)prefersStatusBarHidden {
+    return YES;
+}
+
 - (void)addBtnBack{
     UIButton *btn = [[UIButton alloc] initWithFrame:CGRectMake(0, 20, 100, 30)];
     [btn setTitle:@"Close" forState:UIControlStateNormal];
