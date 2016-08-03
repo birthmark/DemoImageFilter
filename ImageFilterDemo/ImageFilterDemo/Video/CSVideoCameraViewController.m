@@ -95,6 +95,10 @@
 }
 
 - (void)actionClose:(UIButton *)sender {
+    if (isCapturingVideo) {
+        [self stopVideoCapture];
+    }
+    
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
@@ -197,6 +201,10 @@
 }
 
 - (void)actionAlbum:(UIButton *)sender {
+    if (isCapturingVideo) {
+        [self stopVideoCapture];
+    }
+    
     [self dismissViewControllerAnimated:YES completion:^{
         if (_delegate && [_delegate respondsToSelector:@selector(CSVideoCameraViewControllerDelegateActionAlbum)]) {
             [_delegate CSVideoCameraViewControllerDelegateActionAlbum];
