@@ -34,6 +34,12 @@
     [self initToolBar];
 }
 
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    
+    previewView.center = CGPointMake(previewView.center.x, previewView.center.y + 30);
+}
+
 - (BOOL)prefersStatusBarHidden {
     return YES;
 }
