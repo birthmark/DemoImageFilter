@@ -13,6 +13,9 @@
 #import "GPUImage.h"
 
 
+#define PreviewViewOffet 29
+
+
 @interface CSVideoCameraViewController () <
 
     GPUImageVideoCameraDelegate
@@ -53,7 +56,7 @@
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     
-    previewView.center = CGPointMake(previewView.center.x, previewView.center.y + 30);
+    previewView.center = CGPointMake(self.view.center.x, self.view.center.y + PreviewViewOffet);
 }
 
 - (BOOL)prefersStatusBarHidden {
@@ -236,7 +239,7 @@
 - (void)initVideoCameraView {
     previewView = [[GPUImageView alloc] initWithFrame:self.view.frame];
     // 保持与iOS系统相机的位置一致。
-    previewView.center = CGPointMake(previewView.center.x, previewView.center.y - 30);
+    previewView.center = CGPointMake(self.view.center.x, self.view.center.y - PreviewViewOffet);
     previewView.backgroundColor = [UIColor whiteColor];
     previewView.fillMode = kGPUImageFillModePreserveAspectRatio;
     [self.view insertSubview:previewView atIndex:0];

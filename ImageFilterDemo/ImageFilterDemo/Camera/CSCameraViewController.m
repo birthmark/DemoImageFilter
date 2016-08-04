@@ -10,6 +10,17 @@
 
 #import "GPUImage.h"
 
+
+#define PreviewViewOffet 29
+
+
+typedef NS_ENUM(NSInteger, CameraProportionType) {
+    CameraProportionType11,
+    CameraProportionType34,
+    CameraProportionTypeFill,
+};
+
+
 @interface CSCameraViewController () <
 
     GPUImageVideoCameraDelegate
@@ -23,6 +34,8 @@
     GPUImageStillCamera *stillCamera;
     
     GPUImageFilter *filter;
+    
+    NSInteger cameraProportionType;
 }
 
 - (void)viewDidLoad {
@@ -37,7 +50,7 @@
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     
-    previewView.center = CGPointMake(previewView.center.x, previewView.center.y + 30);
+    previewView.center = CGPointMake(self.view.center.x, self.view.center.y + PreviewViewOffet);
 }
 
 - (BOOL)prefersStatusBarHidden {
@@ -155,7 +168,20 @@
 }
 
 - (void)actionProportion:(UIButton *)sender {
-
+    CGFloat width = previewView.frame.size.width;
+    switch (cameraProportionType) {
+        case CameraProportionType11:
+            cameraProportionType = CameraProportionType34;
+            break;
+        case CameraProportionType34:
+            cameraProportionType = CameraProportionTypeFill;
+            break;
+        case CameraProportionTypeFill:
+            cameraProportionType = CameraProportionType11;
+            break;
+        default:
+            break;
+    }
 }
 
 - (void)actionFilter:(UIButton *)sender {
@@ -167,7 +193,8 @@
 - (void)initCameraView {
     previewView = [[GPUImageView alloc] initWithFrame:self.view.frame];
     // 保持与iOS系统相机的位置一致。
-    previewView.center = CGPointMake(previewView.center.x, previewView.center.y - 30);
+    previewView.center = CGPointMake(self.view.center.x, self.view.center.y - PreviewViewOffet);
+    cameraProportionType = CameraProportionType34;
     previewView.backgroundColor = [UIColor whiteColor];
     previewView.fillMode = kGPUImageFillModePreserveAspectRatio;
     [self.view insertSubview:previewView atIndex:0];
