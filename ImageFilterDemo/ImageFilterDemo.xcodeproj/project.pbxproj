@@ -30,6 +30,7 @@
 		A4D8AECA1D51A8D500060E5F /* CSVideoCameraViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A4D8AEC91D51A8D500060E5F /* CSVideoCameraViewController.m */; };
 		A4D8AECD1D51A96200060E5F /* DemoGPUImageVideoCameraViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A4D8AECC1D51A96200060E5F /* DemoGPUImageVideoCameraViewController.m */; };
 		A4D8AED01D51BD0500060E5F /* CSViewVideoCameraDuration.m in Sources */ = {isa = PBXBuildFile; fileRef = A4D8AECF1D51BD0500060E5F /* CSViewVideoCameraDuration.m */; };
+		A4D8AF081D582B1E00060E5F /* CSAlbumDataSourceManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A4D8AF071D582B1E00060E5F /* CSAlbumDataSourceManager.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -82,6 +83,8 @@
 		A4D8AECC1D51A96200060E5F /* DemoGPUImageVideoCameraViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DemoGPUImageVideoCameraViewController.m; sourceTree = "<group>"; };
 		A4D8AECE1D51BD0500060E5F /* CSViewVideoCameraDuration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSViewVideoCameraDuration.h; sourceTree = "<group>"; };
 		A4D8AECF1D51BD0500060E5F /* CSViewVideoCameraDuration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSViewVideoCameraDuration.m; sourceTree = "<group>"; };
+		A4D8AF061D582B1E00060E5F /* CSAlbumDataSourceManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSAlbumDataSourceManager.h; sourceTree = "<group>"; };
+		A4D8AF071D582B1E00060E5F /* CSAlbumDataSourceManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSAlbumDataSourceManager.m; sourceTree = "<group>"; };
 		A6F843A432C2E791DD049C6B /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		C752A151CB3ABBAAA2273FB3 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -113,6 +116,8 @@
 			children = (
 				832A2EA11D50E82600203BC8 /* CSAlbumViewController.h */,
 				832A2EA21D50E82600203BC8 /* CSAlbumViewController.m */,
+				A4D8AF061D582B1E00060E5F /* CSAlbumDataSourceManager.h */,
+				A4D8AF071D582B1E00060E5F /* CSAlbumDataSourceManager.m */,
 			);
 			path = Album;
 			sourceTree = "<group>";
@@ -414,6 +419,7 @@
 			files = (
 				A4D8AEC71D5091A700060E5F /* DemoGPUImageCameraViewController.m in Sources */,
 				A44EB7341D4B2B0C00EF5F8E /* RootTableViewController.m in Sources */,
+				A4D8AF081D582B1E00060E5F /* CSAlbumDataSourceManager.m in Sources */,
 				834C52F51B92DABE000690FD /* AppDelegate.m in Sources */,
 				832A2EA31D50E82600203BC8 /* CSAlbumViewController.m in Sources */,
 				A4D8AECA1D51A8D500060E5F /* CSVideoCameraViewController.m in Sources */,
