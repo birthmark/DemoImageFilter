@@ -8,15 +8,19 @@
 
 #import "CSAlbumDataSourceManager.h"
 
+#import <Photos/Photos.h>
+
 @interface CSAlbumDataSourceManager ()
 
-@property (nonatomic, copy) NSArray *assets;
+@property (nonatomic, copy) NSMutableArray *photoAssets;
 
 @end
 
 @implementation CSAlbumDataSourceManager {
 
     NSArray *_assets;
+    
+    dispatch_once_t onceTokenForScrollToEnd;
 }
 
 + (instancetype)sharedInstance {
@@ -40,25 +44,43 @@
                 @"1",@"2",@"3",
                 ];
     
+    
+    _photoAssets = [[NSMutableArray alloc] init];
+    
+    // 获取PHAsset
+    PHFetchResult<PHAssetCollection *> *albums = [PHAssetCollection fetchAssetCollectionsWithType:PHAssetCollectionTypeMoment subtype:PHAssetCollectionSubtypeAlbumRegular options:nil];
+    for (PHAssetCollection *album in albums) {
+        PHFetchResult<PHAsset *> *assets = [PHAsset fetchAssetsInAssetCollection:album options:nil];
+        for (PHAsset *asset in assets) {
+            [_photoAssets addObject:asset];
+        }
+    }
 }
 
 #pragma mark - <UICollectionViewDataSource>
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
-    return 2;
+    return 1;
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return _assets.count;
+    return _photoAssets.count;
 }
 
-- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kCSAlbumUICollectionViewCell forIndexPath:indexPath];
+- (CSAlbumCollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
+    CSAlbumCollectionViewCell *cell = (CSAlbumCollectionViewCell *)[collectionView dequeueReusableCellWithReuseIdentifier:kCSAlbumUICollectionViewCell forIndexPath:indexPath];
     
     cell.backgroundColor = [UIColor colorWithRed:((arc4random() % 255) / 255.0)
                                            green:((arc4random() % 255) / 255.0)
                                             blue:((arc4random() % 255) / 255.0)
                                            alpha:1.0f];
+    
+    [[PHImageManager defaultManager] requestImageForAsset:_photoAssets[indexPath.item] targetSize:cell.frame.size contentMode:PHImageContentModeAspectFill options:nil resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            cell.imageView.image = result;
+        });
+    }];
     
     return cell;
 }
@@ -85,6 +107,24 @@
 
 #pragma mark - <UICollectionViewDelegate>
 
+- (void)collectionView:(UICollectionView *)collectionView willDisplayCell:(UICollectionViewCell *)cell forItemAtIndexPath:(NSIndexPath *)indexPath {
+    dispatch_once(&onceTokenForScrollToEnd, ^{
+        NSIndexPath *indexPath = [NSIndexPath indexPathForItem:(_photoAssets.count - 1) inSection:0];
+        [collectionView scrollToItemAtIndexPath:indexPath atScrollPosition:UICollectionViewScrollPositionBottom animated:NO];
+    });
+}
+
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    CSAlbumCollectionViewCell *cell = (CSAlbumCollectionViewCell *)[collectionView cellForItemAtIndexPath:indexPath];
+    
+    UIImage *selectedImage = _photoAssets[indexPath.item];
+    CGRect fromRect = [collectionView convertRect:cell.frame toView:collectionView.superview];
+    if (_delegate && [_delegate respondsToSelector:@selector(didSelectImage:fromRect:)]) {
+        [_delegate didSelectImage:selectedImage fromRect:fromRect];
+    }
+
+    [collectionView deselectItemAtIndexPath:indexPath animated:YES];
+}
 
 #pragma mark - <UICollectionViewDelegateFlowLayout>
 

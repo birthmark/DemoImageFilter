@@ -9,7 +9,12 @@
 #import "CSAlbumViewController.h"
 #import "CSAlbumDataSourceManager.h"
 
-@interface CSAlbumViewController ()
+#import "BeautyCenterViewController.h"
+
+@interface CSAlbumViewController () <
+
+    CSAlbumDataSourceManagerDelegate
+>
 
 @end
 
@@ -83,7 +88,7 @@
     _collectionView.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:_collectionView];
     
-    [_collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:kCSAlbumUICollectionViewCell];
+    [_collectionView registerNib:[UINib nibWithNibName:@"CSAlbumCollectionViewCell" bundle:nil] forCellWithReuseIdentifier:kCSAlbumUICollectionViewCell];
     
     [_collectionView registerClass:[UICollectionReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:kCSAlbumUICollectionViewHeader];
     
@@ -92,6 +97,22 @@
     CSAlbumDataSourceManager *manager = [CSAlbumDataSourceManager sharedInstance];
     _collectionView.dataSource = manager;
     _collectionView.delegate = manager;
+    
+    manager.delegate = self;
+}
+
+#pragma mark - <CSAlbumDataSourceManagerDelegate>
+
+- (void)didSelectImage:(UIImage *)image fromRect:(CGRect)rect {
+    NSLog(@"rect : %@", NSStringFromCGRect(rect));
+    
+    UIView *view = [[UIView alloc] initWithFrame:rect];
+    view.backgroundColor = [UIColor redColor];
+    [self.view addSubview:view];
+    
+//    BeautyCenterViewController *beautyCenter = [[BeautyCenterViewController alloc] init];
+    
+//    [self presentViewController:beautyCenter animated:YES completion:nil];
 }
 
 @end

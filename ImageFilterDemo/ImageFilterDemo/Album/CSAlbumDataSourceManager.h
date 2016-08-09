@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
+#import "CSAlbumCollectionViewCell.h"
 
 #define kScreenSize   [[UIScreen mainScreen] bounds].size
 #define kScreenWidth  [[UIScreen mainScreen] bounds].size.width
@@ -21,11 +22,20 @@
 
 #define kCSAlbumUICollectionViewFooter @"CSAlbumUICollectionViewFooter"
 
+
+@protocol CSAlbumDataSourceManagerDelegate <NSObject>
+
+- (void)didSelectImage:(UIImage *)image fromRect:(CGRect)rect;
+
+@end
+
 @interface CSAlbumDataSourceManager : NSObject <
 
     UICollectionViewDataSource,
     UICollectionViewDelegate
 >
+
+@property (nonatomic, weak) id<CSAlbumDataSourceManagerDelegate> delegate;
 
 + (instancetype)sharedInstance;
 

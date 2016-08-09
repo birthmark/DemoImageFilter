@@ -19,6 +19,9 @@
 		A405861C1B93FE40004DD437 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A405861B1B93FE40004DD437 /* OpenGLES.framework */; };
 		A405861E1B93FE4E004DD437 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A405861D1B93FE4E004DD437 /* CoreGraphics.framework */; };
 		A40586201B940EA6004DD437 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A405861F1B940EA6004DD437 /* QuartzCore.framework */; };
+		A42D28AE1D598DAC00FEE114 /* CSAlbumCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A42D28AD1D598DAC00FEE114 /* CSAlbumCollectionViewCell.m */; };
+		A42D28B01D598E5B00FEE114 /* CSAlbumCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A42D28AF1D598E5B00FEE114 /* CSAlbumCollectionViewCell.xib */; };
+		A42D28B31D5994ED00FEE114 /* BeautyCenterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A42D28B21D5994ED00FEE114 /* BeautyCenterViewController.m */; };
 		A44EB7301D4B2B0C00EF5F8E /* CPUImageFilterUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = A44EB7261D4B2B0C00EF5F8E /* CPUImageFilterUtil.m */; };
 		A44EB7311D4B2B0C00EF5F8E /* Model.png in Resources */ = {isa = PBXBuildFile; fileRef = A44EB7281D4B2B0C00EF5F8E /* Model.png */; };
 		A44EB7331D4B2B0C00EF5F8E /* ItemViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A44EB72D1D4B2B0C00EF5F8E /* ItemViewController.m */; };
@@ -63,6 +66,11 @@
 		A405861B1B93FE40004DD437 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		A405861D1B93FE4E004DD437 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		A405861F1B940EA6004DD437 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		A42D28AC1D598DAC00FEE114 /* CSAlbumCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSAlbumCollectionViewCell.h; sourceTree = "<group>"; };
+		A42D28AD1D598DAC00FEE114 /* CSAlbumCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSAlbumCollectionViewCell.m; sourceTree = "<group>"; };
+		A42D28AF1D598E5B00FEE114 /* CSAlbumCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CSAlbumCollectionViewCell.xib; sourceTree = "<group>"; };
+		A42D28B11D5994ED00FEE114 /* BeautyCenterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BeautyCenterViewController.h; sourceTree = "<group>"; };
+		A42D28B21D5994ED00FEE114 /* BeautyCenterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BeautyCenterViewController.m; sourceTree = "<group>"; };
 		A44EB7251D4B2B0C00EF5F8E /* CPUImageFilterUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CPUImageFilterUtil.h; sourceTree = "<group>"; };
 		A44EB7261D4B2B0C00EF5F8E /* CPUImageFilterUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CPUImageFilterUtil.m; sourceTree = "<group>"; };
 		A44EB7281D4B2B0C00EF5F8E /* Model.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Model.png; sourceTree = "<group>"; };
@@ -116,8 +124,13 @@
 			children = (
 				832A2EA11D50E82600203BC8 /* CSAlbumViewController.h */,
 				832A2EA21D50E82600203BC8 /* CSAlbumViewController.m */,
+				A42D28B11D5994ED00FEE114 /* BeautyCenterViewController.h */,
+				A42D28B21D5994ED00FEE114 /* BeautyCenterViewController.m */,
 				A4D8AF061D582B1E00060E5F /* CSAlbumDataSourceManager.h */,
 				A4D8AF071D582B1E00060E5F /* CSAlbumDataSourceManager.m */,
+				A42D28AC1D598DAC00FEE114 /* CSAlbumCollectionViewCell.h */,
+				A42D28AD1D598DAC00FEE114 /* CSAlbumCollectionViewCell.m */,
+				A42D28AF1D598E5B00FEE114 /* CSAlbumCollectionViewCell.xib */,
 			);
 			path = Album;
 			sourceTree = "<group>";
@@ -364,6 +377,7 @@
 			files = (
 				834C52FB1B92DABE000690FD /* Main.storyboard in Resources */,
 				A4D8AEC41D50918F00060E5F /* GPUImageCustomFilter.fsh in Resources */,
+				A42D28B01D598E5B00FEE114 /* CSAlbumCollectionViewCell.xib in Resources */,
 				A44EB7311D4B2B0C00EF5F8E /* Model.png in Resources */,
 				834C53001B92DABE000690FD /* LaunchScreen.xib in Resources */,
 				834C52FD1B92DABE000690FD /* Images.xcassets in Resources */,
@@ -418,6 +432,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A4D8AEC71D5091A700060E5F /* DemoGPUImageCameraViewController.m in Sources */,
+				A42D28B31D5994ED00FEE114 /* BeautyCenterViewController.m in Sources */,
 				A44EB7341D4B2B0C00EF5F8E /* RootTableViewController.m in Sources */,
 				A4D8AF081D582B1E00060E5F /* CSAlbumDataSourceManager.m in Sources */,
 				834C52F51B92DABE000690FD /* AppDelegate.m in Sources */,
@@ -429,6 +444,7 @@
 				A4D8AED01D51BD0500060E5F /* CSViewVideoCameraDuration.m in Sources */,
 				A4D8AEC01D50457200060E5F /* VideoViewController.m in Sources */,
 				832A2EA91D50EFA100203BC8 /* CSCameraViewController.m in Sources */,
+				A42D28AE1D598DAC00FEE114 /* CSAlbumCollectionViewCell.m in Sources */,
 				A44EB7301D4B2B0C00EF5F8E /* CPUImageFilterUtil.m in Sources */,
 				834C52F21B92DABE000690FD /* main.m in Sources */,
 			);
