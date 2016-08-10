@@ -103,16 +103,16 @@
 
 #pragma mark - <CSAlbumDataSourceManagerDelegate>
 
-- (void)didSelectImage:(UIImage *)image fromRect:(CGRect)rect {
-    NSLog(@"rect : %@", NSStringFromCGRect(rect));
+- (void)didSelectPHAsset:(PHAsset *)asset fromRect:(CGRect)rect {
+    NSLog(@"didSelectPHAsset rect : %@", NSStringFromCGRect(rect));
     
-    UIView *view = [[UIView alloc] initWithFrame:rect];
-    view.backgroundColor = [UIColor redColor];
-    [self.view addSubview:view];
+//    UIView *view = [[UIView alloc] initWithFrame:rect];
+//    view.backgroundColor = [UIColor redColor];
+//    [self.view addSubview:view];
     
-//    BeautyCenterViewController *beautyCenter = [[BeautyCenterViewController alloc] init];
-    
-//    [self presentViewController:beautyCenter animated:YES completion:nil];
+    BeautyCenterViewController *beautyCenter = [[BeautyCenterViewController alloc] init];
+    beautyCenter.asset = asset;
+    [self presentViewController:beautyCenter animated:YES completion:nil];
 }
 
 @end

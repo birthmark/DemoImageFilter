@@ -8,6 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
+#import <Photos/Photos.h>
+
 @interface BeautyCenterViewController : UIViewController
+
+@property (nonatomic, strong) PHAsset *asset;
 
 @end

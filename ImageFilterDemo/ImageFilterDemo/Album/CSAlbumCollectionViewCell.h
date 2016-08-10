@@ -8,8 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
+#import <Photos/Photos.h>
+
 @interface CSAlbumCollectionViewCell : UICollectionViewCell
 
 @property (weak, nonatomic) IBOutlet UIImageView *imageView;
+
+@property (nonatomic, assign) PHImageRequestID imageRqeustID;
 
 @end

@@ -12,26 +12,56 @@
 
 @end
 
-@implementation BeautyCenterViewController
+@implementation BeautyCenterViewController {
+
+    UIView *_topBar;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+ 
+    self.view.backgroundColor = [UIColor whiteColor];
+    
+    __block UIImageView *imageView = [[UIImageView alloc] initWithFrame:self.view.frame];
+    imageView.contentMode = UIViewContentModeScaleAspectFit;
+    [self.view addSubview:imageView];
+    
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        [[PHImageManager defaultManager] requestImageForAsset:_asset
+                                                   targetSize:imageView.frame.size
+                                                  contentMode:PHImageContentModeAspectFill
+                                                      options:nil
+                                                resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
+                                                    
+                                                    dispatch_async(dispatch_get_main_queue(), ^{
+                                                        imageView.image = result;
+                                                    });
+                                                }];
+        
+    });
+    
+    [self initTopBar];
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+- (BOOL)prefersStatusBarHidden {
+    return YES;
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+- (void)initTopBar {
+    _topBar = [[UIView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.frame), 40)];
+    _topBar.backgroundColor = [UIColor blackColor];
+    _topBar.alpha = 0.5;
+    [self.view addSubview:_topBar];
+    
+    // Close
+    UIButton *btnClose = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 40, 40)];
+    [btnClose setBackgroundImage:[UIImage imageNamed:@"btnClose"] forState:UIControlStateNormal];
+    [btnClose addTarget:self action:@selector(actionClose:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:btnClose];
 }
-*/
+
+- (void)actionClose:(UIButton *)sender {
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
 
 @end

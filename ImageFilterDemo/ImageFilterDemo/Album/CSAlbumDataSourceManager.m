@@ -8,11 +8,9 @@
 
 #import "CSAlbumDataSourceManager.h"
 
-#import <Photos/Photos.h>
-
 @interface CSAlbumDataSourceManager ()
 
-@property (nonatomic, copy) NSMutableArray *photoAssets;
+@property (nonatomic, copy) NSMutableArray<PHAsset *> *photoAssets;
 
 @end
 
@@ -75,11 +73,22 @@
                                             blue:((arc4random() % 255) / 255.0)
                                            alpha:1.0f];
     
-    [[PHImageManager defaultManager] requestImageForAsset:_photoAssets[indexPath.item] targetSize:cell.frame.size contentMode:PHImageContentModeAspectFill options:nil resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
-        
+    // 要考虑到scale
+    CGFloat scale = [UIScreen mainScreen].scale;
+    CGSize targetSize = CGSizeMake(CGRectGetWidth(cell.frame) * scale, CGRectGetHeight(cell.frame) * scale);
+    
+    [[PHImageManager defaultManager] cancelImageRequest:cell.imageRqeustID];
+    cell.imageRqeustID = [[PHImageManager defaultManager] requestImageForAsset:_photoAssets[indexPath.item]
+                                                                    targetSize:targetSize
+                                                                   contentMode:PHImageContentModeAspectFill
+                                                                       options:nil
+                                                                 resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
+                                                
+        NSLog(@"data source result size : %@", NSStringFromCGSize(result.size));
         dispatch_async(dispatch_get_main_queue(), ^{
             cell.imageView.image = result;
         });
+                                                
     }];
     
     return cell;
@@ -117,10 +126,10 @@
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     CSAlbumCollectionViewCell *cell = (CSAlbumCollectionViewCell *)[collectionView cellForItemAtIndexPath:indexPath];
     
-    UIImage *selectedImage = _photoAssets[indexPath.item];
+    PHAsset *selectedPHAsset = _photoAssets[indexPath.item];
     CGRect fromRect = [collectionView convertRect:cell.frame toView:collectionView.superview];
-    if (_delegate && [_delegate respondsToSelector:@selector(didSelectImage:fromRect:)]) {
-        [_delegate didSelectImage:selectedImage fromRect:fromRect];
+    if (_delegate && [_delegate respondsToSelector:@selector(didSelectPHAsset:fromRect:)]) {
+        [_delegate didSelectPHAsset:selectedPHAsset fromRect:fromRect];
     }
 
     [collectionView deselectItemAtIndexPath:indexPath animated:YES];

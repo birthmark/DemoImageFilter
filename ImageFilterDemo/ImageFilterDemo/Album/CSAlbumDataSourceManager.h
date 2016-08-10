@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
+#import <Photos/Photos.h>
 
 #import "CSAlbumCollectionViewCell.h"
 
@@ -25,7 +26,7 @@
 
 @protocol CSAlbumDataSourceManagerDelegate <NSObject>
 
-- (void)didSelectImage:(UIImage *)image fromRect:(CGRect)rect;
+- (void)didSelectPHAsset:(PHAsset *)asset fromRect:(CGRect)rect;
 
 @end
 
