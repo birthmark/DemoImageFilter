@@ -24,6 +24,8 @@
 
 #import "CSAlbumViewController.h"
 
+#import "CSAlbumCoverCollectionViewController.h"
+
 typedef NS_ENUM(NSInteger, enumDemoImageFilter) {
     demoCPUImageFilter = 0,
     demoCoreImageFilter,
@@ -520,7 +522,9 @@ typedef NS_ENUM(NSInteger, enumDemoImageFilter) {
 #pragma mark - Custom Album Demo
 
 - (void)demoCustomAlbum {
-    CSAlbumViewController *albumVC = [[CSAlbumViewController alloc] init];
+//    CSAlbumViewController *albumVC = [[CSAlbumViewController alloc] init];
+    CSAlbumCoverCollectionViewController *albumVC = [[CSAlbumCoverCollectionViewController alloc] init];
+    
     [self presentViewController:albumVC animated:YES completion:nil];
 }
 
