@@ -33,7 +33,16 @@
 		A47F5A2B1D704058002B4F3E /* LUT_Moonlight.png in Resources */ = {isa = PBXBuildFile; fileRef = A47F5A2A1D704058002B4F3E /* LUT_Moonlight.png */; };
 		A47F5A2E1D704113002B4F3E /* GPUImageMoonlightFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = A47F5A2D1D704113002B4F3E /* GPUImageMoonlightFilter.m */; };
 		A47F5A301D70466D002B4F3E /* LUT_From_PS_ATN_File.png in Resources */ = {isa = PBXBuildFile; fileRef = A47F5A2F1D70466D002B4F3E /* LUT_From_PS_ATN_File.png */; };
-		A47F5A321D7046C6002B4F3E /* Child.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A47F5A311D7046C6002B4F3E /* Child.jpg */; };
+		A47F5A3E1D704A7D002B4F3E /* texture_colorBurnBlend_1.png in Resources */ = {isa = PBXBuildFile; fileRef = A47F5A341D704A7D002B4F3E /* texture_colorBurnBlend_1.png */; };
+		A47F5A3F1D704A7D002B4F3E /* texture_linearBurnBlend_1.png in Resources */ = {isa = PBXBuildFile; fileRef = A47F5A351D704A7D002B4F3E /* texture_linearBurnBlend_1.png */; };
+		A47F5A401D704A7D002B4F3E /* texture_multiplyBlend_1.png in Resources */ = {isa = PBXBuildFile; fileRef = A47F5A361D704A7D002B4F3E /* texture_multiplyBlend_1.png */; };
+		A47F5A411D704A7D002B4F3E /* texture_normalBlend_1.png in Resources */ = {isa = PBXBuildFile; fileRef = A47F5A371D704A7D002B4F3E /* texture_normalBlend_1.png */; };
+		A47F5A421D704A7D002B4F3E /* texture_normalBlend_2.png in Resources */ = {isa = PBXBuildFile; fileRef = A47F5A381D704A7D002B4F3E /* texture_normalBlend_2.png */; };
+		A47F5A431D704A7D002B4F3E /* texture_normalBlend_3.png in Resources */ = {isa = PBXBuildFile; fileRef = A47F5A391D704A7D002B4F3E /* texture_normalBlend_3.png */; };
+		A47F5A441D704A7D002B4F3E /* texture_normalBlend_4.png in Resources */ = {isa = PBXBuildFile; fileRef = A47F5A3A1D704A7D002B4F3E /* texture_normalBlend_4.png */; };
+		A47F5A451D704A7D002B4F3E /* texture_overlayBlend_1.png in Resources */ = {isa = PBXBuildFile; fileRef = A47F5A3B1D704A7D002B4F3E /* texture_overlayBlend_1.png */; };
+		A47F5A461D704A7D002B4F3E /* texture_overlayBlend_2.png in Resources */ = {isa = PBXBuildFile; fileRef = A47F5A3C1D704A7D002B4F3E /* texture_overlayBlend_2.png */; };
+		A47F5A471D704A7D002B4F3E /* texture_screenBlend_1.png in Resources */ = {isa = PBXBuildFile; fileRef = A47F5A3D1D704A7D002B4F3E /* texture_screenBlend_1.png */; };
 		A4D8AEBD1D50456600060E5F /* CameraViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A4D8AEBC1D50456600060E5F /* CameraViewController.m */; };
 		A4D8AEC01D50457200060E5F /* VideoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A4D8AEBF1D50457200060E5F /* VideoViewController.m */; };
 		A4D8AEC41D50918F00060E5F /* GPUImageCustomFilter.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A4D8AEC31D50918F00060E5F /* GPUImageCustomFilter.fsh */; };
@@ -95,7 +104,16 @@
 		A47F5A2C1D704113002B4F3E /* GPUImageMoonlightFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GPUImageMoonlightFilter.h; sourceTree = "<group>"; };
 		A47F5A2D1D704113002B4F3E /* GPUImageMoonlightFilter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GPUImageMoonlightFilter.m; sourceTree = "<group>"; };
 		A47F5A2F1D70466D002B4F3E /* LUT_From_PS_ATN_File.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LUT_From_PS_ATN_File.png; sourceTree = "<group>"; };
-		A47F5A311D7046C6002B4F3E /* Child.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Child.jpg; sourceTree = "<group>"; };
+		A47F5A341D704A7D002B4F3E /* texture_colorBurnBlend_1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = texture_colorBurnBlend_1.png; sourceTree = "<group>"; };
+		A47F5A351D704A7D002B4F3E /* texture_linearBurnBlend_1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = texture_linearBurnBlend_1.png; sourceTree = "<group>"; };
+		A47F5A361D704A7D002B4F3E /* texture_multiplyBlend_1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = texture_multiplyBlend_1.png; sourceTree = "<group>"; };
+		A47F5A371D704A7D002B4F3E /* texture_normalBlend_1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = texture_normalBlend_1.png; sourceTree = "<group>"; };
+		A47F5A381D704A7D002B4F3E /* texture_normalBlend_2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = texture_normalBlend_2.png; sourceTree = "<group>"; };
+		A47F5A391D704A7D002B4F3E /* texture_normalBlend_3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = texture_normalBlend_3.png; sourceTree = "<group>"; };
+		A47F5A3A1D704A7D002B4F3E /* texture_normalBlend_4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = texture_normalBlend_4.png; sourceTree = "<group>"; };
+		A47F5A3B1D704A7D002B4F3E /* texture_overlayBlend_1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = texture_overlayBlend_1.png; sourceTree = "<group>"; };
+		A47F5A3C1D704A7D002B4F3E /* texture_overlayBlend_2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = texture_overlayBlend_2.png; sourceTree = "<group>"; };
+		A47F5A3D1D704A7D002B4F3E /* texture_screenBlend_1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = texture_screenBlend_1.png; sourceTree = "<group>"; };
 		A4D8AEBB1D50456600060E5F /* CameraViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CameraViewController.h; sourceTree = "<group>"; };
 		A4D8AEBC1D50456600060E5F /* CameraViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CameraViewController.m; sourceTree = "<group>"; };
 		A4D8AEBE1D50457200060E5F /* VideoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VideoViewController.h; sourceTree = "<group>"; };
@@ -244,7 +262,6 @@
 		A44EB7271D4B2B0C00EF5F8E /* Images */ = {
 			isa = PBXGroup;
 			children = (
-				A47F5A311D7046C6002B4F3E /* Child.jpg */,
 				A44EB7281D4B2B0C00EF5F8E /* Model.png */,
 			);
 			path = Images;
@@ -282,6 +299,23 @@
 			path = LUTs;
 			sourceTree = "<group>";
 		};
+		A47F5A331D704A7D002B4F3E /* Textures */ = {
+			isa = PBXGroup;
+			children = (
+				A47F5A341D704A7D002B4F3E /* texture_colorBurnBlend_1.png */,
+				A47F5A351D704A7D002B4F3E /* texture_linearBurnBlend_1.png */,
+				A47F5A361D704A7D002B4F3E /* texture_multiplyBlend_1.png */,
+				A47F5A371D704A7D002B4F3E /* texture_normalBlend_1.png */,
+				A47F5A381D704A7D002B4F3E /* texture_normalBlend_2.png */,
+				A47F5A391D704A7D002B4F3E /* texture_normalBlend_3.png */,
+				A47F5A3A1D704A7D002B4F3E /* texture_normalBlend_4.png */,
+				A47F5A3B1D704A7D002B4F3E /* texture_overlayBlend_1.png */,
+				A47F5A3C1D704A7D002B4F3E /* texture_overlayBlend_2.png */,
+				A47F5A3D1D704A7D002B4F3E /* texture_screenBlend_1.png */,
+			);
+			path = Textures;
+			sourceTree = "<group>";
+		};
 		A4D8AEB91D50453400060E5F /* Camera */ = {
 			isa = PBXGroup;
 			children = (
@@ -309,6 +343,7 @@
 		A4D8AEC11D50917A00060E5F /* GPUImage */ = {
 			isa = PBXGroup;
 			children = (
+				A47F5A331D704A7D002B4F3E /* Textures */,
 				A47F5A251D703D51002B4F3E /* LUTs */,
 				A47F5A221D703759002B4F3E /* ACVs */,
 				A4D8AEC21D50918F00060E5F /* Shaders */,
@@ -420,17 +455,26 @@
 			buildActionMask = 2147483647;
 			files = (
 				834C52FB1B92DABE000690FD /* Main.storyboard in Resources */,
+				A47F5A3E1D704A7D002B4F3E /* texture_colorBurnBlend_1.png in Resources */,
+				A47F5A421D704A7D002B4F3E /* texture_normalBlend_2.png in Resources */,
 				A4D8AEC41D50918F00060E5F /* GPUImageCustomFilter.fsh in Resources */,
+				A47F5A451D704A7D002B4F3E /* texture_overlayBlend_1.png in Resources */,
 				A42D28B01D598E5B00FEE114 /* CSAlbumCollectionViewCell.xib in Resources */,
 				A44EB7311D4B2B0C00EF5F8E /* Model.png in Resources */,
-				A47F5A321D7046C6002B4F3E /* Child.jpg in Resources */,
 				A47F5A301D70466D002B4F3E /* LUT_From_PS_ATN_File.png in Resources */,
+				A47F5A431D704A7D002B4F3E /* texture_normalBlend_3.png in Resources */,
+				A47F5A401D704A7D002B4F3E /* texture_multiplyBlend_1.png in Resources */,
 				A47F5A281D703D51002B4F3E /* LUT_Bleach.png in Resources */,
 				834C53001B92DABE000690FD /* LaunchScreen.xib in Resources */,
+				A47F5A471D704A7D002B4F3E /* texture_screenBlend_1.png in Resources */,
+				A47F5A461D704A7D002B4F3E /* texture_overlayBlend_2.png in Resources */,
+				A47F5A411D704A7D002B4F3E /* texture_normalBlend_1.png in Resources */,
 				834C52FD1B92DABE000690FD /* Images.xcassets in Resources */,
 				A47F5A2B1D704058002B4F3E /* LUT_Moonlight.png in Resources */,
 				A47F5A241D703759002B4F3E /* customToneCurve.acv in Resources */,
 				A47F5A291D703D51002B4F3E /* LUT_Original.png in Resources */,
+				A47F5A441D704A7D002B4F3E /* texture_normalBlend_4.png in Resources */,
+				A47F5A3F1D704A7D002B4F3E /* texture_linearBurnBlend_1.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -470,7 +470,7 @@ typedef NS_ENUM(NSInteger, enumDemoImageFilter) {
     
     
     // 自己制作的基准图: LUT_Bleach.png, LUT_Moonlight.png, LUT_From_PS_ATN_File.png
-    
+    /*
     GPUImagePicture *originalImageSource = [[GPUImagePicture alloc] initWithImage:_originImage];
     
     GPUImagePicture *lookupImageSource = [[GPUImagePicture alloc] initWithImage:[UIImage imageNamed:@"LUT_Moonlight.png"]];
@@ -486,6 +486,7 @@ typedef NS_ENUM(NSInteger, enumDemoImageFilter) {
     
     _filteredImage = [lookupFilter imageFromCurrentFramebuffer];
     _filteredImageView.image = _filteredImage;
+    */
     
     
     // 自己使用ToneCurve acv文件
@@ -494,6 +495,37 @@ typedef NS_ENUM(NSInteger, enumDemoImageFilter) {
     _filteredImage = [curveFilter imageByFilteringImage:_originImage];
     _filteredImageView.image = _filteredImage;
     */
+    
+    
+    // 添加texture, 使用GPUImageTwoInputFilter来制作filter.
+
+//    GPUImageColorBurnBlendFilter *blendFilter = [[GPUImageColorBurnBlendFilter alloc] init];
+//    GPUImageLinearBurnBlendFilter *blendFilter = [[GPUImageLinearBurnBlendFilter alloc] init];
+//    GPUImageMultiplyBlendFilter *blendFilter = [[GPUImageMultiplyBlendFilter alloc] init];
+//    GPUImageNormalBlendFilter *blendFilter = [[GPUImageNormalBlendFilter alloc] init];
+//    GPUImageOverlayBlendFilter *blendFilter = [[GPUImageOverlayBlendFilter alloc] init];
+    GPUImageScreenBlendFilter *blendFilter = [[GPUImageScreenBlendFilter alloc] init];
+    
+    [blendFilter useNextFrameForImageCapture];
+    
+    GPUImagePicture *originalImageSource = [[GPUImagePicture alloc] initWithImage:_originImage];
+
+//    GPUImagePicture *textureImageSource = [[GPUImagePicture alloc] initWithImage:[UIImage imageNamed:@"texture_colorBurnBlend_1.png"]];
+//    GPUImagePicture *textureImageSource = [[GPUImagePicture alloc] initWithImage:[UIImage imageNamed:@"texture_linearBurnBlend_1.png"]];
+//    GPUImagePicture *textureImageSource = [[GPUImagePicture alloc] initWithImage:[UIImage imageNamed:@"texture_multiplyBlend_1.png"]];
+//    GPUImagePicture *textureImageSource = [[GPUImagePicture alloc] initWithImage:[UIImage imageNamed:@"texture_normalBlend_1.png"]];
+//    GPUImagePicture *textureImageSource = [[GPUImagePicture alloc] initWithImage:[UIImage imageNamed:@"texture_overlayBlend_1.png"]];
+    GPUImagePicture *textureImageSource = [[GPUImagePicture alloc] initWithImage:[UIImage imageNamed:@"texture_screenBlend_1.png"]];
+
+    
+    [originalImageSource addTarget:blendFilter];
+    [originalImageSource processImage];
+    
+    [textureImageSource addTarget:blendFilter];
+    [textureImageSource processImage];
+    
+    _filteredImage = [blendFilter imageFromCurrentFramebuffer];
+    _filteredImageView.image = _filteredImage;
 }
 
 #pragma mark - GPUImage Still Camera
