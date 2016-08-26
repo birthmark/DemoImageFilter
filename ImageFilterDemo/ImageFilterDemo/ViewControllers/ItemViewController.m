@@ -26,6 +26,8 @@
 
 #import "CSAlbumCoverCollectionViewController.h"
 
+#import "GPUImageMoonlightFilter.h"
+
 typedef NS_ENUM(NSInteger, enumDemoImageFilter) {
     demoCPUImageFilter = 0,
     demoCoreImageFilter,
@@ -34,6 +36,8 @@ typedef NS_ENUM(NSInteger, enumDemoImageFilter) {
     
     demoGPUImageSepiaFilter,
     demoGPUImageCustomFilter,
+    demoGPUImageFilterMaker,
+    
     demoGPUImageStillCamera,
     demoGPUImageVideoCamera,
     
@@ -91,6 +95,7 @@ typedef NS_ENUM(NSInteger, enumDemoImageFilter) {
                               @"GLKView and CoreImage Filter",
                               @"GPUImage Sepia Filter",
                               @"GPUImage Custom Filter",
+                              @"GPUImage Filter Maker",
                               @"GPUImage Still Camera",
                               @"GPUImage Video Camera",
                               @"Simple Album",
@@ -151,6 +156,11 @@ typedef NS_ENUM(NSInteger, enumDemoImageFilter) {
         case demoGPUImageCustomFilter:
             [self demoGPUImageCustomFilter];
             break;
+        
+        case demoGPUImageFilterMaker:
+            [self demoGPUImageFilterMaker];
+            break;
+            
         case demoGPUImageStillCamera:
             [self demoGPUImageStillCamera];
             break;
@@ -436,6 +446,54 @@ typedef NS_ENUM(NSInteger, enumDemoImageFilter) {
     GPUImageFilter *customFilter = [[GPUImageFilter alloc] initWithFragmentShaderFromFile:@"GPUImageCustomFilter"];
     _filteredImage = [customFilter imageByFilteringImage:_originImage];
     _filteredImageView.image = _filteredImage;
+}
+
+- (void)demoGPUImageFilterMaker {
+    [self displayOriginImage:nil];
+    
+    
+    // TODO: 第一次点击进去itemVC，滤镜并没有效果。再次进去即可。原因暂时不明！！！
+    // 基准图：lookup_amatorka.png
+    /*
+    GPUImageAmatorkaFilter *lookupFilter = [[GPUImageAmatorkaFilter alloc] init];
+    _filteredImage = [lookupFilter imageByFilteringImage:_originImage];
+    _filteredImageView.image = _filteredImage;
+    */
+    
+    
+    // 根据LUT，封装一个GPUImageMoonlightFilter
+    /*
+     GPUImageMoonlightFilter *lookupFilter = [[GPUImageMoonlightFilter alloc] init];
+     _filteredImage = [lookupFilter imageByFilteringImage:_originImage];
+     _filteredImageView.image = _filteredImage;
+     */
+    
+    
+    // 自己制作的基准图: LUT_Bleach.png, LUT_Moonlight.png, LUT_From_PS_ATN_File.png
+    
+    GPUImagePicture *originalImageSource = [[GPUImagePicture alloc] initWithImage:_originImage];
+    
+    GPUImagePicture *lookupImageSource = [[GPUImagePicture alloc] initWithImage:[UIImage imageNamed:@"LUT_Moonlight.png"]];
+    
+    GPUImageLookupFilter *lookupFilter = [[GPUImageLookupFilter alloc] init];
+    
+    [originalImageSource addTarget:lookupFilter];
+    [lookupImageSource addTarget:lookupFilter];
+    
+    [lookupFilter useNextFrameForImageCapture];
+    [originalImageSource processImage];
+    [lookupImageSource processImage];
+    
+    _filteredImage = [lookupFilter imageFromCurrentFramebuffer];
+    _filteredImageView.image = _filteredImage;
+    
+    
+    // 自己使用ToneCurve acv文件
+    /*
+    GPUImageToneCurveFilter *curveFilter = [[GPUImageToneCurveFilter alloc] initWithACV:@"customToneCurve"];
+    _filteredImage = [curveFilter imageByFilteringImage:_originImage];
+    _filteredImageView.image = _filteredImage;
+    */
 }
 
 #pragma mark - GPUImage Still Camera
