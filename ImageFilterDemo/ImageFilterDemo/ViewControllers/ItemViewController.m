@@ -446,9 +446,12 @@ typedef NS_ENUM(NSInteger, enumDemoImageFilter) {
     
 //    GPUImagePicture *gpuImagePic = [[GPUImagePicture alloc] initWithImage:_originImage];
 //    GPUImageSepiaFilter *gpuSepiaFilter = [[GPUImageSepiaFilter alloc] init];
+//    
+//    // useNextFrameForImageCapture要在processImage和imageFromCurrentFramebuffer方法之前。
 //    [gpuImagePic addTarget:gpuSepiaFilter];
-//    [gpuImagePic useNextFrameForImageCapture];
+//    [gpuSepiaFilter useNextFrameForImageCapture];
 //    [gpuImagePic processImage];
+//    
 //    _filteredImage = [gpuSepiaFilter imageFromCurrentFramebuffer];
 //    _filteredImageView.image = _filteredImage;
 }
