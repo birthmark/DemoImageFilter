@@ -34,6 +34,8 @@
                               @"GPUImage Custom Filter",
                               @"GPUImage Filter Maker",
                               @"GPUImage Brightness Filter",
+                              @"GPUImage Filter Group",
+                              @"GPUImage Filter Pipeline",
                               
                               @"GPUImage Still Camera",
                               @"GPUImage Video Camera",

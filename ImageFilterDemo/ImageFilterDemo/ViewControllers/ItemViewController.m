@@ -39,6 +39,8 @@ typedef NS_ENUM(NSInteger, enumDemoImageFilter) {
     demoGPUImageFilterMaker,
     
     demoGPUImageBrightnessFilter,
+    demoGPUImageFilterGroup,
+    demoGPUImageFilterPipeline,
     
     demoGPUImageStillCamera,
     demoGPUImageVideoCamera,
@@ -87,6 +89,9 @@ typedef NS_ENUM(NSInteger, enumDemoImageFilter) {
     
     
     GPUImageBrightnessFilter *brightnessFilter;
+    
+    GPUImagePicture *gpuImagePic;
+    GPUImageView *gpuImageView;
 }
 
 - (void)viewDidLoad {
@@ -103,6 +108,8 @@ typedef NS_ENUM(NSInteger, enumDemoImageFilter) {
                               @"GPUImage Custom Filter",
                               @"GPUImage Filter Maker",
                               @"GPUImage Brightness Filter",
+                              @"GPUImage Filter Group",
+                              @"GPUImage Filter Pipeline",
                               
                               @"GPUImage Still Camera",
                               @"GPUImage Video Camera",
@@ -142,6 +149,9 @@ typedef NS_ENUM(NSInteger, enumDemoImageFilter) {
     
     _filteredImageView = [[UIImageView alloc] initWithFrame:CGRectMake((self.view.frame.size.width - 150) / 2, 340, 150, 200)];
     [self.view addSubview:_filteredImageView];
+    
+    gpuImageView = [[GPUImageView alloc] initWithFrame:_filteredImageView.frame];
+    [self.view addSubview:gpuImageView];
 }
 
 - (void)demosFilter {
@@ -172,6 +182,12 @@ typedef NS_ENUM(NSInteger, enumDemoImageFilter) {
             
         case demoGPUImageBrightnessFilter:
             [self demoGPUImageBrightnessFilter];
+            break;
+        case demoGPUImageFilterGroup:
+            [self demoGPUImageFilterGroup];
+            break;
+        case demoGPUImageFilterPipeline:
+            [self demoGPUImageFilterPipeline];
             break;
             
         case demoGPUImageStillCamera:
@@ -569,8 +585,67 @@ typedef NS_ENUM(NSInteger, enumDemoImageFilter) {
 - (void)actionBrightnessSlider:(UISlider *)sender {
     brightnessFilter.brightness = sender.value;
     
-    _filteredImage = [brightnessFilter imageByFilteringImage:_originImage];
-    _filteredImageView.image = _filteredImage;
+//    _filteredImage = [brightnessFilter imageByFilteringImage:_originImage];
+//    _filteredImageView.image = _filteredImage;
+    
+    [gpuImagePic processImage];
+}
+
+- (void)demoGPUImageFilterGroup {
+    [self displayOriginImage:nil];
+    
+    [self addBrightnessSlider];
+    
+    /*
+     GPUImagePicture *gpuImagePic = [[GPUImagePicture alloc] initWithImage:_originImage];
+     
+     GPUImageFilterGroup *filterGroup = [[GPUImageFilterGroup alloc] init];
+     
+     GPUImageSepiaFilter *sepiaFilter = [[GPUImageSepiaFilter alloc] init];
+     [filterGroup addFilter:sepiaFilter];
+     
+     brightnessFilter = [[GPUImageBrightnessFilter alloc] init];
+     brightnessFilter.brightness = 0.5;
+     [filterGroup addFilter:brightnessFilter];
+     
+     [sepiaFilter addTarget:brightnessFilter];
+     
+     filterGroup.initialFilters = @[sepiaFilter, brightnessFilter];
+     filterGroup.terminalFilter = sepiaFilter;
+     
+     //    [gpuImagePic addTarget:filterGroup];
+     //    [filterGroup useNextFrameForImageCapture];
+     //    [gpuImagePic processImage];
+     
+     _filteredImage = [filterGroup imageFromCurrentFramebuffer];
+     _filteredImageView.image = _filteredImage;
+     */
+}
+
+- (void)demoGPUImageFilterPipeline {
+    [self displayOriginImage:nil];
+    
+    [self addBrightnessSlider];
+    
+    
+    gpuImagePic = [[GPUImagePicture alloc] initWithImage:_originImage];
+    
+    GPUImageFilter *customFilter = [[GPUImageFilter alloc] initWithFragmentShaderFromFile:@"GPUImageCustomFilter"];
+    // 使用LUT的滤镜，亮度调节无效。原因未知。
+//    GPUImageMoonlightFilter *lookupFilter = [[GPUImageMoonlightFilter alloc] init];
+    
+    brightnessFilter = [[GPUImageBrightnessFilter alloc] init];
+    brightnessFilter.brightness = 0.0;
+    
+    NSArray *filters = @[brightnessFilter, customFilter];
+    GPUImageFilterPipeline *filterPipeline = [[GPUImageFilterPipeline alloc] initWithOrderedFilters:filters input:gpuImagePic output:gpuImageView];
+    
+    [gpuImagePic processImage];
+    
+    // filteredImage为nil。原因未知。
+    UIImage *filteredImage = [filterPipeline currentFilteredFrame];
+    
+    NSLog(@"%@", filteredImage);
 }
 
 #pragma mark - GPUImage Still Camera
