@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		5CE82EC7D14491315AA786A1 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A6F843A432C2E791DD049C6B /* libPods.a */; };
 		832A2EA31D50E82600203BC8 /* CSAlbumViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 832A2EA21D50E82600203BC8 /* CSAlbumViewController.m */; };
 		832A2EA91D50EFA100203BC8 /* CSCameraViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 832A2EA81D50EFA100203BC8 /* CSCameraViewController.m */; };
 		834C52F21B92DABE000690FD /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 834C52F11B92DABE000690FD /* main.m */; };
@@ -51,6 +50,7 @@
 		A4D8AECD1D51A96200060E5F /* DemoGPUImageVideoCameraViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A4D8AECC1D51A96200060E5F /* DemoGPUImageVideoCameraViewController.m */; };
 		A4D8AED01D51BD0500060E5F /* CSViewVideoCameraDuration.m in Sources */ = {isa = PBXBuildFile; fileRef = A4D8AECF1D51BD0500060E5F /* CSViewVideoCameraDuration.m */; };
 		A4D8AF081D582B1E00060E5F /* CSAlbumDataSourceManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A4D8AF071D582B1E00060E5F /* CSAlbumDataSourceManager.m */; };
+		DD82DD4AAC3BD05F16B37789 /* libPods-ImageFilterDemo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FC6FAC3C1BE6B6B1815CE150 /* libPods-ImageFilterDemo.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -64,7 +64,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		7B22F29F9389979952073F8A /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+		6128B69739574C7D3EDB3D10 /* Pods-ImageFilterDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ImageFilterDemo.release.xcconfig"; path = "Pods/Target Support Files/Pods-ImageFilterDemo/Pods-ImageFilterDemo.release.xcconfig"; sourceTree = "<group>"; };
 		832A2EA11D50E82600203BC8 /* CSAlbumViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSAlbumViewController.h; sourceTree = "<group>"; };
 		832A2EA21D50E82600203BC8 /* CSAlbumViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSAlbumViewController.m; sourceTree = "<group>"; };
 		832A2EA71D50EFA100203BC8 /* CSCameraViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSCameraViewController.h; sourceTree = "<group>"; };
@@ -129,8 +129,8 @@
 		A4D8AECF1D51BD0500060E5F /* CSViewVideoCameraDuration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSViewVideoCameraDuration.m; sourceTree = "<group>"; };
 		A4D8AF061D582B1E00060E5F /* CSAlbumDataSourceManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSAlbumDataSourceManager.h; sourceTree = "<group>"; };
 		A4D8AF071D582B1E00060E5F /* CSAlbumDataSourceManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSAlbumDataSourceManager.m; sourceTree = "<group>"; };
-		A6F843A432C2E791DD049C6B /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		C752A151CB3ABBAAA2273FB3 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
+		BB8A08A1C1FA46E173EA13A6 /* Pods-ImageFilterDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ImageFilterDemo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ImageFilterDemo/Pods-ImageFilterDemo.debug.xcconfig"; sourceTree = "<group>"; };
+		FC6FAC3C1BE6B6B1815CE150 /* libPods-ImageFilterDemo.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ImageFilterDemo.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -141,7 +141,7 @@
 				A40586201B940EA6004DD437 /* QuartzCore.framework in Frameworks */,
 				A405861E1B93FE4E004DD437 /* CoreGraphics.framework in Frameworks */,
 				A405861C1B93FE40004DD437 /* OpenGLES.framework in Frameworks */,
-				5CE82EC7D14491315AA786A1 /* libPods.a in Frameworks */,
+				DD82DD4AAC3BD05F16B37789 /* libPods-ImageFilterDemo.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -155,6 +155,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2488665B768E22FAA2325A66 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				BB8A08A1C1FA46E173EA13A6 /* Pods-ImageFilterDemo.debug.xcconfig */,
+				6128B69739574C7D3EDB3D10 /* Pods-ImageFilterDemo.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		832A2EA01D50E7C200203BC8 /* Album */ = {
 			isa = PBXGroup;
 			children = (
@@ -181,8 +190,8 @@
 				834C52EE1B92DABE000690FD /* ImageFilterDemo */,
 				834C53081B92DABE000690FD /* ImageFilterDemoTests */,
 				834C52ED1B92DABE000690FD /* Products */,
-				EFDE6DBC0037B94E7514FF8D /* Pods */,
 				9974907C63373BA9209589F3 /* Frameworks */,
+				2488665B768E22FAA2325A66 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -245,7 +254,7 @@
 			isa = PBXGroup;
 			children = (
 				A405861F1B940EA6004DD437 /* QuartzCore.framework */,
-				A6F843A432C2E791DD049C6B /* libPods.a */,
+				FC6FAC3C1BE6B6B1815CE150 /* libPods-ImageFilterDemo.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -363,15 +372,6 @@
 			path = Shaders;
 			sourceTree = "<group>";
 		};
-		EFDE6DBC0037B94E7514FF8D /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				C752A151CB3ABBAAA2273FB3 /* Pods.debug.xcconfig */,
-				7B22F29F9389979952073F8A /* Pods.release.xcconfig */,
-			);
-			name = Pods;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -379,11 +379,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 834C530F1B92DABE000690FD /* Build configuration list for PBXNativeTarget "ImageFilterDemo" */;
 			buildPhases = (
-				78E655C3AC8A205A2930F2DD /* Check Pods Manifest.lock */,
+				D68C0A6C465E14211D0CB29E /* [CP] Check Pods Manifest.lock */,
 				834C52E81B92DABE000690FD /* Sources */,
 				834C52E91B92DABE000690FD /* Frameworks */,
 				834C52EA1B92DABE000690FD /* Resources */,
-				DE758AA7061A65661DEED86A /* Copy Pods Resources */,
+				CC1C9C43579B34A2D7F13238 /* [CP] Embed Pods Frameworks */,
+				63AC9270FCCF30DFD0111F01 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -423,6 +424,7 @@
 				TargetAttributes = {
 					834C52EB1B92DABE000690FD = {
 						CreatedOnToolsVersion = 6.4;
+						DevelopmentTeam = NYXX2N95WM;
 					};
 					834C53041B92DABE000690FD = {
 						CreatedOnToolsVersion = 6.4;
@@ -488,34 +490,49 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		78E655C3AC8A205A2930F2DD /* Check Pods Manifest.lock */ = {
+		63AC9270FCCF30DFD0111F01 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Check Pods Manifest.lock";
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ImageFilterDemo/Pods-ImageFilterDemo-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		CC1C9C43579B34A2D7F13238 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ImageFilterDemo/Pods-ImageFilterDemo-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		D68C0A6C465E14211D0CB29E /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
-			showEnvVarsInLog = 0;
-		};
-		DE758AA7061A65661DEED86A /* Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -667,9 +684,10 @@
 		};
 		834C53101B92DABE000690FD /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = C752A151CB3ABBAAA2273FB3 /* Pods.debug.xcconfig */;
+			baseConfigurationReference = BB8A08A1C1FA46E173EA13A6 /* Pods-ImageFilterDemo.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = ImageFilterDemo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "icetime17.$(PRODUCT_NAME:rfc1034identifier)";
@@ -679,9 +697,10 @@
 		};
 		834C53111B92DABE000690FD /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 7B22F29F9389979952073F8A /* Pods.release.xcconfig */;
+			baseConfigurationReference = 6128B69739574C7D3EDB3D10 /* Pods-ImageFilterDemo.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = ImageFilterDemo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "icetime17.$(PRODUCT_NAME:rfc1034identifier)";

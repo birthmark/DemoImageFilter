@@ -38,6 +38,8 @@ typedef NS_ENUM(NSInteger, enumDemoImageFilter) {
     demoGPUImageCustomFilter,
     demoGPUImageFilterMaker,
     
+    demoGPUImageBrightnessFilter,
+    
     demoGPUImageStillCamera,
     demoGPUImageVideoCamera,
     
@@ -82,6 +84,9 @@ typedef NS_ENUM(NSInteger, enumDemoImageFilter) {
     GPUImageStillCamera *stillCamera;
     GPUImageVideoCamera *videoCamera;
     GPUImageMovieWriter *movieWriter;
+    
+    
+    GPUImageBrightnessFilter *brightnessFilter;
 }
 
 - (void)viewDidLoad {
@@ -93,11 +98,15 @@ typedef NS_ENUM(NSInteger, enumDemoImageFilter) {
                               @"CoreImage Filter",
                               @"CoreImage Filter Multiple",
                               @"GLKView and CoreImage Filter",
+                              
                               @"GPUImage Sepia Filter",
                               @"GPUImage Custom Filter",
                               @"GPUImage Filter Maker",
+                              @"GPUImage Brightness Filter",
+                              
                               @"GPUImage Still Camera",
                               @"GPUImage Video Camera",
+                              
                               @"Simple Album",
                               @"Custom Album",
                               @"Simple Camera",
@@ -159,6 +168,10 @@ typedef NS_ENUM(NSInteger, enumDemoImageFilter) {
         
         case demoGPUImageFilterMaker:
             [self demoGPUImageFilterMaker];
+            break;
+            
+        case demoGPUImageBrightnessFilter:
+            [self demoGPUImageBrightnessFilter];
             break;
             
         case demoGPUImageStillCamera:
@@ -525,6 +538,35 @@ typedef NS_ENUM(NSInteger, enumDemoImageFilter) {
     [textureImageSource processImage];
     
     _filteredImage = [blendFilter imageFromCurrentFramebuffer];
+    _filteredImageView.image = _filteredImage;
+}
+
+- (void)demoGPUImageBrightnessFilter {
+    [self displayOriginImage:nil];
+    
+    [self addBrightnessSlider];
+    
+    brightnessFilter = [[GPUImageBrightnessFilter alloc] init];
+    brightnessFilter.brightness = 0.0;
+    
+    _filteredImage = [brightnessFilter imageByFilteringImage:_originImage];
+    _filteredImageView.image = _filteredImage;
+}
+
+- (void)addBrightnessSlider {
+    UISlider *slider = [[UISlider alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 30)];
+    [self.view addSubview:slider];
+    slider.center = _originImageView.center;
+    slider.minimumValue = -0.5f;
+    slider.maximumValue = 0.5f;
+    
+    [slider addTarget:self action:@selector(actionBrightnessSlider:) forControlEvents:UIControlEventValueChanged];
+}
+
+- (void)actionBrightnessSlider:(UISlider *)sender {
+    brightnessFilter.brightness = sender.value;
+    
+    _filteredImage = [brightnessFilter imageByFilteringImage:_originImage];
     _filteredImageView.image = _filteredImage;
 }
 

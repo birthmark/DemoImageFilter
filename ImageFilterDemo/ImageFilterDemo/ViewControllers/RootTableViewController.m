@@ -29,11 +29,15 @@
                               @"CoreImage Filter",
                               @"CoreImage Filter Multiple",
                               @"GLKView and CoreImage Filter",
+                              
                               @"GPUImage Sepia Filter",
                               @"GPUImage Custom Filter",
                               @"GPUImage Filter Maker",
+                              @"GPUImage Brightness Filter",
+                              
                               @"GPUImage Still Camera",
                               @"GPUImage Video Camera",
+                              
                               @"Simple Album",
                               @"Custom Album",
                               @"Simple Camera",
