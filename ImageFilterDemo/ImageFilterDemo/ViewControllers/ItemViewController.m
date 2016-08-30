@@ -87,6 +87,7 @@ typedef NS_ENUM(NSInteger, enumDemoImageFilter) {
     GPUImageVideoCamera *videoCamera;
     GPUImageMovieWriter *movieWriter;
     
+    GPUImageFilterPipeline *filterPipeline;
     
     GPUImageBrightnessFilter *brightnessFilter;
     
@@ -585,10 +586,15 @@ typedef NS_ENUM(NSInteger, enumDemoImageFilter) {
 - (void)actionBrightnessSlider:(UISlider *)sender {
     brightnessFilter.brightness = sender.value;
     
-//    _filteredImage = [brightnessFilter imageByFilteringImage:_originImage];
-//    _filteredImageView.image = _filteredImage;
-    
+    [[filterPipeline.filters lastObject] useNextFrameForImageCapture];
     [gpuImagePic processImage];
+    
+    _filteredImage = [filterPipeline currentFilteredFrame];
+    _filteredImageView.image = _filteredImage;
+
+    // 频繁滑动slider，会导致crash。原因未知。
+    // arc环境下，只负责回收oc对象的内存，显存自然需要GPUImage使用者自己来回收
+//    [[GPUImageContext sharedImageProcessingContext].framebufferCache purgeAllUnassignedFramebuffers];
 }
 
 - (void)demoGPUImageFilterGroup {
@@ -638,14 +644,19 @@ typedef NS_ENUM(NSInteger, enumDemoImageFilter) {
     brightnessFilter.brightness = 0.0;
     
     NSArray *filters = @[brightnessFilter, customFilter];
-    GPUImageFilterPipeline *filterPipeline = [[GPUImageFilterPipeline alloc] initWithOrderedFilters:filters input:gpuImagePic output:gpuImageView];
+    filterPipeline = [[GPUImageFilterPipeline alloc] initWithOrderedFilters:filters input:gpuImagePic output:gpuImageView];
     
+    // useNextFrameForImageCapture与processImage一般成对出现。
+    [[filterPipeline.filters lastObject] useNextFrameForImageCapture];
     [gpuImagePic processImage];
     
-    // filteredImage为nil。原因未知。
-    UIImage *filteredImage = [filterPipeline currentFilteredFrame];
+    gpuImageView.hidden = YES;
     
-    NSLog(@"%@", filteredImage);
+    // filteredImage为nil。原因在于：
+    // [filterPipeline currentFilteredFrame] 调用最后一个filter的imageFromCurrentFramebuffer方法。
+    // 所以需要提前对最后一个filter调用useNextFrameForImageCapture方法，image才能放到framebuffer中。
+    _filteredImage = [filterPipeline currentFilteredFrame];
+    _filteredImageView.image = _filteredImage;
 }
 
 #pragma mark - GPUImage Still Camera
