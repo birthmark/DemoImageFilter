@@ -199,20 +199,31 @@ typedef NS_ENUM(NSInteger, CameraProportionType) {
     previewView.fillMode = kGPUImageFillModePreserveAspectRatio;
     [self.view insertSubview:previewView atIndex:0];
     
+    [self addFocusTapGesture];
+    
     stillCamera = [[GPUImageStillCamera alloc] initWithSessionPreset:AVCaptureSessionPresetPhoto cameraPosition:AVCaptureDevicePositionBack];
     stillCamera.outputImageOrientation = UIInterfaceOrientationPortrait;
+    stillCamera.horizontallyMirrorFrontFacingCamera = YES;
     stillCamera.delegate = self;
     
-    // 不加滤镜
+    // TODO: 不加滤镜, 如何获取图片？
 //        [stillCamera addTarget:previewView];
     //
     
     // 添加滤镜
-    filter = [[GPUImageSepiaFilter alloc] init];
+    
+    // GPUImageStillCamera (output) -> GPUImageFilter (input, output) -> GPUImageView (input)
+    // GPUImagePicture (output)     —> GPUImageFilter (input, output) —> GPUImageView (input)
+
+//    filter = [[GPUImageSepiaFilter alloc] init];
+    
+    // TODO: 使用LUT的滤镜没有效果。原因未知。
+     filter = [[GPUImageAmatorkaFilter alloc] init];
     [filter addTarget:previewView];
 
     [stillCamera addTarget:filter];
-    //
+    
+    // 添加滤镜
     
     [stillCamera startCameraCapture];
 }
@@ -221,6 +232,31 @@ typedef NS_ENUM(NSInteger, CameraProportionType) {
 
 - (void)willOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer {
     
+}
+
+- (void)addFocusTapGesture {
+    UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(actionFocus:)];
+    [previewView addGestureRecognizer:tapGesture];
+}
+
+- (void)actionFocus:(UITapGestureRecognizer *)sender {
+    CGPoint touchpoint = [sender locationInView:previewView];
+    
+    if (!stillCamera.inputCamera.isFocusPointOfInterestSupported ||
+        !stillCamera.inputCamera.isExposurePointOfInterestSupported) {
+        return;
+    }
+    
+    [stillCamera.inputCamera lockForConfiguration:nil];
+    
+    // 需要同时设置focusMode为AVCaptureFocusModeAutoFocus
+    stillCamera.inputCamera.focusPointOfInterest = touchpoint;
+    stillCamera.inputCamera.focusMode = AVCaptureFocusModeAutoFocus;
+    
+    stillCamera.inputCamera.exposurePointOfInterest = touchpoint;
+    stillCamera.inputCamera.exposureMode = AVCaptureExposureModeAutoExpose;
+    
+    [stillCamera.inputCamera unlockForConfiguration];
 }
 
 @end

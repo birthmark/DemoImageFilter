@@ -487,11 +487,11 @@ typedef NS_ENUM(NSInteger, enumDemoImageFilter) {
     
     // TODO: 第一次点击进去itemVC，滤镜并没有效果。再次进去即可。原因暂时不明！！！
     // 基准图：lookup_amatorka.png
-    /*
+    
     GPUImageAmatorkaFilter *lookupFilter = [[GPUImageAmatorkaFilter alloc] init];
     _filteredImage = [lookupFilter imageByFilteringImage:_originImage];
     _filteredImageView.image = _filteredImage;
-    */
+    
     
     
     // 根据LUT，封装一个GPUImageMoonlightFilter
@@ -531,7 +531,7 @@ typedef NS_ENUM(NSInteger, enumDemoImageFilter) {
     
     
     // 添加texture, 使用GPUImageTwoInputFilter来制作filter.
-
+    /*
 //    GPUImageColorBurnBlendFilter *blendFilter = [[GPUImageColorBurnBlendFilter alloc] init];
 //    GPUImageLinearBurnBlendFilter *blendFilter = [[GPUImageLinearBurnBlendFilter alloc] init];
 //    GPUImageMultiplyBlendFilter *blendFilter = [[GPUImageMultiplyBlendFilter alloc] init];
@@ -559,6 +559,7 @@ typedef NS_ENUM(NSInteger, enumDemoImageFilter) {
     
     _filteredImage = [blendFilter imageFromCurrentFramebuffer];
     _filteredImageView.image = _filteredImage;
+     */
 }
 
 - (void)demoGPUImageBrightnessFilter {
