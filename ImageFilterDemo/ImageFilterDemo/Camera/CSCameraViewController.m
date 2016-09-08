@@ -9,7 +9,7 @@
 #import "CSCameraViewController.h"
 
 #import "GPUImage.h"
-
+#import "CameraFocusView.h"
 
 #define PreviewViewOffet 29
 
@@ -36,6 +36,8 @@ typedef NS_ENUM(NSInteger, CameraProportionType) {
     GPUImageFilter *filter;
     
     NSInteger cameraProportionType;
+    
+    CameraFocusView *cameraFocusView;
 }
 
 - (void)viewDidLoad {
@@ -47,10 +49,18 @@ typedef NS_ENUM(NSInteger, CameraProportionType) {
     [self initToolBar];
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    [self listenAVCaptureDeviceSubjectAreaDidChangeNotification];
+}
+
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     
     previewView.center = CGPointMake(self.view.center.x, self.view.center.y + PreviewViewOffet);
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:AVCaptureDeviceSubjectAreaDidChangeNotification object:nil];
 }
 
 - (BOOL)prefersStatusBarHidden {
@@ -247,16 +257,62 @@ typedef NS_ENUM(NSInteger, CameraProportionType) {
         return;
     }
     
+    if (!cameraFocusView) {
+        cameraFocusView = [[CameraFocusView alloc] initWithFrame:CGRectMake(0, 0, 50, 50)];
+        [self.view addSubview:cameraFocusView];
+    }
+    cameraFocusView.center = touchpoint;
+    
+    
+    [cameraFocusView beginAnimation];
+    
     [stillCamera.inputCamera lockForConfiguration:nil];
     
     // 需要同时设置focusMode为AVCaptureFocusModeAutoFocus
     stillCamera.inputCamera.focusPointOfInterest = touchpoint;
-    stillCamera.inputCamera.focusMode = AVCaptureFocusModeAutoFocus;
+    stillCamera.inputCamera.focusMode = AVCaptureFocusModeContinuousAutoFocus;
     
     stillCamera.inputCamera.exposurePointOfInterest = touchpoint;
-    stillCamera.inputCamera.exposureMode = AVCaptureExposureModeAutoExpose;
+    stillCamera.inputCamera.exposureMode = AVCaptureExposureModeContinuousAutoExposure;
     
     [stillCamera.inputCamera unlockForConfiguration];
+}
+
+- (void)listenAVCaptureDeviceSubjectAreaDidChangeNotification {
+    [stillCamera.inputCamera lockForConfiguration:nil];
+    stillCamera.inputCamera.subjectAreaChangeMonitoringEnabled = YES;
+    [stillCamera.inputCamera unlockForConfiguration];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(actionAVCaptureDeviceSubjectAreaDidChange:)
+                                                 name:AVCaptureDeviceSubjectAreaDidChangeNotification
+                                               object:nil];
+}
+
+- (void)actionAVCaptureDeviceSubjectAreaDidChange:(NSNotification *)notification {
+    CGPoint devicePoint = CGPointMake(.5, .5);
+    [self setupFocusMode:AVCaptureFocusModeContinuousAutoFocus
+              exposeMode:AVCaptureExposureModeContinuousAutoExposure
+                 atPoint:devicePoint
+    subjectAreaChangeMonitoringEnabled:YES];
+}
+
+- (void)setupFocusMode:(AVCaptureFocusMode)focusMode exposeMode:(AVCaptureExposureMode)exposureMode atPoint:(CGPoint)point subjectAreaChangeMonitoringEnabled:(BOOL)subjectAreaChangeMonitoringEnabled {
+    
+    if ([stillCamera.inputCamera lockForConfiguration:nil]) {
+        if (stillCamera.inputCamera.isFocusPointOfInterestSupported) {
+            stillCamera.inputCamera.focusPointOfInterest = point;
+            stillCamera.inputCamera.focusMode = focusMode;
+        }
+        
+        if (stillCamera.inputCamera.isExposurePointOfInterestSupported) {
+            stillCamera.inputCamera.exposurePointOfInterest = point;
+            stillCamera.inputCamera.exposureMode = exposureMode;
+        }
+        
+        stillCamera.inputCamera.subjectAreaChangeMonitoringEnabled = subjectAreaChangeMonitoringEnabled;
+        [stillCamera.inputCamera unlockForConfiguration];
+    }
 }
 
 @end
