@@ -10,6 +10,7 @@
 
 #import "GPUImage.h"
 #import "CameraFocusView.h"
+#import "CSSlider.h"
 
 #define PreviewViewOffet 29
 
@@ -23,7 +24,8 @@ typedef NS_ENUM(NSInteger, CameraProportionType) {
 
 @interface CSCameraViewController () <
 
-    GPUImageVideoCameraDelegate
+    GPUImageVideoCameraDelegate,
+    CSSliderDelegate
 >
 
 @end
@@ -38,12 +40,16 @@ typedef NS_ENUM(NSInteger, CameraProportionType) {
     NSInteger cameraProportionType;
     
     CameraFocusView *cameraFocusView;
+    
+    CSSlider *csSlider;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     
     [self initCameraView];
+    
+    [self initExposureSlider];
     
     [self initTopBar];
     [self initToolBar];
@@ -236,6 +242,45 @@ typedef NS_ENUM(NSInteger, CameraProportionType) {
     // 添加滤镜
     
     [stillCamera startCameraCapture];
+}
+
+- (void)initExposureSlider {
+    csSlider = [[CSSlider alloc] initWithFrame:CGRectMake(0, 0, 300, 40)];
+    csSlider.center = self.view.center;
+    csSlider.value = 0.5f;
+    [self.view addSubview:csSlider];
+    csSlider.delegate = self;
+    //    csSlider.thumbTintColor = [UIColor greenColor];
+    
+    csSlider.csThumbImage = [UIImage imageNamed:@"CSSliderHandler"];
+    csSlider.csMinimumTrackTintColor = [UIColor redColor];
+    csSlider.csMaximumTrackTintColor = [UIColor lightGrayColor];
+    // Please use CSSliderTrackTintType_Divide after csMinimumTrackTintColor and csMaximumTrackTintColor set already. Please do not set minimumValueImage and maximumValueImage.
+    csSlider.trackTintType = CSSliderTrackTintType_Linear;
+    
+        csSlider.sliderDirection = CSSliderDirection_Vertical;
+}
+
+#pragma mark - CSSliderDelegate
+
+- (void)CSSliderValueChanged:(CSSlider *)sender {
+    CGFloat bias = -1.5f + sender.value * (1.5f - (-1.5f));
+    NSLog(@"%f", bias);
+    [stillCamera.inputCamera lockForConfiguration:nil];
+    [stillCamera.inputCamera setExposureTargetBias:bias completionHandler:nil];
+    [stillCamera.inputCamera unlockForConfiguration];
+}
+
+- (void)CSSliderTouchDown:(CSSlider *)sender {
+    
+}
+
+- (void)CSSliderTouchUp:(CSSlider *)sender {
+    
+}
+
+- (void)CSSliderTouchCancel:(CSSlider *)sender {
+    
 }
 
 #pragma mark - GPUImageVideoCameraDelegate
