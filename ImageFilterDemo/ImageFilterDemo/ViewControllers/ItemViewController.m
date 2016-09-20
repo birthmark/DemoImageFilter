@@ -461,16 +461,33 @@ typedef NS_ENUM(NSInteger, enumDemoImageFilter) {
     _filteredImage = [filter imageByFilteringImage:_originImage];
     _filteredImageView.image = _filteredImage;
     
-//    GPUImagePicture *gpuImagePic = [[GPUImagePicture alloc] initWithImage:_originImage];
-//    GPUImageSepiaFilter *gpuSepiaFilter = [[GPUImageSepiaFilter alloc] init];
-//    
-//    // useNextFrameForImageCapture要在processImage和imageFromCurrentFramebuffer方法之前。
-//    [gpuImagePic addTarget:gpuSepiaFilter];
-//    [gpuSepiaFilter useNextFrameForImageCapture];
-//    [gpuImagePic processImage];
-//    
-//    _filteredImage = [gpuSepiaFilter imageFromCurrentFramebuffer];
-//    _filteredImageView.image = _filteredImage;
+    
+    /*
+    GPUImageSepiaFilter *gpuSepiaFilter = [[GPUImageSepiaFilter alloc] init];
+    [gpuSepiaFilter useNextFrameForImageCapture];
+    
+    GPUImagePicture *gpuImagePicture = [[GPUImagePicture alloc] initWithImage:_originImage];
+    [gpuImagePicture addTarget:gpuSepiaFilter]; // 添加滤镜
+    
+    [gpuImagePicture processImage]; // 开始渲染
+    
+    _filteredImage = [gpuSepiaFilter imageFromCurrentFramebuffer]; // 获取渲染结果图
+    _filteredImageView.image = _filteredImage;
+     */
+    
+    
+    /*
+    GPUImageSepiaFilter *gpuSepiaFilter = [[GPUImageSepiaFilter alloc] init];
+    [gpuSepiaFilter useNextFrameForImageCapture];
+    
+    // 直接将渲染结果图输出至GPUImageView中，就不需要取图了。但是左右会有黑框。TODO：原因不明。
+    [gpuSepiaFilter addTarget:gpuImageView];
+    
+    GPUImagePicture *gpuImagePicture = [[GPUImagePicture alloc] initWithImage:_originImage];
+    [gpuImagePicture addTarget:gpuSepiaFilter]; // 添加滤镜
+    
+    [gpuImagePicture processImage]; // 开始渲染
+     */
 }
 
 - (void)demoGPUImageCustomFilter {
