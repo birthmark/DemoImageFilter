@@ -44,6 +44,8 @@
 		A47F5A471D704A7D002B4F3E /* texture_screenBlend_1.png in Resources */ = {isa = PBXBuildFile; fileRef = A47F5A3D1D704A7D002B4F3E /* texture_screenBlend_1.png */; };
 		A4880B5F1D814AC40016B619 /* CameraFocusView.m in Sources */ = {isa = PBXBuildFile; fileRef = A4880B5E1D814AC40016B619 /* CameraFocusView.m */; };
 		A4880B621D816B600016B619 /* CSSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = A4880B601D816B600016B619 /* CSSlider.m */; };
+		A4CDE55B1D9939940009F1F0 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A4CDE55A1D9939940009F1F0 /* CoreMotion.framework */; };
+		A4CDE55F1D99FFE60009F1F0 /* UIImage+CSCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = A4CDE55E1D99FFE60009F1F0 /* UIImage+CSCategory.m */; };
 		A4D8AEBD1D50456600060E5F /* CameraViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A4D8AEBC1D50456600060E5F /* CameraViewController.m */; };
 		A4D8AEC01D50457200060E5F /* VideoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A4D8AEBF1D50457200060E5F /* VideoViewController.m */; };
 		A4D8AEC41D50918F00060E5F /* GPUImageCustomFilter.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A4D8AEC31D50918F00060E5F /* GPUImageCustomFilter.fsh */; };
@@ -120,6 +122,10 @@
 		A4880B5E1D814AC40016B619 /* CameraFocusView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CameraFocusView.m; sourceTree = "<group>"; };
 		A4880B601D816B600016B619 /* CSSlider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSSlider.m; sourceTree = "<group>"; };
 		A4880B611D816B600016B619 /* CSSlider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSSlider.h; sourceTree = "<group>"; };
+		A4CDE55A1D9939940009F1F0 /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
+		A4CDE55D1D99FFDD0009F1F0 /* UIImage+CSCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+CSCategory.h"; sourceTree = "<group>"; };
+		A4CDE55E1D99FFE60009F1F0 /* UIImage+CSCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+CSCategory.m"; sourceTree = "<group>"; };
+		A4CDE5601D9A01590009F1F0 /* Macro.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Macro.h; sourceTree = "<group>"; };
 		A4D8AEBB1D50456600060E5F /* CameraViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CameraViewController.h; sourceTree = "<group>"; };
 		A4D8AEBC1D50456600060E5F /* CameraViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CameraViewController.m; sourceTree = "<group>"; };
 		A4D8AEBE1D50457200060E5F /* VideoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VideoViewController.h; sourceTree = "<group>"; };
@@ -144,6 +150,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A4CDE55B1D9939940009F1F0 /* CoreMotion.framework in Frameworks */,
 				A40586201B940EA6004DD437 /* QuartzCore.framework in Frameworks */,
 				A405861E1B93FE4E004DD437 /* CoreGraphics.framework in Frameworks */,
 				A405861C1B93FE40004DD437 /* OpenGLES.framework in Frameworks */,
@@ -213,6 +220,7 @@
 		834C52EE1B92DABE000690FD /* ImageFilterDemo */ = {
 			isa = PBXGroup;
 			children = (
+				A4CDE55C1D99FFC50009F1F0 /* OCCategory */,
 				A4D8AEC11D50917A00060E5F /* GPUImage */,
 				A44EB7241D4B2B0C00EF5F8E /* CPUImageFilterUtil */,
 				A44EB7271D4B2B0C00EF5F8E /* Images */,
@@ -259,6 +267,7 @@
 		9974907C63373BA9209589F3 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				A4CDE55A1D9939940009F1F0 /* CoreMotion.framework */,
 				A405861F1B940EA6004DD437 /* QuartzCore.framework */,
 				FC6FAC3C1BE6B6B1815CE150 /* libPods-ImageFilterDemo.a */,
 			);
@@ -329,6 +338,16 @@
 				A47F5A3D1D704A7D002B4F3E /* texture_screenBlend_1.png */,
 			);
 			path = Textures;
+			sourceTree = "<group>";
+		};
+		A4CDE55C1D99FFC50009F1F0 /* OCCategory */ = {
+			isa = PBXGroup;
+			children = (
+				A4CDE55D1D99FFDD0009F1F0 /* UIImage+CSCategory.h */,
+				A4CDE55E1D99FFE60009F1F0 /* UIImage+CSCategory.m */,
+				A4CDE5601D9A01590009F1F0 /* Macro.h */,
+			);
+			path = OCCategory;
 			sourceTree = "<group>";
 		};
 		A4D8AEB91D50453400060E5F /* Camera */ = {
@@ -434,7 +453,7 @@
 				TargetAttributes = {
 					834C52EB1B92DABE000690FD = {
 						CreatedOnToolsVersion = 6.4;
-						DevelopmentTeam = NYXX2N95WM;
+						DevelopmentTeam = GGVWN85K85;
 					};
 					834C53041B92DABE000690FD = {
 						CreatedOnToolsVersion = 6.4;
@@ -553,6 +572,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A4D8AEC71D5091A700060E5F /* DemoGPUImageCameraViewController.m in Sources */,
+				A4CDE55F1D99FFE60009F1F0 /* UIImage+CSCategory.m in Sources */,
 				A42D28B31D5994ED00FEE114 /* BeautyCenterViewController.m in Sources */,
 				A44EB7341D4B2B0C00EF5F8E /* RootTableViewController.m in Sources */,
 				A4D8AF081D582B1E00060E5F /* CSAlbumDataSourceManager.m in Sources */,
@@ -700,9 +720,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				DEVELOPMENT_TEAM = GGVWN85K85;
 				INFOPLIST_FILE = ImageFilterDemo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "icetime17.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.icetime17.ImageFilterDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -713,9 +734,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				DEVELOPMENT_TEAM = GGVWN85K85;
 				INFOPLIST_FILE = ImageFilterDemo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "icetime17.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.icetime17.ImageFilterDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;

@@ -12,8 +12,6 @@
 #import "CameraFocusView.h"
 #import "CSSlider.h"
 
-#define PreviewViewOffet 29
-
 
 typedef NS_ENUM(NSInteger, CameraProportionType) {
     CameraProportionType11,
@@ -42,6 +40,9 @@ typedef NS_ENUM(NSInteger, CameraProportionType) {
     CameraFocusView *cameraFocusView;
     
     CSSlider *csSlider;
+    
+    UIView *topBar;
+    UIView *toolBar;
 }
 
 - (void)viewDidLoad {
@@ -58,13 +59,13 @@ typedef NS_ENUM(NSInteger, CameraProportionType) {
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
+    [self listenOrientationMonitorDidChangeNotification];
+    
     [self listenAVCaptureDeviceSubjectAreaDidChangeNotification];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-    
-    previewView.center = CGPointMake(self.view.center.x, self.view.center.y + PreviewViewOffet);
     
     [[NSNotificationCenter defaultCenter] removeObserver:self name:AVCaptureDeviceSubjectAreaDidChangeNotification object:nil];
 }
@@ -73,11 +74,34 @@ typedef NS_ENUM(NSInteger, CameraProportionType) {
     return YES;
 }
 
+- (BOOL)shouldAutorotate {
+    return YES;
+}
+
+- (UIInterfaceOrientationMask)supportedInterfaceOrientations {
+    return UIInterfaceOrientationMaskPortrait | UIInterfaceOrientationMaskLandscapeRight;
+}
+
+- (UIInterfaceOrientation)preferredInterfaceOrientationForPresentation {
+    return UIInterfaceOrientationPortrait;
+}
+
+- (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id <UIViewControllerTransitionCoordinator>)coordinator {
+    [self updateLayoutAfterRotationViaSize:size];
+}
+
+- (void)updateLayoutAfterRotationViaSize:(CGSize)size {
+    NSLog(@"%@", NSStringFromCGSize(size));
+//    previewView.frame = CGRectMake(0, 0, size.width, size.height);
+//    topBar.frame = CGRectMake(0, 0, size.width, 40);
+//    toolBar.frame = CGRectMake(0, size.height - 100, size.width, 100);
+}
+
 #pragma mark - Top Bar
 
 - (void)initTopBar {
-    UIView *topBar = [[UIView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.frame), 40)];
-    topBar.backgroundColor = [UIColor blackColor];
+    topBar = [[UIView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.frame), 40)];
+    topBar.backgroundColor = [UIColor clearColor];
     [self.view addSubview:topBar];
     
     // Settings
@@ -118,8 +142,8 @@ typedef NS_ENUM(NSInteger, CameraProportionType) {
 #pragma mark - Tool Bar
 
 - (void)initToolBar {
-    UIView *toolBar = [[UIView alloc] initWithFrame:CGRectMake(0, CGRectGetHeight(self.view.frame) - 100, CGRectGetWidth(self.view.frame), 100)];
-    toolBar.backgroundColor = [UIColor whiteColor];
+    toolBar = [[UIView alloc] initWithFrame:CGRectMake(0, CGRectGetHeight(self.view.frame) - 100, CGRectGetWidth(self.view.frame), 100)];
+    toolBar.backgroundColor = [UIColor clearColor];
     [self.view addSubview:toolBar];
     
     // Capture
@@ -161,6 +185,8 @@ typedef NS_ENUM(NSInteger, CameraProportionType) {
 
 - (void)actionCapture:(UIButton *)sender {
     [stillCamera capturePhotoAsImageProcessedUpToFilter:filter withOrientation:UIImageOrientationUp withCompletionHandler:^(UIImage *processedImage, NSError *error) {
+        [stillCamera pauseCameraCapture];
+        
         if (error == nil) {
             UIImageWriteToSavedPhotosAlbum(processedImage, nil, nil, nil);
             
@@ -172,6 +198,8 @@ typedef NS_ENUM(NSInteger, CameraProportionType) {
                 
             }];
         }
+        
+        [stillCamera resumeCameraCapture];
     }];
 }
 
@@ -209,10 +237,9 @@ typedef NS_ENUM(NSInteger, CameraProportionType) {
 - (void)initCameraView {
     previewView = [[GPUImageView alloc] initWithFrame:self.view.frame];
     // 保持与iOS系统相机的位置一致。
-    previewView.center = CGPointMake(self.view.center.x, self.view.center.y - PreviewViewOffet);
     cameraProportionType = CameraProportionType34;
     previewView.backgroundColor = [UIColor whiteColor];
-    previewView.fillMode = kGPUImageFillModePreserveAspectRatio;
+    previewView.fillMode = kGPUImageFillModePreserveAspectRatioAndFill;
     [self.view insertSubview:previewView atIndex:0];
     
     [self addFocusTapGesture];
@@ -246,7 +273,7 @@ typedef NS_ENUM(NSInteger, CameraProportionType) {
 
 - (void)initExposureSlider {
     csSlider = [[CSSlider alloc] initWithFrame:CGRectMake(0, 0, 300, 40)];
-    csSlider.center = self.view.center;
+    csSlider.center = CGPointMake(CGRectGetWidth(self.view.frame) - 40, self.view.center.y);
     csSlider.value = 0.5f;
     [self.view addSubview:csSlider];
     csSlider.delegate = self;
@@ -321,6 +348,10 @@ typedef NS_ENUM(NSInteger, CameraProportionType) {
     stillCamera.inputCamera.exposureMode = AVCaptureExposureModeContinuousAutoExposure;
     
     [stillCamera.inputCamera unlockForConfiguration];
+}
+
+- (void)listenOrientationMonitorDidChangeNotification {
+
 }
 
 - (void)listenAVCaptureDeviceSubjectAreaDidChangeNotification {
