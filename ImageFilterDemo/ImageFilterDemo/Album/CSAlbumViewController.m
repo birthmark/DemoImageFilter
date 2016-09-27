@@ -83,7 +83,7 @@
     UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
     layout.scrollDirection = UICollectionViewScrollDirectionVertical;
     
-    CGRect frame = CGRectMake(0, CGRectGetHeight(_topBar.frame), kScreenWidth, kScreenHeight - CGRectGetHeight(_topBar.frame));
+    CGRect frame = CGRectMake(0, CGRectGetHeight(_topBar.frame), kCSScreenWidth, kCSScreenHeight - CGRectGetHeight(_topBar.frame));
     _collectionView = [[UICollectionView alloc] initWithFrame:frame collectionViewLayout:layout];
     _collectionView.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:_collectionView];

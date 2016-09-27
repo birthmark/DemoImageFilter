@@ -12,10 +12,7 @@
 
 #import "CSAlbumCollectionViewCell.h"
 
-#define kScreenSize   [[UIScreen mainScreen] bounds].size
-#define kScreenWidth  [[UIScreen mainScreen] bounds].size.width
-#define kScreenHeight [[UIScreen mainScreen] bounds].size.height
-
+#import "Macro.h"
 
 #define kCSAlbumUICollectionViewCell @"CSAlbumUICollectionViewCell"
 

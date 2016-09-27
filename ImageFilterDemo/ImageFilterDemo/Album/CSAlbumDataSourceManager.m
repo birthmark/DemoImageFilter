@@ -7,6 +7,14 @@
 //
 
 #import "CSAlbumDataSourceManager.h"
+#import "UIImage+CSCategory.h"
+
+#define kCellOffset 2
+#define kCellCountOfALine 3
+
+#define kHeaderHeight 50
+#define kFooterHeight 100
+
 
 @interface CSAlbumDataSourceManager ()
 
@@ -68,25 +76,19 @@
 - (CSAlbumCollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     CSAlbumCollectionViewCell *cell = (CSAlbumCollectionViewCell *)[collectionView dequeueReusableCellWithReuseIdentifier:kCSAlbumUICollectionViewCell forIndexPath:indexPath];
     
-    cell.backgroundColor = [UIColor colorWithRed:((arc4random() % 255) / 255.0)
-                                           green:((arc4random() % 255) / 255.0)
-                                            blue:((arc4random() % 255) / 255.0)
-                                           alpha:1.0f];
-    
-    // 要考虑到scale
-    CGFloat scale = [UIScreen mainScreen].scale;
-    CGSize targetSize = CGSizeMake(CGRectGetWidth(cell.frame) * scale, CGRectGetHeight(cell.frame) * scale);
+    CGFloat widthCell = (kCSScreenWidth - kCellOffset * (kCellCountOfALine - 1)) / kCellCountOfALine;
+    CGSize targetSize = CGSizeMake(widthCell * 2, widthCell * 2);
     
     [[PHImageManager defaultManager] cancelImageRequest:cell.imageRqeustID];
     cell.imageRqeustID = [[PHImageManager defaultManager] requestImageForAsset:_photoAssets[indexPath.item]
                                                                     targetSize:targetSize
-                                                                   contentMode:PHImageContentModeAspectFill
+                                                                   contentMode:PHImageContentModeAspectFit
                                                                        options:nil
                                                                  resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
                                                 
         NSLog(@"data source result size : %@", NSStringFromCGSize(result.size));
         dispatch_async(dispatch_get_main_queue(), ^{
-            cell.imageView.image = result;
+            cell.imageView.image = [result cs_imageFitTargetSize:targetSize];
         });
                                                 
     }];
@@ -137,18 +139,13 @@
 
 #pragma mark - <UICollectionViewDelegateFlowLayout>
 
-#define kCellOffset 2
-#define kHeaderHeight 50
-#define kFooterHeight 100
-
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
-    CGFloat width = (kScreenWidth - kCellOffset * 3) / 4;
-//    CGFloat width = 75;
+    CGFloat width = (kCSScreenWidth - kCellOffset * (kCellCountOfALine - 1)) / kCellCountOfALine;
     return CGSizeMake(width, width);
 }
 
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout insetForSectionAtIndex:(NSInteger)section {
-    return UIEdgeInsetsZero;
+    return UIEdgeInsetsMake(kCellOffset, 0, kCellOffset, 0);
 }
 
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section {
@@ -160,14 +157,10 @@
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section {
-    return CGSizeMake(kScreenWidth, kHeaderHeight);
+    return CGSizeMake(kCSScreenWidth, 60);
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout referenceSizeForFooterInSection:(NSInteger)section {
-    if (section == 1) {
-        return CGSizeMake(kScreenWidth, kFooterHeight);
-    }
-    
     return CGSizeZero;
 }
 
