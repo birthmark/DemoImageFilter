@@ -28,6 +28,8 @@
 
 #import "GPUImageMoonlightFilter.h"
 
+#import "CSPreviewViewController.h"
+
 typedef NS_ENUM(NSInteger, enumDemoImageFilter) {
     demoCPUImageFilter = 0,
     demoCoreImageFilter,
@@ -47,8 +49,12 @@ typedef NS_ENUM(NSInteger, enumDemoImageFilter) {
     
     demoSimpleAlbum,
     demoCustomAlbum,
+    
+    demoCustomPreview,
+    
     demoSimpleCamera,
     demoCustomCamera,
+    
     demoSimpleVideo,
     demoCustomVideo,
 };
@@ -117,8 +123,12 @@ typedef NS_ENUM(NSInteger, enumDemoImageFilter) {
                               
                               @"Simple Album",
                               @"Custom Album",
+                              
+                              @"Custom Preview",
+                              
                               @"Simple Camera",
                               @"Custom Camera",
+                              
                               @"Simple Video",
                               @"Custom Video",
                               ];
@@ -204,12 +214,19 @@ typedef NS_ENUM(NSInteger, enumDemoImageFilter) {
         case demoCustomAlbum:
             [self demoCustomAlbum];
             break;
+            
+        case demoCustomPreview:
+            [self demoCustomPreview];
+            break;
+            
         case demoSimpleCamera:
             [self demoSimpleCamera];
             break;
         case demoCustomCamera:
             [self demoCustomCamera];
             break;
+            
+            
         case demoSimpleVideo:
             [self demoSimpleVideo];
             break;
@@ -504,19 +521,19 @@ typedef NS_ENUM(NSInteger, enumDemoImageFilter) {
     
     // TODO: 第一次点击进去itemVC，滤镜并没有效果。再次进去即可。原因暂时不明！！！
     // 基准图：lookup_amatorka.png
-    
+    /*
     GPUImageAmatorkaFilter *lookupFilter = [[GPUImageAmatorkaFilter alloc] init];
     _filteredImage = [lookupFilter imageByFilteringImage:_originImage];
     _filteredImageView.image = _filteredImage;
-    
+    */
     
     
     // 根据LUT，封装一个GPUImageMoonlightFilter
-    /*
+    
      GPUImageMoonlightFilter *lookupFilter = [[GPUImageMoonlightFilter alloc] init];
      _filteredImage = [lookupFilter imageByFilteringImage:_originImage];
      _filteredImageView.image = _filteredImage;
-     */
+     
     
     
     // 自己制作的基准图: LUT_Bleach.png, LUT_Moonlight.png, LUT_From_PS_ATN_File.png
@@ -765,6 +782,13 @@ typedef NS_ENUM(NSInteger, enumDemoImageFilter) {
 //    CSAlbumCoverCollectionViewController *albumVC = [[CSAlbumCoverCollectionViewController alloc] init];
     
     [self presentViewController:albumVC animated:YES completion:nil];
+}
+
+#pragma mark - Custom Preview
+
+- (void)demoCustomPreview {
+    CSPreviewViewController *previewVC = [[CSPreviewViewController alloc] init];
+    [self presentViewController:previewVC animated:YES completion:nil];
 }
 
 #pragma mark - Simple Camera Demo

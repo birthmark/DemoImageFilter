@@ -7,7 +7,6 @@
 //
 
 #import "UIImage+CSCategory.h"
-#import "Macro.h"
 
 @implementation UIImage (CSCategory)
 

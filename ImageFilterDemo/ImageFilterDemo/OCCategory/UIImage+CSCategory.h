@@ -9,6 +9,8 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
+#import "Macro.h"
+
 @interface UIImage (CSCategory)
 
 /**

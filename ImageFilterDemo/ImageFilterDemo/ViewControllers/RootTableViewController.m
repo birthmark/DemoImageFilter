@@ -42,8 +42,12 @@
                               
                               @"Simple Album",
                               @"Custom Album",
+                              
+                              @"Custom Preview",
+                              
                               @"Simple Camera",
                               @"Custom Camera",
+                              
                               @"Simple Video",
                               @"Custom Video",
                               ];
