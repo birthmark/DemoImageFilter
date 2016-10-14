@@ -50,6 +50,8 @@
                               
                               @"Simple Video",
                               @"Custom Video",
+                              
+                              @"Image Crop",
                               ];
 }
 

@@ -30,6 +30,8 @@
 
 #import "CSPreviewViewController.h"
 
+#import "ViewImageCrop.h"
+
 typedef NS_ENUM(NSInteger, enumDemoImageFilter) {
     demoCPUImageFilter = 0,
     demoCoreImageFilter,
@@ -57,6 +59,8 @@ typedef NS_ENUM(NSInteger, enumDemoImageFilter) {
     
     demoSimpleVideo,
     demoCustomVideo,
+    
+    demoImageCrop,
 };
 
 @interface ItemViewController () <
@@ -99,6 +103,8 @@ typedef NS_ENUM(NSInteger, enumDemoImageFilter) {
     
     GPUImagePicture *gpuImagePic;
     GPUImageView *gpuImageView;
+    
+    ViewImageCrop *_viewImageCrop;
 }
 
 - (void)viewDidLoad {
@@ -131,6 +137,8 @@ typedef NS_ENUM(NSInteger, enumDemoImageFilter) {
                               
                               @"Simple Video",
                               @"Custom Video",
+                              
+                              @"Image Crop",
                               ];
     [self demosFilter];
 }
@@ -233,6 +241,11 @@ typedef NS_ENUM(NSInteger, enumDemoImageFilter) {
         case demoCustomVideo:
             [self demoCustomVideo];
             break;
+            
+        case demoImageCrop:
+            [self demoImageCrop];
+            break;
+            
         default:
             break;
     }
@@ -856,6 +869,29 @@ typedef NS_ENUM(NSInteger, enumDemoImageFilter) {
         self.filteredImage = _originImage;
         self.filteredImageView.image = self.filteredImage;
     }];
+}
+
+#pragma mark - image crop
+
+- (void)demoImageCrop
+{
+    CGFloat heightCrop = 150 * [UIScreen mainScreen].scale;
+    _viewImageCrop = [[ViewImageCrop alloc] initWithFrame:CGRectMake(0, 0, kCSScreenWidth, heightCrop)];
+    [self.view addSubview:_viewImageCrop];
+    _viewImageCrop.image = [UIImage imageNamed:@"Shiny_2.jpg"];
+    _viewImageCrop.center = self.view.center;
+    
+    UIButton *btnCrop = [[UIButton alloc] initWithFrame:CGRectMake(0, CGRectGetHeight(self.view.frame) - 50, kCSScreenWidth, 30)];
+    [btnCrop setTitle:@"Crop" forState:UIControlStateNormal];
+    [btnCrop setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
+    [self.view addSubview:btnCrop];
+    [btnCrop addTarget:self action:@selector(actionBtnImageCrop:) forControlEvents:UIControlEventTouchUpInside];
+}
+
+- (void)actionBtnImageCrop:(UIButton *)sender
+{
+    UIImage *ret = _viewImageCrop.imageCropped;
+    NSLog(@"123");
 }
 
 @end

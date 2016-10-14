@@ -168,4 +168,14 @@
     return imageRatioed;
 }
 
+// Returns a copy of this image that is cropped to the given bounds.
+// The bounds will be adjusted using CGRectIntegral.
+// This method ignores the image's imageOrientation setting.
+- (UIImage *)croppedImage:(CGRect)bounds {
+    CGImageRef imageRef = CGImageCreateWithImageInRect([self CGImage], bounds);
+    UIImage *croppedImage = [UIImage imageWithCGImage:imageRef];
+    CGImageRelease(imageRef);
+    return croppedImage;
+}
+
 @end

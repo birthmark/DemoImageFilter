@@ -68,4 +68,6 @@
  */
 - (UIImage *)cs_imageFitTargetSize:(CGSize)targetSize;
 
+- (UIImage *)croppedImage:(CGRect)bounds;
+
 @end
