@@ -249,6 +249,16 @@ typedef NS_ENUM(NSInteger, CameraProportionType) {
     
     [stillCamera addTarget:previewView];
     
+    CGPoint focusPoint = CGPointMake(0.5f, 0.5f);
+    [stillCamera.inputCamera lockForConfiguration:nil];
+    if (stillCamera.inputCamera.isFocusPointOfInterestSupported) {
+        stillCamera.inputCamera.focusPointOfInterest = focusPoint;
+        stillCamera.inputCamera.focusMode = AVCaptureFocusModeContinuousAutoFocus;
+    }
+    stillCamera.inputCamera.focusPointOfInterest = focusPoint;
+    stillCamera.inputCamera.exposureMode = AVCaptureExposureModeContinuousAutoExposure;
+    [stillCamera.inputCamera unlockForConfiguration];
+    
     [stillCamera startCameraCapture];
 }
 
@@ -305,33 +315,46 @@ typedef NS_ENUM(NSInteger, CameraProportionType) {
 }
 
 - (void)actionFocus:(UITapGestureRecognizer *)sender {
-    CGPoint touchpoint = [sender locationInView:previewView];
-    
-    if (!stillCamera.inputCamera.isFocusPointOfInterestSupported ||
-        !stillCamera.inputCamera.isExposurePointOfInterestSupported) {
-        return;
-    }
-    
     if (!cameraFocusView) {
         cameraFocusView = [[CameraFocusView alloc] initWithFrame:CGRectMake(0, 0, 50, 50)];
         [self.view addSubview:cameraFocusView];
     }
+    
+    CGPoint touchpoint = [sender locationInView:previewView];
+    
     cameraFocusView.center = touchpoint;
     
     [cameraFocusView beginAnimation];
     
     // 需要同时设置focusMode为AVCaptureFocusModeAutoFocus
     NSLog(@"touchpoint : %@", NSStringFromCGPoint(touchpoint));
+    // 需要坐标系转换
+    CGPoint focusPoint = [self realFocusPoint:touchpoint];
     
     [stillCamera.inputCamera lockForConfiguration:nil];
     
-    stillCamera.inputCamera.focusPointOfInterest = touchpoint;
-    stillCamera.inputCamera.focusMode = AVCaptureFocusModeContinuousAutoFocus;
+    if (stillCamera.inputCamera.isFocusPointOfInterestSupported) {
+        stillCamera.inputCamera.focusPointOfInterest = focusPoint;
+        stillCamera.inputCamera.focusMode = AVCaptureFocusModeContinuousAutoFocus;
+    }
     
-    stillCamera.inputCamera.exposurePointOfInterest = touchpoint;
+    stillCamera.inputCamera.exposurePointOfInterest = focusPoint;
     stillCamera.inputCamera.exposureMode = AVCaptureExposureModeContinuousAutoExposure;
     
     [stillCamera.inputCamera unlockForConfiguration];
+}
+
+- (CGPoint)realFocusPoint:(CGPoint)point
+{
+    CGPoint realPoint = CGPointZero;
+    if (stillCamera.isBackFacingCameraPresent) {
+        realPoint = CGPointMake(point.y / previewView.frame.size.height,
+                                1 - point.x / previewView.frame.size.width);
+    } else {
+        realPoint = CGPointMake(point.y / previewView.frame.size.height,
+                                point.x / previewView.frame.size.width);
+    }
+    return realPoint;
 }
 
 #pragma mark - 自动曝光调节
