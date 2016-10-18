@@ -59,13 +59,13 @@ typedef NS_ENUM(NSInteger, CameraProportionType) {
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
-//    [self listenAVCaptureDeviceSubjectAreaDidChangeNotification];
+    [self listenAVCaptureDeviceSubjectAreaDidChangeNotification];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     
-//    [[NSNotificationCenter defaultCenter] removeObserver:self name:AVCaptureDeviceSubjectAreaDidChangeNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:AVCaptureDeviceSubjectAreaDidChangeNotification object:nil];
 }
 
 - (BOOL)prefersStatusBarHidden {
