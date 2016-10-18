@@ -12,6 +12,7 @@
 #import <GLKit/GLKit.h>
 #import <AVFoundation/AVFoundation.h>
 #import <AssetsLibrary/AssetsLibrary.h>
+#import <Photos/Photos.h>
 
 #import "GPUImage.h"
 #import "CPUImageFilterUtil.h"
@@ -833,6 +834,26 @@ typedef NS_ENUM(NSInteger, enumDemoImageFilter) {
 #pragma mark - UIImagePickerControllerDelegate
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
+    if (picker.sourceType == UIImagePickerControllerSourceTypePhotoLibrary) {
+        NSURL *assetURL = [info objectForKey:UIImagePickerControllerReferenceURL];
+        
+        PHFetchResult<PHAsset *> *assets = [PHAsset fetchAssetsWithALAssetURLs:@[assetURL] options:nil];
+        if (assets.count > 0) {
+            PHAsset *asset = [assets firstObject];
+            
+            NSLog(@"%@", asset.creationDate);
+            NSLog(@"%@", asset.location);
+            
+            [[PHImageManager defaultManager] requestImageForAsset:asset targetSize:PHImageManagerMaximumSize contentMode:PHImageContentModeAspectFit options:nil resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
+                
+                NSLog(@"get asset image");
+                
+            }];
+        }
+        
+    }
+    
+    
     UIImage *originalImage = [info valueForKey:UIImagePickerControllerOriginalImage];
     UIImage *editedImage = [info valueForKey:UIImagePickerControllerEditedImage];
     UIImage *savedImage = editedImage ? editedImage : originalImage;
