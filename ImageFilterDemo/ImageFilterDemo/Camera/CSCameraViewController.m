@@ -8,6 +8,8 @@
 
 #import "CSCameraViewController.h"
 
+#import <CoreLocation/CoreLocation.h>
+
 #import "GPUImage.h"
 #import "CameraFocusView.h"
 #import "CSSlider.h"
@@ -23,7 +25,8 @@ typedef NS_ENUM(NSInteger, CameraProportionType) {
 @interface CSCameraViewController () <
 
     GPUImageVideoCameraDelegate,
-    CSSliderDelegate
+    CSSliderDelegate,
+    CLLocationManagerDelegate
 >
 
 @end
@@ -43,6 +46,9 @@ typedef NS_ENUM(NSInteger, CameraProportionType) {
     
     UIView *topBar;
     UIView *toolBar;
+    
+    CLLocationManager *_locationManager;
+    CLLocation *_currentLocation;
 }
 
 - (void)viewDidLoad {
@@ -54,6 +60,9 @@ typedef NS_ENUM(NSInteger, CameraProportionType) {
     
     [self initTopBar];
     [self initToolBar];
+    
+    _locationManager = [[CLLocationManager alloc] init];
+    _locationManager.delegate = self;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -62,10 +71,21 @@ typedef NS_ENUM(NSInteger, CameraProportionType) {
     [self listenAVCaptureDeviceSubjectAreaDidChangeNotification];
 }
 
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    
+    [_locationManager requestAlwaysAuthorization];
+    
+    [_locationManager startUpdatingLocation];
+}
+
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     
     [[NSNotificationCenter defaultCenter] removeObserver:self name:AVCaptureDeviceSubjectAreaDidChangeNotification object:nil];
+    
+    [_locationManager stopUpdatingLocation];
 }
 
 - (BOOL)prefersStatusBarHidden {
@@ -393,6 +413,18 @@ typedef NS_ENUM(NSInteger, CameraProportionType) {
         
         stillCamera.inputCamera.subjectAreaChangeMonitoringEnabled = subjectAreaChangeMonitoringEnabled;
         [stillCamera.inputCamera unlockForConfiguration];
+    }
+}
+
+#pragma mark - 地理定位
+
+- (void)locationManager:(CLLocationManager *)manager
+     didUpdateLocations:(NSArray<CLLocation *> *)locations
+{
+    if (locations.count > 0) {
+        _currentLocation = [locations firstObject];
+        
+        [_locationManager stopUpdatingHeading];
     }
 }
 
