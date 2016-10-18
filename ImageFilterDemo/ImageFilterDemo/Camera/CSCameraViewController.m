@@ -8,11 +8,13 @@
 
 #import "CSCameraViewController.h"
 
-#import <CoreLocation/CoreLocation.h>
+#import "CLLocation+GPSDictionary.h"
 
 #import "GPUImage.h"
 #import "CameraFocusView.h"
 #import "CSSlider.h"
+
+#import <Photos/Photos.h>
 
 
 typedef NS_ENUM(NSInteger, CameraProportionType) {
@@ -203,15 +205,60 @@ typedef NS_ENUM(NSInteger, CameraProportionType) {
 
 - (void)actionCapture:(UIButton *)sender {
     [stillCamera capturePhotoAsImageProcessedUpToFilter:filter withOrientation:UIImageOrientationUp withCompletionHandler:^(UIImage *processedImage, NSError *error) {
+        
         [stillCamera pauseCameraCapture];
         
         if (error == nil) {
-            UIImageWriteToSavedPhotosAlbum(processedImage, nil, nil, nil);
+            NSData *imageData = UIImageJPEGRepresentation(processedImage, 1.f);
+            
+            CGImageSourceRef imgSource = CGImageSourceCreateWithData((__bridge CFDataRef)imageData, NULL);
+            //this is the type of image (e.g., public.jpeg)
+            CFStringRef UTI = CGImageSourceGetType(imgSource);
+            
+            //this will be the data CGImageDestinationRef will write into
+            NSMutableData *newImageData = [NSMutableData data];
+            CGImageDestinationRef destination = CGImageDestinationCreateWithData((__bridge CFMutableDataRef)newImageData, UTI, 1, NULL);
+            
+            if(!destination) {
+                NSLog(@"***Could not create image destination ***");
+                return;
+            }
+            
+            //get original metadata
+//            NSDictionary *dict = [_mediaInfoobjectForKey:UIImagePickerControllerMediaMetadata];
+            NSMutableDictionary *metadata = [NSMutableDictionary dictionary];
+            
+            NSDictionary *gpsDict = [_currentLocation GPSDictionary];
+            if (metadata && gpsDict) {
+                [metadata setValue:gpsDict forKey:(NSString *)kCGImagePropertyGPSDictionary];
+            }
+            
+            //add the image contained in the image source to the destination, overidding the old metadata with our modified metadata
+            CGImageDestinationAddImageFromSource(destination, imgSource, 0, (__bridge CFDictionaryRef)metadata);
+            CGImageDestinationFinalize(destination);
+            
+            CGImageRef img = CGImageSourceCreateImageAtIndex(imgSource, 0, NULL);
+//            CGContextRef ctx = UIGraphicsGetCurrentContext();
+            
+            UIImage *dstImage = [UIImage imageWithCGImage:img];
+            
+            CFRelease(imgSource);
+            CFRelease(destination);
+            
+//            UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil);
+            
+            
+            [[PHPhotoLibrary sharedPhotoLibrary] performChanges:^{
+                [PHAssetChangeRequest creationRequestForAssetFromImage:dstImage];
+            } completionHandler:^(BOOL success, NSError * _Nullable error) {
+                
+            }];
+            
             
             [self dismissViewControllerAnimated:YES completion:^{
                 
                 if (_delegate && [_delegate respondsToSelector:@selector(CSCameraViewControllerDelegateDoneWithImage:)]) {
-                    [_delegate CSCameraViewControllerDelegateDoneWithImage:processedImage];
+                    [_delegate CSCameraViewControllerDelegateDoneWithImage:dstImage];
                 }
                 
             }];
@@ -278,6 +325,25 @@ typedef NS_ENUM(NSInteger, CameraProportionType) {
     stillCamera.inputCamera.focusPointOfInterest = focusPoint;
     stillCamera.inputCamera.exposureMode = AVCaptureExposureModeContinuousAutoExposure;
     [stillCamera.inputCamera unlockForConfiguration];
+    
+    // TODO: 不加滤镜, 如何获取图片？
+    //        [stillCamera addTarget:previewView];
+    //
+    
+    // 添加滤镜
+    
+    // GPUImageStillCamera (output) -> GPUImageFilter (input, output) -> GPUImageView (input)
+    // GPUImagePicture (output)     —> GPUImageFilter (input, output) —> GPUImageView (input)
+    
+    //    filter = [[GPUImageSepiaFilter alloc] init];
+    
+    // TODO: 使用LUT的滤镜没有效果。原因未知。
+    filter = [[GPUImageAmatorkaFilter alloc] init];
+    [filter addTarget:previewView];
+    
+    [stillCamera addTarget:filter];
+    
+    // 添加滤镜
     
     [stillCamera startCameraCapture];
 }
