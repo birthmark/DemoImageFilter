@@ -59,15 +59,13 @@ typedef NS_ENUM(NSInteger, CameraProportionType) {
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
-    [self listenOrientationMonitorDidChangeNotification];
-    
-    [self listenAVCaptureDeviceSubjectAreaDidChangeNotification];
+//    [self listenAVCaptureDeviceSubjectAreaDidChangeNotification];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:AVCaptureDeviceSubjectAreaDidChangeNotification object:nil];
+//    [[NSNotificationCenter defaultCenter] removeObserver:self name:AVCaptureDeviceSubjectAreaDidChangeNotification object:nil];
 }
 
 - (BOOL)prefersStatusBarHidden {
@@ -249,24 +247,7 @@ typedef NS_ENUM(NSInteger, CameraProportionType) {
     stillCamera.horizontallyMirrorFrontFacingCamera = YES;
     stillCamera.delegate = self;
     
-    // TODO: 不加滤镜, 如何获取图片？
-//        [stillCamera addTarget:previewView];
-    //
-    
-    // 添加滤镜
-    
-    // GPUImageStillCamera (output) -> GPUImageFilter (input, output) -> GPUImageView (input)
-    // GPUImagePicture (output)     —> GPUImageFilter (input, output) —> GPUImageView (input)
-
-//    filter = [[GPUImageSepiaFilter alloc] init];
-    
-    // TODO: 使用LUT的滤镜没有效果。原因未知。
-     filter = [[GPUImageAmatorkaFilter alloc] init];
-    [filter addTarget:previewView];
-
-    [stillCamera addTarget:filter];
-    
-    // 添加滤镜
+    [stillCamera addTarget:previewView];
     
     [stillCamera startCameraCapture];
 }
@@ -316,6 +297,8 @@ typedef NS_ENUM(NSInteger, CameraProportionType) {
     
 }
 
+#pragma mark - Focus tap
+
 - (void)addFocusTapGesture {
     UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(actionFocus:)];
     [previewView addGestureRecognizer:tapGesture];
@@ -335,12 +318,13 @@ typedef NS_ENUM(NSInteger, CameraProportionType) {
     }
     cameraFocusView.center = touchpoint;
     
-    
     [cameraFocusView beginAnimation];
+    
+    // 需要同时设置focusMode为AVCaptureFocusModeAutoFocus
+    NSLog(@"touchpoint : %@", NSStringFromCGPoint(touchpoint));
     
     [stillCamera.inputCamera lockForConfiguration:nil];
     
-    // 需要同时设置focusMode为AVCaptureFocusModeAutoFocus
     stillCamera.inputCamera.focusPointOfInterest = touchpoint;
     stillCamera.inputCamera.focusMode = AVCaptureFocusModeContinuousAutoFocus;
     
@@ -350,9 +334,7 @@ typedef NS_ENUM(NSInteger, CameraProportionType) {
     [stillCamera.inputCamera unlockForConfiguration];
 }
 
-- (void)listenOrientationMonitorDidChangeNotification {
-
-}
+#pragma mark - 自动曝光调节
 
 - (void)listenAVCaptureDeviceSubjectAreaDidChangeNotification {
     [stillCamera.inputCamera lockForConfiguration:nil];
