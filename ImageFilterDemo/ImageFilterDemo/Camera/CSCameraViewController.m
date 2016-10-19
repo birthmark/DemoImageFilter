@@ -39,6 +39,8 @@ typedef NS_ENUM(NSInteger, CameraProportionType) {
     GPUImageView *previewView;
     GPUImageStillCamera *stillCamera;
     
+    GPUImageFilterGroup *_filterGroup;
+    
     GPUImageFilter *filter;
     
     NSInteger cameraProportionType;
@@ -205,7 +207,7 @@ typedef NS_ENUM(NSInteger, CameraProportionType) {
 }
 
 - (void)actionCapture:(UIButton *)sender {
-    [stillCamera capturePhotoAsImageProcessedUpToFilter:filter withOrientation:UIImageOrientationUp withCompletionHandler:^(UIImage *processedImage, NSError *error) {
+    [stillCamera capturePhotoAsImageProcessedUpToFilter:_filterGroup withOrientation:UIImageOrientationUp withCompletionHandler:^(UIImage *processedImage, NSError *error) {
         
         [stillCamera pauseCameraCapture];
         
@@ -433,6 +435,7 @@ typedef NS_ENUM(NSInteger, CameraProportionType) {
     // GPUImageStillCamera (output) -> GPUImageFilter (input, output) -> GPUImageView (input)
     // GPUImagePicture (output)     —> GPUImageFilter (input, output) —> GPUImageView (input)
     
+    /*
     // TODO: 有时候使用LUT的滤镜没有效果。原因未知。
     // filter = [[GPUImageSepiaFilter alloc] init];
     filter = [[GPUImageMoonlightFilter alloc] init];
@@ -440,6 +443,25 @@ typedef NS_ENUM(NSInteger, CameraProportionType) {
     [filter addTarget:previewView];
     
     [stillCamera addTarget:filter];
+    
+    [stillCamera startCameraCapture];
+     */
+    
+    
+    GPUImageFilter *filter1 = [[GPUImageToonFilter alloc] init];
+    
+    filter = [[GPUImageMoonlightFilter alloc] init];
+    _filterGroup = [[GPUImageFilterGroup alloc] init];
+    
+    // 每个filter之间要连接起来
+    [filter addTarget:filter1];
+    // 正确设置initialFilters和terminalFilter
+    _filterGroup.initialFilters = @[filter];
+    _filterGroup.terminalFilter = filter1;
+    
+    [_filterGroup addTarget:previewView];
+    
+    [stillCamera addTarget:_filterGroup];
     
     [stillCamera startCameraCapture];
 }
