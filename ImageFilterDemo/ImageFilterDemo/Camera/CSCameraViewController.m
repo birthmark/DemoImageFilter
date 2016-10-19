@@ -209,6 +209,23 @@ typedef NS_ENUM(NSInteger, CameraProportionType) {
         [stillCamera pauseCameraCapture];
         
         if (error == nil) {
+            UIImageWriteToSavedPhotosAlbum(processedImage, nil, nil, nil);
+            [self dismissViewControllerAnimated:YES completion:^{
+                
+                if (_delegate && [_delegate respondsToSelector:@selector(CSCameraViewControllerDelegateDoneWithImage:)]) {
+                    [_delegate CSCameraViewControllerDelegateDoneWithImage:processedImage];
+                }
+                
+            }];
+            
+            
+            
+            
+            
+            
+            return;
+            
+            /*
             NSData *imageData = UIImageJPEGRepresentation(processedImage, 1.f);
             
             CGImageSourceRef imgSource = CGImageSourceCreateWithData((__bridge CFDataRef)imageData, NULL);
@@ -233,19 +250,32 @@ typedef NS_ENUM(NSInteger, CameraProportionType) {
                 [metadata setValue:gpsDict forKey:(NSString *)kCGImagePropertyGPSDictionary];
             }
             
+            /*
             //add the image contained in the image source to the destination, overidding the old metadata with our modified metadata
             CGImageDestinationAddImageFromSource(destination, imgSource, 0, (__bridge CFDictionaryRef)metadata);
-            CGImageDestinationFinalize(destination);
             
-            CGImageRef img = CGImageSourceCreateImageAtIndex(imgSource, 0, NULL);
-//            CGContextRef ctx = UIGraphicsGetCurrentContext();
+            BOOL success = CGImageDestinationFinalize(destination);
             
-            UIImage *dstImage = [UIImage imageWithCGImage:img];
+            if(!success) {
+                NSLog(@"***Could not create data from image destination ***");
+            }
+            
+//            CGImageRef img = CGImageSourceCreateImageAtIndex(imgSource, 0, NULL);
+////            CGContextRef ctx = UIGraphicsGetCurrentContext();
+//            
+//            UIImage *dstImage = [UIImage imageWithCGImage:img];
+            
+            NSData *newData = [self writeMetadataIntoImageData:imageData metadata:metadata];
+            
+            UIImage *dstImage = [UIImage imageWithData:newData];
             
             CFRelease(imgSource);
             CFRelease(destination);
             
-//            UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil);
+
+            
+            CIImage *ciImage = [CIImage imageWithCGImage:[dstImage CGImage]];
+            NSDictionary *info = ciImage.properties;
             
             
             [[PHPhotoLibrary sharedPhotoLibrary] performChanges:^{
@@ -253,15 +283,7 @@ typedef NS_ENUM(NSInteger, CameraProportionType) {
             } completionHandler:^(BOOL success, NSError * _Nullable error) {
                 
             }];
-            
-            
-            [self dismissViewControllerAnimated:YES completion:^{
-                
-                if (_delegate && [_delegate respondsToSelector:@selector(CSCameraViewControllerDelegateDoneWithImage:)]) {
-                    [_delegate CSCameraViewControllerDelegateDoneWithImage:dstImage];
-                }
-                
-            }];
+            */
         }
         
         [stillCamera resumeCameraCapture];
