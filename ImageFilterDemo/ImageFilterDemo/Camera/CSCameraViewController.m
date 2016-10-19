@@ -16,6 +16,7 @@
 #import "CSSlider.h"
 
 #import <Photos/Photos.h>
+#import <AssetsLibrary/AssetsLibrary.h>
 
 
 typedef NS_ENUM(NSInteger, CameraProportionType) {
@@ -207,13 +208,128 @@ typedef NS_ENUM(NSInteger, CameraProportionType) {
     btnFilter.center        = CGPointMake(btnFilter.center.x, btnCapture.center.y);
 }
 
+- (UIImage *)imageWithData:(NSData *)imageData metadata:(NSDictionary *)metadata
+{
+    CGImageSourceRef source = CGImageSourceCreateWithData((__bridge CFDataRef)imageData, NULL);
+    NSMutableDictionary * sourceDic = [NSMutableDictionary dictionary];
+    NSDictionary *source_metadata = (NSDictionary *)CFBridgingRelease(CGImageSourceCopyProperties(source, NULL));
+    [sourceDic addEntriesFromDictionary: metadata];
+    [sourceDic addEntriesFromDictionary:source_metadata];
+    
+    NSMutableData *dest_data = [NSMutableData data];
+    CFStringRef UTI = CGImageSourceGetType(source);
+    CGImageDestinationRef destination = CGImageDestinationCreateWithData((__bridge CFMutableDataRef)dest_data, UTI, 1,NULL);
+    CGImageDestinationAddImageFromSource(destination, source, 0, (__bridge CFDictionaryRef)sourceDic);
+    CGImageDestinationFinalize(destination);
+    CFRelease(source);
+    CFRelease(destination);
+    return [UIImage imageWithData: dest_data];
+    
+    /*
+     //add the image contained in the image source to the destination, overidding the old metadata with our modified metadata
+     CGImageDestinationAddImageFromSource(destination, imgSource, 0, (__bridge CFDictionaryRef)metadata);
+     
+     BOOL success = CGImageDestinationFinalize(destination);
+     
+     if(!success) {
+     NSLog(@"***Could not create data from image destination ***");
+     }
+     
+     //            CGImageRef img = CGImageSourceCreateImageAtIndex(imgSource, 0, NULL);
+     ////            CGContextRef ctx = UIGraphicsGetCurrentContext();
+     //
+     //            UIImage *dstImage = [UIImage imageWithCGImage:img];
+     
+     NSData *newData = [self writeMetadataIntoImageData:imageData metadata:metadata];
+     
+     UIImage *dstImage = [UIImage imageWithData:newData];
+     
+     CFRelease(imgSource);
+     CFRelease(destination);
+     
+     
+     
+     CIImage *ciImage = [CIImage imageWithCGImage:[dstImage CGImage]];
+     NSDictionary *info = ciImage.properties;
+     */
+}
+
+- (void)writeImageDataToSavedPhotosAlbum:(NSData *)imageData metadata:(NSDictionary *)metadata
+{
+    [[PHPhotoLibrary sharedPhotoLibrary] performChanges:^{
+        UIImage *image = [self imageWithData:imageData metadata:metadata];
+        [PHAssetChangeRequest creationRequestForAssetFromImage:image];
+    } completionHandler:^(BOOL success, NSError *error) {
+    }];
+}
+
+- (void)saveImageToCameraRoll:(UIImage*)image location:(CLLocation*)location
+{
+    [[PHPhotoLibrary sharedPhotoLibrary] performChanges:^{
+        PHAssetChangeRequest *newAssetRequest = [PHAssetChangeRequest creationRequestForAssetFromImage:image];
+        newAssetRequest.location = location;
+        newAssetRequest.creationDate = [NSDate date];
+    } completionHandler:^(BOOL success, NSError *error) {
+    }];
+}
+
+- (NSDictionary *)metadataForImage:(UIImage *)image withCLLocation:(CLLocation *)location
+{
+    NSData *imageData = UIImageJPEGRepresentation(image, 1.f);
+    
+    CGImageSourceRef imgSource = CGImageSourceCreateWithData((__bridge CFDataRef)imageData, NULL);
+    //this is the type of image (e.g., public.jpeg)
+    CFStringRef UTI = CGImageSourceGetType(imgSource);
+    
+    //this will be the data CGImageDestinationRef will write into
+    NSMutableData *newImageData = [NSMutableData data];
+    CGImageDestinationRef destination = CGImageDestinationCreateWithData((__bridge CFMutableDataRef)newImageData, UTI, 1, NULL);
+    
+    if(!destination) {
+        NSLog(@"***Could not create image destination ***");
+        return nil;
+    }
+    
+    //get original metadata
+    //            NSDictionary *dict = [_mediaInfoobjectForKey:UIImagePickerControllerMediaMetadata];
+    NSMutableDictionary *metadata = [NSMutableDictionary dictionary];
+    
+    NSDictionary *gpsDict = [location GPSDictionary];
+    if (metadata && gpsDict) {
+        [metadata setValue:gpsDict forKey:(NSString *)kCGImagePropertyGPSDictionary];
+    }
+
+    return metadata;
+}
+
 - (void)actionCapture:(UIButton *)sender {
     [stillCamera capturePhotoAsImageProcessedUpToFilter:[_filterPipeline.filters lastObject]  withOrientation:UIImageOrientationUp withCompletionHandler:^(UIImage *processedImage, NSError *error) {
         
         [stillCamera pauseCameraCapture];
         
         if (error == nil) {
-            UIImageWriteToSavedPhotosAlbum(processedImage, nil, nil, nil);
+            
+            NSDictionary *metadata = [self metadataForImage:processedImage withCLLocation:_currentLocation];
+            
+            // 仅此方法可以保存GPS信息。其他都不行。
+            ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
+            [library writeImageToSavedPhotosAlbum:[processedImage CGImage] metadata:metadata completionBlock:^(NSURL *assetURL, NSError *error) {
+                NSLog(@"ok");
+            }];
+            
+            
+//            [self saveImageToCameraRoll:processedImage location:_currentLocation];
+            
+            
+//            [[PHPhotoLibrary sharedPhotoLibrary] performChanges:^{
+//                PHAssetChangeRequest *request = [PHAssetChangeRequest creationRequestForAssetFromImage:processedImage];
+//                request.location = _currentLocation;
+//                request.creationDate = [NSDate date];
+//            } completionHandler:^(BOOL success, NSError * _Nullable error) {
+//                
+//            }];
+            
+            
             [self dismissViewControllerAnimated:YES completion:^{
                 
                 if (_delegate && [_delegate respondsToSelector:@selector(CSCameraViewControllerDelegateDoneWithImage:)]) {
@@ -221,67 +337,6 @@ typedef NS_ENUM(NSInteger, CameraProportionType) {
                 }
                 
             }];
-            
-            
-            /*
-            NSData *imageData = UIImageJPEGRepresentation(processedImage, 1.f);
-            
-            CGImageSourceRef imgSource = CGImageSourceCreateWithData((__bridge CFDataRef)imageData, NULL);
-            //this is the type of image (e.g., public.jpeg)
-            CFStringRef UTI = CGImageSourceGetType(imgSource);
-            
-            //this will be the data CGImageDestinationRef will write into
-            NSMutableData *newImageData = [NSMutableData data];
-            CGImageDestinationRef destination = CGImageDestinationCreateWithData((__bridge CFMutableDataRef)newImageData, UTI, 1, NULL);
-            
-            if(!destination) {
-                NSLog(@"***Could not create image destination ***");
-                return;
-            }
-            
-            //get original metadata
-//            NSDictionary *dict = [_mediaInfoobjectForKey:UIImagePickerControllerMediaMetadata];
-            NSMutableDictionary *metadata = [NSMutableDictionary dictionary];
-            
-            NSDictionary *gpsDict = [_currentLocation GPSDictionary];
-            if (metadata && gpsDict) {
-                [metadata setValue:gpsDict forKey:(NSString *)kCGImagePropertyGPSDictionary];
-            }
-            
-            /*
-            //add the image contained in the image source to the destination, overidding the old metadata with our modified metadata
-            CGImageDestinationAddImageFromSource(destination, imgSource, 0, (__bridge CFDictionaryRef)metadata);
-            
-            BOOL success = CGImageDestinationFinalize(destination);
-            
-            if(!success) {
-                NSLog(@"***Could not create data from image destination ***");
-            }
-            
-//            CGImageRef img = CGImageSourceCreateImageAtIndex(imgSource, 0, NULL);
-////            CGContextRef ctx = UIGraphicsGetCurrentContext();
-//            
-//            UIImage *dstImage = [UIImage imageWithCGImage:img];
-            
-            NSData *newData = [self writeMetadataIntoImageData:imageData metadata:metadata];
-            
-            UIImage *dstImage = [UIImage imageWithData:newData];
-            
-            CFRelease(imgSource);
-            CFRelease(destination);
-            
-
-            
-            CIImage *ciImage = [CIImage imageWithCGImage:[dstImage CGImage]];
-            NSDictionary *info = ciImage.properties;
-            
-            
-            [[PHPhotoLibrary sharedPhotoLibrary] performChanges:^{
-                [PHAssetChangeRequest creationRequestForAssetFromImage:dstImage];
-            } completionHandler:^(BOOL success, NSError * _Nullable error) {
-                
-            }];
-            */
         }
         
          [stillCamera resumeCameraCapture];
