@@ -220,12 +220,6 @@ typedef NS_ENUM(NSInteger, CameraProportionType) {
             }];
             
             
-            
-            
-            
-            
-            return;
-            
             /*
             NSData *imageData = UIImageJPEGRepresentation(processedImage, 1.f);
             
@@ -287,7 +281,7 @@ typedef NS_ENUM(NSInteger, CameraProportionType) {
             */
         }
         
-        [stillCamera resumeCameraCapture];
+         [stillCamera resumeCameraCapture];
     }];
 }
 
