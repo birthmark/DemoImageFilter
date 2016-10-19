@@ -11,6 +11,10 @@
 
 #import "BeautyCenterViewController.h"
 
+
+typedef void (^CSPhotoKitManagerResultBlock)(BOOL success, NSError *error);
+
+
 @interface CSAlbumViewController () <
 
     CSAlbumDataSourceManagerDelegate
@@ -32,6 +36,14 @@
     [self initTopBar];
     
     [self initUICollectionView];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    NSIndexPath *lastIndexPath = [NSIndexPath indexPathForItem:[CSAlbumDataSourceManager sharedInstance].photoAssets.count - 1 inSection:0];
+    [_collectionView scrollToItemAtIndexPath:lastIndexPath atScrollPosition:UICollectionViewScrollPositionCenteredVertically animated:YES];
 }
 
 - (BOOL)prefersStatusBarHidden {
@@ -110,9 +122,49 @@
 //    view.backgroundColor = [UIColor redColor];
 //    [self.view addSubview:view];
     
-    BeautyCenterViewController *beautyCenter = [[BeautyCenterViewController alloc] init];
-    beautyCenter.asset = asset;
-    [self presentViewController:beautyCenter animated:YES completion:nil];
+    [self deleteAssets:@[asset] resultBlock:^(BOOL success, NSError *error) {
+        NSLog(@"success : %d", success);
+    }];
+    
+//    BeautyCenterViewController *beautyCenter = [[BeautyCenterViewController alloc] init];
+//    beautyCenter.asset = asset;
+//    [self presentViewController:beautyCenter animated:YES completion:nil];
+}
+
+- (void)createAlbum:(NSString *)title resultBlock:(CSPhotoKitManagerResultBlock)resultBlock
+{
+    [[PHPhotoLibrary sharedPhotoLibrary] performChanges:^{
+        [PHAssetCollectionChangeRequest creationRequestForAssetCollectionWithTitle:title];
+    } completionHandler:^(BOOL success, NSError *error) {
+        if (resultBlock) {
+            resultBlock(success, error);
+        }
+    }];
+}
+
+- (void)deleteAssets:(NSArray *)assets resultBlock:(CSPhotoKitManagerResultBlock)resultBlock
+{
+    NSMutableArray *deleteAssets = [NSMutableArray array];
+    for (PHAsset *asset in assets) {
+        @autoreleasepool {
+            [deleteAssets addObject:asset];
+        }
+        
+    }
+    if (0 == deleteAssets.count) {
+        if (resultBlock) {
+            resultBlock(YES, nil);
+        }
+        return;
+    }
+    
+    [[PHPhotoLibrary sharedPhotoLibrary] performChanges:^{
+        [PHAssetChangeRequest deleteAssets:deleteAssets];
+    } completionHandler:^(BOOL success, NSError *error) {
+        if (resultBlock) {
+            resultBlock(success, error);
+        }
+    }];
 }
 
 @end

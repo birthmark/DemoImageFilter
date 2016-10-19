@@ -35,6 +35,8 @@
 
 @property (nonatomic, weak) id<CSAlbumDataSourceManagerDelegate> delegate;
 
+@property (nonatomic, copy) NSMutableArray<PHAsset *> *photoAssets;
+
 + (instancetype)sharedInstance;
 
 @end

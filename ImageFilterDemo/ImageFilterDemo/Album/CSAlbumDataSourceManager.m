@@ -18,13 +18,9 @@
 
 @interface CSAlbumDataSourceManager ()
 
-@property (nonatomic, copy) NSMutableArray<PHAsset *> *photoAssets;
-
 @end
 
 @implementation CSAlbumDataSourceManager {
-
-    NSArray *_assets;
     
     dispatch_once_t onceTokenForScrollToEnd;
 }
@@ -40,21 +36,12 @@
 }
 
 - (void)prepareUICollectionViewDataSource {
-    _assets = @[
-                @"1",@"2",@"3",
-                @"1",@"2",@"3",
-                @"1",@"2",@"3",
-                @"1",@"2",@"3",
-                @"1",@"2",@"3",
-                @"1",@"2",@"3",
-                @"1",@"2",@"3",
-                ];
-    
-    
     _photoAssets = [[NSMutableArray alloc] init];
     
     // 获取PHAsset
-    PHFetchResult<PHAssetCollection *> *albums = [PHAssetCollection fetchAssetCollectionsWithType:PHAssetCollectionTypeMoment subtype:PHAssetCollectionSubtypeAlbumRegular options:nil];
+    PHFetchResult<PHAssetCollection *> *albums = [PHAssetCollection fetchAssetCollectionsWithType:PHAssetCollectionTypeSmartAlbum
+                                                                                          subtype:PHAssetCollectionSubtypeAlbumRegular
+                                                                                          options:nil];
     for (PHAssetCollection *album in albums) {
         PHFetchResult<PHAsset *> *assets = [PHAsset fetchAssetsInAssetCollection:album options:nil];
         for (PHAsset *asset in assets) {
