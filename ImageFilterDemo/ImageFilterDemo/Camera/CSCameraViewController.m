@@ -268,6 +268,82 @@ typedef NS_ENUM(NSInteger, CameraProportionType) {
     }];
 }
 
+- (NSData *)writeMetadataIntoImageData:(NSData *)imageData metadata:(NSMutableDictionary *)metadata {
+    // create an imagesourceref
+    CGImageSourceRef source = CGImageSourceCreateWithData((__bridge CFDataRef) imageData, NULL);
+    
+    // this is the type of image (e.g., public.jpeg)
+    CFStringRef UTI = CGImageSourceGetType(source);
+    
+    // create a new data object and write the new image into it
+    NSMutableData *dest_data = [NSMutableData data];
+    CGImageDestinationRef destination = CGImageDestinationCreateWithData((__bridge CFMutableDataRef)dest_data, UTI, 1, NULL);
+    if (!destination) {
+        NSLog(@"Error: Could not create image destination");
+    }
+    // add the image contained in the image source to the destination, overidding the old metadata with our modified metadata
+    CGImageDestinationAddImageFromSource(destination, source, 0, (__bridge CFDictionaryRef) metadata);
+    BOOL success = NO;
+    success = CGImageDestinationFinalize(destination);
+    if (!success) {
+        NSLog(@"Error: Could not create data from image destination");
+    }
+    CFRelease(destination);
+    CFRelease(source);
+    return dest_data;
+}
+
+- (NSData *)taggedImageData:(NSData *)imageData metadata:(NSDictionary *)metadata orientation:(UIImageOrientation)orientation {
+    NSMutableDictionary *newMetadata = [NSMutableDictionary dictionaryWithDictionary:metadata];
+    if (!newMetadata[(NSString *)kCGImagePropertyGPSDictionary] && _currentLocation) {
+        newMetadata[(NSString *)kCGImagePropertyGPSDictionary] = [_currentLocation GPSDictionary];
+    }
+    
+    // Reference: http://sylvana.net/jpegcrop/exif_orientation.html
+    int newOrientation;
+    switch (orientation) {
+        case UIImageOrientationUp:
+            newOrientation = 1;
+            break;
+            
+        case UIImageOrientationDown:
+            newOrientation = 3;
+            break;
+            
+        case UIImageOrientationLeft:
+            newOrientation = 8;
+            break;
+            
+        case UIImageOrientationRight:
+            newOrientation = 6;
+            break;
+            
+        case UIImageOrientationUpMirrored:
+            newOrientation = 2;
+            break;
+            
+        case UIImageOrientationDownMirrored:
+            newOrientation = 4;
+            break;
+            
+        case UIImageOrientationLeftMirrored:
+            newOrientation = 5;
+            break;
+            
+        case UIImageOrientationRightMirrored:
+            newOrientation = 7;
+            break;
+            
+        default:
+            newOrientation = -1;
+    }
+    if (newOrientation != -1) {
+        newMetadata[(NSString *)kCGImagePropertyOrientation] = @(newOrientation);
+    }
+    NSData *newImageData = [self writeMetadataIntoImageData:imageData metadata:newMetadata];
+    return newImageData;
+}
+
 - (void)actionAlbum:(UIButton *)sender {
     [self dismissViewControllerAnimated:YES completion:^{
         if (_delegate && [_delegate respondsToSelector:@selector(CSCameraViewControllerDelegateActionAlbum)]) {
