@@ -11,6 +11,7 @@
 #import "CLLocation+GPSDictionary.h"
 
 #import "GPUImage.h"
+#import "GPUImageMoonlightFilter.h"
 #import "CameraFocusView.h"
 #import "CSSlider.h"
 
@@ -412,7 +413,8 @@ typedef NS_ENUM(NSInteger, CameraProportionType) {
     stillCamera.horizontallyMirrorFrontFacingCamera = YES;
     stillCamera.delegate = self;
     
-    [stillCamera addTarget:previewView];
+    // 此处曾因错误添加，导致闪屏
+    // [stillCamera addTarget:previewView];
     
     CGPoint focusPoint = CGPointMake(0.5f, 0.5f);
     [stillCamera.inputCamera lockForConfiguration:nil];
@@ -424,24 +426,26 @@ typedef NS_ENUM(NSInteger, CameraProportionType) {
     stillCamera.inputCamera.exposureMode = AVCaptureExposureModeContinuousAutoExposure;
     [stillCamera.inputCamera unlockForConfiguration];
     
+    
     // TODO: 不加滤镜, 如何获取图片？
-    //        [stillCamera addTarget:previewView];
-    //
+    /*
+    [stillCamera addTarget:previewView];
+    [stillCamera startCameraCapture];
+    */
+    
     
     // 添加滤镜
     
     // GPUImageStillCamera (output) -> GPUImageFilter (input, output) -> GPUImageView (input)
     // GPUImagePicture (output)     —> GPUImageFilter (input, output) —> GPUImageView (input)
     
-    //    filter = [[GPUImageSepiaFilter alloc] init];
+    // TODO: 有时候使用LUT的滤镜没有效果。原因未知。
+    // filter = [[GPUImageSepiaFilter alloc] init];
+    filter = [[GPUImageMoonlightFilter alloc] init];
     
-    // TODO: 使用LUT的滤镜没有效果。原因未知。
-    filter = [[GPUImageAmatorkaFilter alloc] init];
     [filter addTarget:previewView];
     
     [stillCamera addTarget:filter];
-    
-    // 添加滤镜
     
     [stillCamera startCameraCapture];
 }
