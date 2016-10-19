@@ -8,14 +8,15 @@
     NSDateFormatter *formatter  = [[NSDateFormatter alloc] init];
     [formatter setTimeZone:timeZone];
     [formatter setDateFormat:@"HH:mm:ss.SS"];
+    
     CLLocation *location=self;
-    NSDictionary *gpsDict   = [NSDictionary dictionaryWithObjectsAndKeys:
-                               [NSNumber numberWithFloat:fabs(location.coordinate.latitude)], kCGImagePropertyGPSLatitude,
-                               ((location.coordinate.latitude >= 0) ? @"N" : @"S"), kCGImagePropertyGPSLatitudeRef,
-                               [NSNumber numberWithFloat:fabs(location.coordinate.longitude)], kCGImagePropertyGPSLongitude,
-                               ((location.coordinate.longitude >= 0) ? @"E" : @"W"), kCGImagePropertyGPSLongitudeRef,
-                               [formatter stringFromDate:[location timestamp]], kCGImagePropertyGPSTimeStamp,
-                               nil];
+    NSDictionary *gpsDict = @{(NSString *)kCGImagePropertyGPSLatitude: @(fabs(location.coordinate.latitude)),
+                              (NSString *)kCGImagePropertyGPSLatitudeRef: ((location.coordinate.latitude >= 0) ? @"N" : @"S"),
+                              (NSString *)kCGImagePropertyGPSLongitude: @(fabs(location.coordinate.longitude)),
+                              (NSString *)kCGImagePropertyGPSLongitudeRef: ((location.coordinate.longitude >= 0) ? @"E" : @"W"),
+                              (NSString *)kCGImagePropertyGPSTimeStamp: [formatter stringFromDate:[location timestamp]],
+                              (NSString *)kCGImagePropertyGPSAltitude: @(fabs(location.altitude)),
+                              };
     return gpsDict;
 }
 
