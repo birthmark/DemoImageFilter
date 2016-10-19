@@ -40,6 +40,7 @@ typedef NS_ENUM(NSInteger, CameraProportionType) {
     GPUImageStillCamera *stillCamera;
     
     GPUImageFilterGroup *_filterGroup;
+    GPUImageFilterPipeline *_filterPipeline;
     
     GPUImageFilter *filter;
     
@@ -207,7 +208,7 @@ typedef NS_ENUM(NSInteger, CameraProportionType) {
 }
 
 - (void)actionCapture:(UIButton *)sender {
-    [stillCamera capturePhotoAsImageProcessedUpToFilter:_filterGroup withOrientation:UIImageOrientationUp withCompletionHandler:^(UIImage *processedImage, NSError *error) {
+    [stillCamera capturePhotoAsImageProcessedUpToFilter:[_filterPipeline.filters lastObject]  withOrientation:UIImageOrientationUp withCompletionHandler:^(UIImage *processedImage, NSError *error) {
         
         [stillCamera pauseCameraCapture];
         
@@ -448,6 +449,7 @@ typedef NS_ENUM(NSInteger, CameraProportionType) {
      */
     
     
+    /*
     GPUImageFilter *filter1 = [[GPUImageToonFilter alloc] init];
     
     filter = [[GPUImageMoonlightFilter alloc] init];
@@ -462,6 +464,15 @@ typedef NS_ENUM(NSInteger, CameraProportionType) {
     [_filterGroup addTarget:previewView];
     
     [stillCamera addTarget:_filterGroup];
+    
+    [stillCamera startCameraCapture];
+     */
+    
+    
+    GPUImageFilter *filter1 = [[GPUImageToonFilter alloc] init];
+    GPUImageMoonlightFilter *filter2 = [[GPUImageMoonlightFilter alloc] init];
+    NSArray *filterArr = @[filter2, filter1];
+    _filterPipeline = [[GPUImageFilterPipeline alloc] initWithOrderedFilters:filterArr input:stillCamera output:previewView];
     
     [stillCamera startCameraCapture];
 }
