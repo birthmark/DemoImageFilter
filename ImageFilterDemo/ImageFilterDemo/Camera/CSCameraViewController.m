@@ -296,23 +296,24 @@ typedef NS_ENUM(NSInteger, CameraProportionType) {
 
 - (NSDictionary *)metadataForImage:(UIImage *)image withCLLocation:(CLLocation *)location
 {
-    NSData *imageData = UIImageJPEGRepresentation(image, 1.f);
-    
-    CGImageSourceRef imgSource = CGImageSourceCreateWithData((__bridge CFDataRef)imageData, NULL);
-    //this is the type of image (e.g., public.jpeg)
-    CFStringRef UTI = CGImageSourceGetType(imgSource);
-    
-    //this will be the data CGImageDestinationRef will write into
-    NSMutableData *newImageData = [NSMutableData data];
-    CGImageDestinationRef destination = CGImageDestinationCreateWithData((__bridge CFMutableDataRef)newImageData, UTI, 1, NULL);
-    
-    if(!destination) {
-        NSLog(@"***Could not create image destination ***");
-        return nil;
-    }
-    
+//    NSData *imageData = UIImageJPEGRepresentation(image, 1.f);
+//    
+//    CGImageSourceRef imgSource = CGImageSourceCreateWithData((__bridge CFDataRef)imageData, NULL);
+//    //this is the type of image (e.g., public.jpeg)
+//    CFStringRef UTI = CGImageSourceGetType(imgSource);
+//    
+//    //this will be the data CGImageDestinationRef will write into
+//    NSMutableData *newImageData = [NSMutableData data];
+//    CGImageDestinationRef destination = CGImageDestinationCreateWithData((__bridge CFMutableDataRef)newImageData, UTI, 1, NULL);
+//    
+//    if(!destination) {
+//        NSLog(@"***Could not create image destination ***");
+//        return nil;
+//    }
+//    CFRelease(imgSource);
+//    CFRelease(destination);
+//    
     //get original metadata
-    //            NSDictionary *dict = [_mediaInfoobjectForKey:UIImagePickerControllerMediaMetadata];
     NSMutableDictionary *metadata = [NSMutableDictionary dictionary];
     
     NSDictionary *gpsDict = [location GPSDictionary];
