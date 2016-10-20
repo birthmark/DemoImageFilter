@@ -48,6 +48,7 @@ typedef NS_ENUM(NSInteger, CameraProportionType) {
     NSInteger cameraProportionType;
     
     CameraFocusView *cameraFocusView;
+    UIView *_maskViewCapture;
     
     CSSlider *csSlider;
     
@@ -75,6 +76,8 @@ typedef NS_ENUM(NSInteger, CameraProportionType) {
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
+    [stillCamera startCameraCapture];
+    
     [self listenAVCaptureDeviceSubjectAreaDidChangeNotification];
 }
 
@@ -89,6 +92,8 @@ typedef NS_ENUM(NSInteger, CameraProportionType) {
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
+    
+    [stillCamera stopCameraCapture];
     
     [[NSNotificationCenter defaultCenter] removeObserver:self name:AVCaptureDeviceSubjectAreaDidChangeNotification object:nil];
     
@@ -302,20 +307,31 @@ typedef NS_ENUM(NSInteger, CameraProportionType) {
     return metadata;
 }
 
+#pragma mark - Capture
+
 - (void)actionCapture:(UIButton *)sender {
-    [stillCamera capturePhotoAsImageProcessedUpToFilter:[_filterPipeline.filters lastObject]  withOrientation:UIImageOrientationUp withCompletionHandler:^(UIImage *processedImage, NSError *error) {
+    [stillCamera capturePhotoAsImageProcessedUpToFilter:filter withOrientation:UIImageOrientationUp withCompletionHandler:^(UIImage *processedImage, NSError *error) {
         
+        _maskViewCapture.hidden = NO;
         [stillCamera pauseCameraCapture];
         
         if (error == nil) {
             
-            NSDictionary *metadata = [self metadataForImage:processedImage withCLLocation:_currentLocation];
+            [stillCamera resumeCameraCapture];
             
-            // 仅此方法可以保存GPS信息。其他都不行。
-            ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
-            [library writeImageToSavedPhotosAlbum:[processedImage CGImage] metadata:metadata completionBlock:^(NSURL *assetURL, NSError *error) {
-                NSLog(@"ok");
-            }];
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.05 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                _maskViewCapture.hidden = YES;
+            });
+            
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                NSDictionary *metadata = [self metadataForImage:processedImage withCLLocation:_currentLocation];
+                
+                // 仅此方法可以保存GPS信息。其他都不行。
+                ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
+                [library writeImageToSavedPhotosAlbum:[processedImage CGImage] metadata:metadata completionBlock:^(NSURL *assetURL, NSError *error) {
+                    NSLog(@"ok");
+                }];
+            });
             
             
 //            [self saveImageToCameraRoll:processedImage location:_currentLocation];
@@ -330,16 +346,14 @@ typedef NS_ENUM(NSInteger, CameraProportionType) {
 //            }];
             
             
-            [self dismissViewControllerAnimated:YES completion:^{
-                
-                if (_delegate && [_delegate respondsToSelector:@selector(CSCameraViewControllerDelegateDoneWithImage:)]) {
-                    [_delegate CSCameraViewControllerDelegateDoneWithImage:processedImage];
-                }
-                
-            }];
+//            [self dismissViewControllerAnimated:YES completion:^{
+//                
+//                if (_delegate && [_delegate respondsToSelector:@selector(CSCameraViewControllerDelegateDoneWithImage:)]) {
+//                    [_delegate CSCameraViewControllerDelegateDoneWithImage:processedImage];
+//                }
+//                
+//            }];
         }
-        
-         [stillCamera resumeCameraCapture];
     }];
 }
 
@@ -458,6 +472,11 @@ typedef NS_ENUM(NSInteger, CameraProportionType) {
     previewView.fillMode = kGPUImageFillModePreserveAspectRatioAndFill;
     [self.view insertSubview:previewView atIndex:0];
     
+    _maskViewCapture = [[UIView alloc] initWithFrame:previewView.bounds];
+    [self.view insertSubview:_maskViewCapture aboveSubview:previewView];
+    _maskViewCapture.backgroundColor = [UIColor blackColor];
+    _maskViewCapture.hidden = YES;
+    
     [self addFocusTapGesture];
     
     stillCamera = [[GPUImageStillCamera alloc] initWithSessionPreset:AVCaptureSessionPresetPhoto cameraPosition:AVCaptureDevicePositionBack];
@@ -491,17 +510,15 @@ typedef NS_ENUM(NSInteger, CameraProportionType) {
     // GPUImageStillCamera (output) -> GPUImageFilter (input, output) -> GPUImageView (input)
     // GPUImagePicture (output)     —> GPUImageFilter (input, output) —> GPUImageView (input)
     
-    /*
+    
     // TODO: 有时候使用LUT的滤镜没有效果。原因未知。
     // filter = [[GPUImageSepiaFilter alloc] init];
-    filter = [[GPUImageMoonlightFilter alloc] init];
+    filter = [[GPUImageToonFilter alloc] init];
     
     [filter addTarget:previewView];
     
     [stillCamera addTarget:filter];
     
-    [stillCamera startCameraCapture];
-     */
     
     
     /*
@@ -524,12 +541,14 @@ typedef NS_ENUM(NSInteger, CameraProportionType) {
      */
     
     
+    /*
     GPUImageFilter *filter1 = [[GPUImageToonFilter alloc] init];
     GPUImageMoonlightFilter *filter2 = [[GPUImageMoonlightFilter alloc] init];
     NSArray *filterArr = @[filter2, filter1];
     _filterPipeline = [[GPUImageFilterPipeline alloc] initWithOrderedFilters:filterArr input:stillCamera output:previewView];
     
     [stillCamera startCameraCapture];
+     */
 }
 
 - (void)initExposureSlider {
