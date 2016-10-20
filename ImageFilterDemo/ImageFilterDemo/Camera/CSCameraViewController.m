@@ -19,6 +19,39 @@
 #import <AssetsLibrary/AssetsLibrary.h>
 #import "UIImage+CSCategory.h"
 
+
+#ifndef COMPARE_SYSTEM_VERSION
+#define COMPARE_SYSTEM_VERSION(v)    ([[[UIDevice currentDevice] systemVersion] compare:(v) options:NSNumericSearch])
+#endif
+
+#ifndef SYSTEM_VERSION_EQUAL_TO
+#define SYSTEM_VERSION_EQUAL_TO(v)                  (COMPARE_SYSTEM_VERSION(v) == NSOrderedSame)
+#endif
+
+#ifndef SYSTEM_VERSION_GREATER_THAN
+#define SYSTEM_VERSION_GREATER_THAN(v)              (COMPARE_SYSTEM_VERSION(v) == NSOrderedDescending)
+#endif
+
+#ifndef SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO
+#define SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(v)  (COMPARE_SYSTEM_VERSION(v) != NSOrderedAscending)
+#endif
+
+#ifndef SYSTEM_VERSION_LESS_THAN
+#define SYSTEM_VERSION_LESS_THAN(v)                 (COMPARE_SYSTEM_VERSION(v) == NSOrderedAscending)
+#endif
+
+#ifndef SYSTEM_VERSION_LESS_THAN_OR_EQUAL_TO
+#define SYSTEM_VERSION_LESS_THAN_OR_EQUAL_TO(v)     (COMPARE_SYSTEM_VERSION(v) != NSOrderedDescending)
+#endif
+
+#ifndef SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO_8_0
+#define SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO_8_0 (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"8.0"))
+#endif
+
+
+typedef void (^CSPhotoManagerResultBlock)(BOOL success, NSError *error);
+
+
 typedef NS_ENUM(NSInteger, CameraProportionType) {
     CameraProportionType11,
     CameraProportionType34,
@@ -362,35 +395,111 @@ typedef NS_ENUM(NSInteger, CameraProportionType) {
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
                 NSDictionary *metadata = [self metadataForImage:processedImage withCLLocation:_currentLocation];
                 
-                // 仅此方法可以保存GPS信息。其他都不行。
-                ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
-                [library writeImageToSavedPhotosAlbum:[processedImage CGImage] metadata:metadata completionBlock:^(NSURL *assetURL, NSError *error) {
-                    NSLog(@"ok");
-                }];
+//                // 仅此方法可以保存GPS信息。其他都不行。
+//                ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
+//                [library writeImageToSavedPhotosAlbum:[processedImage CGImage] metadata:metadata completionBlock:^(NSURL *assetURL, NSError *error) {
+//                    NSLog(@"ok");
+//                }];
+                
+                [self writeImageData:UIImageJPEGRepresentation(processedImage, 1.f) metadata:metadata toAlbum:nil resultBlock:nil];
             });
-            
-            
-//            [self saveImageToCameraRoll:processedImage location:_currentLocation];
-            
-            
-//            [[PHPhotoLibrary sharedPhotoLibrary] performChanges:^{
-//                PHAssetChangeRequest *request = [PHAssetChangeRequest creationRequestForAssetFromImage:processedImage];
-//                request.location = _currentLocation;
-//                request.creationDate = [NSDate date];
-//            } completionHandler:^(BOOL success, NSError * _Nullable error) {
-//                
-//            }];
-            
-            
-//            [self dismissViewControllerAnimated:YES completion:^{
-//                
-//                if (_delegate && [_delegate respondsToSelector:@selector(CSCameraViewControllerDelegateDoneWithImage:)]) {
-//                    [_delegate CSCameraViewControllerDelegateDoneWithImage:processedImage];
-//                }
-//                
-//            }];
         }
     }];
+}
+
+- (NSData *)imageDataWithData:(NSData *)imageData metadata:(NSDictionary *)metadata
+{
+    CGImageSourceRef source = CGImageSourceCreateWithData((__bridge CFDataRef)imageData, NULL);
+    NSMutableDictionary *source_metadata = [(NSMutableDictionary *)CFBridgingRelease(CGImageSourceCopyProperties(source, NULL)) mutableCopy];
+    [source_metadata addEntriesFromDictionary:metadata];
+    
+    NSMutableData *dest_data = [NSMutableData data];
+    CFStringRef UTI = CGImageSourceGetType(source);
+    CGImageDestinationRef destination = CGImageDestinationCreateWithData((__bridge CFMutableDataRef)dest_data, UTI, 1,NULL);
+    
+    float compression = 1.0f; //设置压缩比
+    NSMutableDictionary* dest_metadata = [NSMutableDictionary dictionaryWithDictionary:metadata];
+    [dest_metadata setObject:[NSNumber numberWithFloat:compression] forKey:(NSString *)kCGImageDestinationLossyCompressionQuality];
+    
+    CGImageDestinationAddImageFromSource(destination, source, 0, (__bridge CFDictionaryRef)dest_metadata);
+    CGImageDestinationFinalize(destination);
+    
+    destination == NULL ? : CFRelease(destination);
+    source == NULL ?      : CFRelease(source);
+    
+    return dest_data;
+}
+
+- (void)writeImageData:(NSData *)imageData metadata:(NSDictionary *)metadata toAlbum:(NSString *)albumName resultBlock:(CSPhotoManagerResultBlock)resultBlock
+{
+    // 临时使用此相册
+    PHFetchResult<PHAssetCollection *> *albums = [PHAssetCollection fetchAssetCollectionsWithType:PHAssetCollectionTypeAlbum subtype:PHAssetCollectionSubtypeAlbumRegular options:nil];
+    
+    
+    __block NSString *assetID = nil;
+    if (metadata) {
+        imageData = [self imageDataWithData:imageData metadata:metadata];
+    }
+    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"9.0") && [PHAssetCreationRequest supportsAssetResourceTypes:@[@(PHAssetResourceTypePhoto)]]) {
+        //iOS9
+        [[PHPhotoLibrary sharedPhotoLibrary] performChanges:^{
+            PHAssetCreationRequest *request = [PHAssetCreationRequest creationRequestForAsset];
+            [request addResourceWithType:PHAssetResourceTypePhoto
+                                    data:imageData
+                                 options:nil];
+            assetID = request.placeholderForCreatedAsset.localIdentifier;
+            PHAssetCollectionChangeRequest *collectionRequest = [PHAssetCollectionChangeRequest changeRequestForAssetCollection:albums[0]];
+            [collectionRequest addAssets:@[request.placeholderForCreatedAsset]];
+        } completionHandler:^(BOOL success, NSError *error) {
+            
+            if (success && assetID) {
+                PHFetchResult<PHAsset *> *assets = [PHAsset fetchAssetsWithLocalIdentifiers:@[assetID] options:nil];
+                PHAsset *asset = assets[0];
+                if (resultBlock) {
+                    resultBlock(success, error);
+                }
+            } else {
+                if (resultBlock) {
+                    resultBlock(success, error);
+                }
+            }
+            
+        }];
+    } else {
+        //iOS8
+        NSString *temporaryFileName = [NSProcessInfo processInfo].globallyUniqueString;
+        NSString *temporaryFilePath = [NSTemporaryDirectory() stringByAppendingPathComponent:[temporaryFileName stringByAppendingPathExtension:@"jpg"]];
+        NSURL *temporaryFileURL = [NSURL fileURLWithPath:temporaryFilePath];
+        
+        [[PHPhotoLibrary sharedPhotoLibrary] performChanges:^{
+            NSError *error = nil;
+            [imageData writeToURL:temporaryFileURL options:NSDataWritingAtomic error:&error];
+            if (error) {
+                NSLog(@"Error occured while writing image data to a temporary file: %@", error);
+            } else {
+                PHAssetChangeRequest *assetRequest = [PHAssetChangeRequest creationRequestForAssetFromImageAtFileURL:temporaryFileURL];
+                PHAssetCollectionChangeRequest *collectionRequest = [PHAssetCollectionChangeRequest changeRequestForAssetCollection:albums[0]];
+                [collectionRequest addAssets:@[assetRequest.placeholderForCreatedAsset]];
+                assetID = assetRequest.placeholderForCreatedAsset.localIdentifier;
+            }
+        } completionHandler:^(BOOL success, NSError *error) {
+            // Delete the temporary file.
+            NSError *removeError = nil;
+            [[NSFileManager defaultManager] removeItemAtURL:temporaryFileURL error:&removeError];
+            
+            if (success && assetID) {
+                PHFetchResult<PHAsset *> *assets = [PHAsset fetchAssetsWithLocalIdentifiers:@[assetID] options:nil];
+                PHAsset *asset = assets[0];
+                if (resultBlock) {
+                    resultBlock(success, error);
+                }
+            } else {
+                if (resultBlock) {
+                    resultBlock(success, error);
+                }
+            }
+        }];
+    }
 }
 
 - (NSData *)writeMetadataIntoImageData:(NSData *)imageData metadata:(NSMutableDictionary *)metadata {
