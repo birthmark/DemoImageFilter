@@ -17,7 +17,7 @@
 
 #import <Photos/Photos.h>
 #import <AssetsLibrary/AssetsLibrary.h>
-
+#import "UIImage+CSCategory.h"
 
 typedef NS_ENUM(NSInteger, CameraProportionType) {
     CameraProportionType11,
@@ -54,6 +54,11 @@ typedef NS_ENUM(NSInteger, CameraProportionType) {
     
     UIView *topBar;
     UIView *toolBar;
+    
+    UIView *_viewAlbumThumbnail;
+    UIImageView *_thumbnailAlbum;
+    UIButton *_btnAlbumThumbnail;
+    UIActivityIndicatorView *_activityIndicator;
     
     CLLocationManager *_locationManager;
     CLLocation *_currentLocation;
@@ -184,15 +189,26 @@ typedef NS_ENUM(NSInteger, CameraProportionType) {
     [toolBar addSubview:btnCapture];
     
     // Album
-    UIButton *btnAlbum = [[UIButton alloc] initWithFrame:CGRectMake(10, 0, 40, 40)];
-    [btnAlbum setBackgroundImage:[UIImage imageNamed:@"Model.png"] forState:UIControlStateNormal];
-    [btnAlbum addTarget:self action:@selector(actionAlbum:) forControlEvents:UIControlEventTouchUpInside];
-    btnAlbum.layer.cornerRadius = 5.0f;
-    btnAlbum.layer.masksToBounds = YES;
-    [toolBar addSubview:btnAlbum];
+    _viewAlbumThumbnail = [[UIView alloc] initWithFrame:CGRectMake(10, 0, 40, 40)];
+    _viewAlbumThumbnail.layer.borderColor= [UIColor whiteColor].CGColor;
+    _viewAlbumThumbnail.layer.borderWidth = 1.f;
+    _viewAlbumThumbnail.layer.cornerRadius = 2.0f;
+    _viewAlbumThumbnail.layer.masksToBounds = YES;
+    [toolBar addSubview:_viewAlbumThumbnail];
+    
+    _thumbnailAlbum = [[UIImageView alloc] initWithFrame:_viewAlbumThumbnail.bounds];
+    _thumbnailAlbum.image = [UIImage imageNamed:@"Model.png"];
+    [_viewAlbumThumbnail addSubview:_thumbnailAlbum];
+    
+    _btnAlbumThumbnail = [[UIButton alloc] initWithFrame:_viewAlbumThumbnail.bounds];
+    [_btnAlbumThumbnail addTarget:self action:@selector(actionAlbum:) forControlEvents:UIControlEventTouchUpInside];
+    [_viewAlbumThumbnail addSubview:_btnAlbumThumbnail];
+    
+    _activityIndicator = [[UIActivityIndicatorView alloc] initWithFrame:_viewAlbumThumbnail.bounds];
+    [_viewAlbumThumbnail addSubview:_activityIndicator];
     
     // Proportion
-    UIButton *btnProportion = [[UIButton alloc] initWithFrame:CGRectMake(CGRectGetMaxX(btnAlbum.frame) + 20, 0, 40, 40)];
+    UIButton *btnProportion = [[UIButton alloc] initWithFrame:CGRectMake(CGRectGetMaxX(_btnAlbumThumbnail.frame) + 20, 0, 40, 40)];
     [btnProportion setBackgroundImage:[UIImage imageNamed:@"btnProportion11"] forState:UIControlStateNormal];
     [btnProportion addTarget:self action:@selector(actionProportion:) forControlEvents:UIControlEventTouchUpInside];
     btnProportion.layer.cornerRadius = 5.0f;
@@ -208,8 +224,8 @@ typedef NS_ENUM(NSInteger, CameraProportionType) {
     [toolBar addSubview:btnFilter];
     
     btnCapture.center       = CGPointMake(toolBar.center.x, CGRectGetHeight(toolBar.frame) / 2);
-    btnAlbum.center         = CGPointMake(btnAlbum.center.x, btnCapture.center.y);
-    btnProportion.center    = CGPointMake(CGRectGetMaxX(btnAlbum.frame) + (CGRectGetMinX(btnCapture.frame) - CGRectGetMaxX(btnAlbum.frame))/2, btnCapture.center.y);
+    _viewAlbumThumbnail.center         = CGPointMake(_btnAlbumThumbnail.center.x, btnCapture.center.y);
+    btnProportion.center    = CGPointMake(CGRectGetMaxX(_btnAlbumThumbnail.frame) + (CGRectGetMinX(btnCapture.frame) - CGRectGetMaxX(_btnAlbumThumbnail.frame))/2, btnCapture.center.y);
     btnFilter.center        = CGPointMake(btnFilter.center.x, btnCapture.center.y);
 }
 
@@ -310,17 +326,36 @@ typedef NS_ENUM(NSInteger, CameraProportionType) {
 #pragma mark - Capture
 
 - (void)actionCapture:(UIButton *)sender {
+    if (![UIApplication sharedApplication].isIgnoringInteractionEvents) {
+        [[UIApplication sharedApplication] beginIgnoringInteractionEvents];
+    }
+    
     [stillCamera capturePhotoAsImageProcessedUpToFilter:filter withOrientation:UIImageOrientationUp withCompletionHandler:^(UIImage *processedImage, NSError *error) {
         
+        _thumbnailAlbum.image = nil;
         _maskViewCapture.hidden = NO;
         [stillCamera pauseCameraCapture];
+        
+        [_activityIndicator startAnimating];
         
         if (error == nil) {
             
             [stillCamera resumeCameraCapture];
             
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.05 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [_activityIndicator stopAnimating];
                 _maskViewCapture.hidden = YES;
+                
+                _thumbnailAlbum.transform = CGAffineTransformMakeScale(0.1f, 0.1f);
+                UIImage *imgAlbumThumbnail = [processedImage cs_imageFitTargetSize:_viewAlbumThumbnail.frame.size];
+                _thumbnailAlbum.image = imgAlbumThumbnail;
+                [UIView animateWithDuration:0.3f animations:^{
+                    _thumbnailAlbum.transform = CGAffineTransformIdentity;
+                } completion:^(BOOL finished) {
+                    if ([UIApplication sharedApplication].isIgnoringInteractionEvents) {
+                        [[UIApplication sharedApplication] endIgnoringInteractionEvents];
+                    }
+                }];
             });
             
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
