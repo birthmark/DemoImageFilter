@@ -51,9 +51,9 @@
 {
     [super viewWillAppear:animated];
     
-//    currentIndexPath = [NSIndexPath indexPathForItem:(thumbnailDataSourceManager.photoAssets.count - 1) inSection:0];
-//    [_collectionViewThumbnail scrollToItemAtIndexPath:currentIndexPath atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:NO];
-//    [_collectionViewPreview scrollToItemAtIndexPath:currentIndexPath atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:NO];
+    currentIndexPath = [NSIndexPath indexPathForItem:(thumbnailDataSourceManager.photoAssets.count - 1) inSection:0];
+    [_collectionViewThumbnail scrollToItemAtIndexPath:currentIndexPath atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:NO];
+    [_collectionViewPreview scrollToItemAtIndexPath:currentIndexPath atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:NO];
     
 //    currentOffsetPreview = _collectionViewPreview.contentOffset.x;
 }
@@ -66,7 +66,7 @@
 
 - (void)initToolBar {
     _toolBar = [[UIView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.frame), 40)];
-    _toolBar.backgroundColor = RGBAHEX(0xFFFFFF, 0.2);
+    _toolBar.backgroundColor = RGBAHEX(0x0, 0.5f);
     [self.view addSubview:_toolBar];
     
     // Album
@@ -131,7 +131,7 @@
     layout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
     
     _collectionViewPreview = [[UICollectionView alloc] initWithFrame:self.view.frame collectionViewLayout:layout];
-    _collectionViewPreview.backgroundColor = [UIColor whiteColor];
+    _collectionViewPreview.backgroundColor = [UIColor blackColor];
     _collectionViewPreview.showsHorizontalScrollIndicator = NO;
     _collectionViewPreview.pagingEnabled = YES;
     [self.view insertSubview:_collectionViewPreview atIndex:0];
@@ -183,6 +183,10 @@
 //    NSLog(@"arr : %@", arr);
 //    NSIndexPath *indexPath = [_collectionViewPreview indexPathForItemAtPoint:self.view.center];
 //    NSLog(@"indexPath : %@", indexPath);
+    
+    
+    CGFloat offset = scrollView.contentOffset.x;
+    
 }
 
 #pragma mark - <UICollectionViewDelegateFlowLayout>
