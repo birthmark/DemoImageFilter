@@ -95,6 +95,8 @@ typedef NS_ENUM(NSInteger, CameraProportionType) {
     
     CLLocationManager *_locationManager;
     CLLocation *_currentLocation;
+    
+    AVAudioPlayer *_audioPlayer;
 }
 
 - (void)viewDidLoad {
@@ -109,6 +111,8 @@ typedef NS_ENUM(NSInteger, CameraProportionType) {
     
     _locationManager = [[CLLocationManager alloc] init];
     _locationManager.delegate = self;
+    
+    [self initAudioPlayer];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -136,6 +140,11 @@ typedef NS_ENUM(NSInteger, CameraProportionType) {
     [[NSNotificationCenter defaultCenter] removeObserver:self name:AVCaptureDeviceSubjectAreaDidChangeNotification object:nil];
     
     [_locationManager stopUpdatingLocation];
+    
+    if (_audioPlayer) {
+        [_audioPlayer stop];
+        _audioPlayer = nil;
+    }
 }
 
 - (BOOL)prefersStatusBarHidden {
@@ -604,7 +613,17 @@ typedef NS_ENUM(NSInteger, CameraProportionType) {
 }
 
 - (void)actionFilter:(UIButton *)sender {
+    if (_audioPlayer) {
+        [_audioPlayer play];
+    }
+}
+
+- (void)initAudioPlayer
+{
+//    NSURL *audioURL = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"magic_animation" ofType:@"m4a"]];
     
+    NSURL *audioURL = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"countdown" ofType:@"wav"]];
+    _audioPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:audioURL error:nil];
 }
 
 #pragma mark - Camera View

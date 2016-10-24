@@ -59,6 +59,8 @@
 		A4D8AECD1D51A96200060E5F /* DemoGPUImageVideoCameraViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A4D8AECC1D51A96200060E5F /* DemoGPUImageVideoCameraViewController.m */; };
 		A4D8AED01D51BD0500060E5F /* CSViewVideoCameraDuration.m in Sources */ = {isa = PBXBuildFile; fileRef = A4D8AECF1D51BD0500060E5F /* CSViewVideoCameraDuration.m */; };
 		A4D8AF081D582B1E00060E5F /* CSAlbumDataSourceManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A4D8AF071D582B1E00060E5F /* CSAlbumDataSourceManager.m */; };
+		A4DE3AEB1DBDDB6900CC8896 /* magic_animation.m4a in Resources */ = {isa = PBXBuildFile; fileRef = A4DE3AEA1DBDDB6900CC8896 /* magic_animation.m4a */; };
+		A4DE3AED1DBDDE1900CC8896 /* countdown.wav in Resources */ = {isa = PBXBuildFile; fileRef = A4DE3AEC1DBDDE1900CC8896 /* countdown.wav */; };
 		A4F225121DB6301700310FB9 /* CLLocation+GPSDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = A4F225111DB6301700310FB9 /* CLLocation+GPSDictionary.m */; };
 		DD82DD4AAC3BD05F16B37789 /* libPods-ImageFilterDemo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FC6FAC3C1BE6B6B1815CE150 /* libPods-ImageFilterDemo.a */; };
 /* End PBXBuildFile section */
@@ -155,6 +157,8 @@
 		A4D8AECF1D51BD0500060E5F /* CSViewVideoCameraDuration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSViewVideoCameraDuration.m; sourceTree = "<group>"; };
 		A4D8AF061D582B1E00060E5F /* CSAlbumDataSourceManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSAlbumDataSourceManager.h; sourceTree = "<group>"; };
 		A4D8AF071D582B1E00060E5F /* CSAlbumDataSourceManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSAlbumDataSourceManager.m; sourceTree = "<group>"; };
+		A4DE3AEA1DBDDB6900CC8896 /* magic_animation.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = magic_animation.m4a; sourceTree = "<group>"; };
+		A4DE3AEC1DBDDE1900CC8896 /* countdown.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = countdown.wav; sourceTree = "<group>"; };
 		A4F225101DB6300D00310FB9 /* CLLocation+GPSDictionary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CLLocation+GPSDictionary.h"; sourceTree = "<group>"; };
 		A4F225111DB6301700310FB9 /* CLLocation+GPSDictionary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CLLocation+GPSDictionary.m"; sourceTree = "<group>"; };
 		BB8A08A1C1FA46E173EA13A6 /* Pods-ImageFilterDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ImageFilterDemo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ImageFilterDemo/Pods-ImageFilterDemo.debug.xcconfig"; sourceTree = "<group>"; };
@@ -395,6 +399,8 @@
 		A4D8AEB91D50453400060E5F /* Camera */ = {
 			isa = PBXGroup;
 			children = (
+				A4DE3AEC1DBDDE1900CC8896 /* countdown.wav */,
+				A4DE3AEA1DBDDB6900CC8896 /* magic_animation.m4a */,
 				A4880B611D816B600016B619 /* CSSlider.h */,
 				A4880B601D816B600016B619 /* CSSlider.m */,
 				832A2EA71D50EFA100203BC8 /* CSCameraViewController.h */,
@@ -530,6 +536,8 @@
 				834C52FB1B92DABE000690FD /* Main.storyboard in Resources */,
 				A47F5A3E1D704A7D002B4F3E /* texture_colorBurnBlend_1.png in Resources */,
 				A47F5A421D704A7D002B4F3E /* texture_normalBlend_2.png in Resources */,
+				A4DE3AEB1DBDDB6900CC8896 /* magic_animation.m4a in Resources */,
+				A4DE3AED1DBDDE1900CC8896 /* countdown.wav in Resources */,
 				A4D8AEC41D50918F00060E5F /* GPUImageCustomFilter.fsh in Resources */,
 				A47F5A451D704A7D002B4F3E /* texture_overlayBlend_1.png in Resources */,
 				A42D28B01D598E5B00FEE114 /* CSAlbumCollectionViewCell.xib in Resources */,
