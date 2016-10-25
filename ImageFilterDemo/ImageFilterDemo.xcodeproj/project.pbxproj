@@ -62,6 +62,7 @@
 		A4DE3AEB1DBDDB6900CC8896 /* magic_animation.m4a in Resources */ = {isa = PBXBuildFile; fileRef = A4DE3AEA1DBDDB6900CC8896 /* magic_animation.m4a */; };
 		A4DE3AED1DBDDE1900CC8896 /* countdown.wav in Resources */ = {isa = PBXBuildFile; fileRef = A4DE3AEC1DBDDE1900CC8896 /* countdown.wav */; };
 		A4DE3B471DBF2D5000CC8896 /* ABPieProgress.m in Sources */ = {isa = PBXBuildFile; fileRef = A4DE3B461DBF2D5000CC8896 /* ABPieProgress.m */; };
+		A4DE3B4A1DBF334F00CC8896 /* NSIndexSet+Convenience.m in Sources */ = {isa = PBXBuildFile; fileRef = A4DE3B491DBF334F00CC8896 /* NSIndexSet+Convenience.m */; };
 		A4F225121DB6301700310FB9 /* CLLocation+GPSDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = A4F225111DB6301700310FB9 /* CLLocation+GPSDictionary.m */; };
 		DD82DD4AAC3BD05F16B37789 /* libPods-ImageFilterDemo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FC6FAC3C1BE6B6B1815CE150 /* libPods-ImageFilterDemo.a */; };
 /* End PBXBuildFile section */
@@ -162,6 +163,8 @@
 		A4DE3AEC1DBDDE1900CC8896 /* countdown.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = countdown.wav; sourceTree = "<group>"; };
 		A4DE3B451DBF2D5000CC8896 /* ABPieProgress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ABPieProgress.h; sourceTree = "<group>"; };
 		A4DE3B461DBF2D5000CC8896 /* ABPieProgress.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ABPieProgress.m; sourceTree = "<group>"; };
+		A4DE3B481DBF334F00CC8896 /* NSIndexSet+Convenience.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSIndexSet+Convenience.h"; sourceTree = "<group>"; };
+		A4DE3B491DBF334F00CC8896 /* NSIndexSet+Convenience.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSIndexSet+Convenience.m"; sourceTree = "<group>"; };
 		A4F225101DB6300D00310FB9 /* CLLocation+GPSDictionary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CLLocation+GPSDictionary.h"; sourceTree = "<group>"; };
 		A4F225111DB6301700310FB9 /* CLLocation+GPSDictionary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CLLocation+GPSDictionary.m"; sourceTree = "<group>"; };
 		BB8A08A1C1FA46E173EA13A6 /* Pods-ImageFilterDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ImageFilterDemo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ImageFilterDemo/Pods-ImageFilterDemo.debug.xcconfig"; sourceTree = "<group>"; };
@@ -307,6 +310,8 @@
 				A415851F1DADCA220058204E /* CSPreviewThumbnailDataSourceManager.m */,
 				A41585201DADCA220058204E /* CSPreviewViewController.h */,
 				A41585211DADCA220058204E /* CSPreviewViewController.m */,
+				A4DE3B481DBF334F00CC8896 /* NSIndexSet+Convenience.h */,
+				A4DE3B491DBF334F00CC8896 /* NSIndexSet+Convenience.m */,
 			);
 			path = Preview;
 			sourceTree = "<group>";
@@ -646,6 +651,7 @@
 				A4D8AF081D582B1E00060E5F /* CSAlbumDataSourceManager.m in Sources */,
 				834C52F51B92DABE000690FD /* AppDelegate.m in Sources */,
 				832A2EA31D50E82600203BC8 /* CSAlbumViewController.m in Sources */,
+				A4DE3B4A1DBF334F00CC8896 /* NSIndexSet+Convenience.m in Sources */,
 				A42D28C51D5B2B9000FEE114 /* CSAlbumCoverCollectionViewController.m in Sources */,
 				A4D8AECA1D51A8D500060E5F /* CSVideoCameraViewController.m in Sources */,
 				A44EB7331D4B2B0C00EF5F8E /* ItemViewController.m in Sources */,

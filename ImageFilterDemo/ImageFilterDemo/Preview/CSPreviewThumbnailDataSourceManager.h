@@ -18,7 +18,10 @@
     UICollectionViewDelegate
 >
 
-@property (nonatomic, copy) NSMutableArray<PHAsset *> *photoAssets;
+@property (nonatomic, copy) PHFetchResult<PHAsset *> *photoAssets;
+
+@property (nonatomic, strong) UICollectionView *collectionViewPreview;
+@property (nonatomic, strong) UICollectionView *collectionViewThumbnail;
 
 + (instancetype)sharedInstance;
 

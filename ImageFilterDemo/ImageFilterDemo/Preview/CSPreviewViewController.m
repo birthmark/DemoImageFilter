@@ -118,6 +118,7 @@
     [_collectionViewThumbnail registerNib:[UINib nibWithNibName:@"CSAlbumCollectionViewCell" bundle:nil] forCellWithReuseIdentifier:@"kCSPreviewCollectionViewCellThumbnail"];
     
     thumbnailDataSourceManager = [CSPreviewThumbnailDataSourceManager sharedInstance];
+    thumbnailDataSourceManager.collectionViewThumbnail = _collectionViewThumbnail;
     
     _collectionViewThumbnail.dataSource = thumbnailDataSourceManager;
     _collectionViewThumbnail.delegate = thumbnailDataSourceManager;
@@ -140,6 +141,8 @@
     
     _collectionViewPreview.dataSource = self;
     _collectionViewPreview.delegate = self;
+    
+    thumbnailDataSourceManager.collectionViewPreview = _collectionViewPreview;
 }
 
 #pragma mark - <UICollectionViewDataSource>
