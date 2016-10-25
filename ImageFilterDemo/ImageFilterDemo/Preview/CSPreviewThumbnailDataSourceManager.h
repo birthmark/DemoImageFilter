@@ -23,6 +23,8 @@
 @property (nonatomic, strong) UICollectionView *collectionViewPreview;
 @property (nonatomic, strong) UICollectionView *collectionViewThumbnail;
 
+@property (nonatomic, strong) NSIndexPath *indexPathSelected;
+
 + (instancetype)sharedInstance;
 
 @end

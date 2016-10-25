@@ -99,10 +99,19 @@
 
 #pragma mark - <UICollectionViewDelegate>
 
-- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    CSAlbumCollectionViewCell *cell = (CSAlbumCollectionViewCell *)[collectionView cellForItemAtIndexPath:indexPath];
+- (void)setIndexPathSelected:(NSIndexPath *)indexPathSelected
+{
+    _indexPathSelected = indexPathSelected;
     
-    PHAsset *selectedPHAsset = _photoAssets[indexPath.item];
+    [_collectionViewThumbnail scrollToItemAtIndexPath:_indexPathSelected atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:YES];
+}
+
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+//    CSAlbumCollectionViewCell *cell = (CSAlbumCollectionViewCell *)[collectionView cellForItemAtIndexPath:indexPath];
+    
+//    PHAsset *selectedPHAsset = _photoAssets[indexPath.item];
+    
+    self.indexPathSelected = indexPath;
     
     [collectionView deselectItemAtIndexPath:indexPath animated:YES];
 }
@@ -114,7 +123,7 @@
 #pragma mark - <UICollectionViewDelegateFlowLayout>
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
-    return CGSizeMake(20, 40);
+    return CGSizeMake(collectionView.frame.size.height / 16 * 9, collectionView.frame.size.height);
 }
 
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout insetForSectionAtIndex:(NSInteger)section {
@@ -122,19 +131,19 @@
 }
 
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section {
-    return 2;
+    return 20;
 }
 
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section {
-    return 0;
+    return kCellOffset;
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section {
-    return CGSizeZero;
+    return CGSizeMake(50, 0);
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout referenceSizeForFooterInSection:(NSInteger)section {
-    return CGSizeZero;
+    return CGSizeMake(50, 0);
 }
 
 #pragma mark - <PHPhotoLibraryChangeObserver>

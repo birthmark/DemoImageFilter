@@ -177,19 +177,19 @@
 #pragma mark - <UICollectionViewDelegate>
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-//    if (scrollView.contentOffset.x - currentOffsetPreview == -CGRectGetWidth(_collectionViewPreview.frame)) {
-//        NSLog(@"another page");
-//        
-//        currentOffsetPreview = scrollView.contentOffset.x;
-//    }
+
 //    NSArray *arr = [_collectionViewPreview indexPathsForVisibleItems];
 //    NSLog(@"arr : %@", arr);
 //    NSIndexPath *indexPath = [_collectionViewPreview indexPathForItemAtPoint:self.view.center];
 //    NSLog(@"indexPath : %@", indexPath);
     
+    CGPoint offset = scrollView.contentOffset;
     
-    CGFloat offset = scrollView.contentOffset.x;
+    [_collectionViewThumbnail setContentOffset:CGPointMake(offset.x / 10, 0) animated:YES];
     
+//    NSArray *cellArr = [_collectionViewPreview indexPathsForVisibleItems];
+    
+//    thumbnailDataSourceManager.indexPathSelected = [cellArr firstObject];
 }
 
 #pragma mark - <UICollectionViewDelegateFlowLayout>
