@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -12,19 +13,41 @@
             <rect key="frame" x="0.0" y="0.0" width="80" height="80"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="kTO-pn-nmV"/>
+                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="kTO-pn-nmV"/>
+                <view alpha="0.5" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DKV-Cv-xxY">
+                    <subviews>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gz4-vC-xBK" customClass="ABPieProgress">
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="24" id="Qch-mX-LXA"/>
+                                <constraint firstAttribute="width" secondItem="gz4-vC-xBK" secondAttribute="height" multiplier="1:1" id="iM1-WN-dky"/>
+                            </constraints>
+                        </view>
+                    </subviews>
+                    <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstItem="gz4-vC-xBK" firstAttribute="centerX" secondItem="DKV-Cv-xxY" secondAttribute="centerX" id="Wie-qX-MYe"/>
+                        <constraint firstItem="gz4-vC-xBK" firstAttribute="centerY" secondItem="DKV-Cv-xxY" secondAttribute="centerY" id="hrb-jd-dJ6"/>
+                    </constraints>
+                </view>
             </subviews>
             <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
+                <constraint firstItem="DKV-Cv-xxY" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="FUb-fE-xi6"/>
+                <constraint firstItem="DKV-Cv-xxY" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="JGl-im-LdS"/>
                 <constraint firstAttribute="trailing" secondItem="kTO-pn-nmV" secondAttribute="trailing" id="OOf-dp-6Xh"/>
+                <constraint firstAttribute="bottom" secondItem="DKV-Cv-xxY" secondAttribute="bottom" id="WD2-CL-1wv"/>
                 <constraint firstAttribute="bottom" secondItem="kTO-pn-nmV" secondAttribute="bottom" id="hSL-Tk-ei0"/>
                 <constraint firstItem="kTO-pn-nmV" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="r1Y-mD-8k4"/>
                 <constraint firstItem="kTO-pn-nmV" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="rO4-lm-Q3R"/>
+                <constraint firstAttribute="trailing" secondItem="DKV-Cv-xxY" secondAttribute="trailing" id="rxi-PE-eLw"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
+                <outlet property="downloadMaskView" destination="DKV-Cv-xxY" id="4k6-ut-Hie"/>
                 <outlet property="imageView" destination="kTO-pn-nmV" id="z8X-sH-e0x"/>
+                <outlet property="pieProgress" destination="gz4-vC-xBK" id="5Qk-2R-bDN"/>
             </connections>
             <point key="canvasLocation" x="340" y="168.5"/>
         </view>

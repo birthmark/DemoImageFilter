@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "ABPieProgress.h"
 
 #import <Photos/Photos.h>
 
@@ -14,6 +15,10 @@
 
 @property (weak, nonatomic) IBOutlet UIImageView *imageView;
 
-@property (nonatomic, assign) PHImageRequestID imageRqeustID;
+@property (weak, nonatomic) IBOutlet UIView *downloadMaskView;
+
+@property (weak, nonatomic) IBOutlet ABPieProgress *pieProgress;
+
+@property (nonatomic, assign) PHImageRequestID imageRequestID;
 
 @end

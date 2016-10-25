@@ -118,17 +118,13 @@ typedef void (^CSPhotoKitManagerResultBlock)(BOOL success, NSError *error);
 - (void)didSelectPHAsset:(PHAsset *)asset fromRect:(CGRect)rect {
     NSLog(@"didSelectPHAsset rect : %@", NSStringFromCGRect(rect));
     
-//    UIView *view = [[UIView alloc] initWithFrame:rect];
-//    view.backgroundColor = [UIColor redColor];
-//    [self.view addSubview:view];
+//    [self deleteAssets:@[asset] resultBlock:^(BOOL success, NSError *error) {
+//        NSLog(@"success : %d", success);
+//    }];
     
-    [self deleteAssets:@[asset] resultBlock:^(BOOL success, NSError *error) {
-        NSLog(@"success : %d", success);
-    }];
-    
-//    BeautyCenterViewController *beautyCenter = [[BeautyCenterViewController alloc] init];
-//    beautyCenter.asset = asset;
-//    [self presentViewController:beautyCenter animated:YES completion:nil];
+    BeautyCenterViewController *beautyCenter = [[BeautyCenterViewController alloc] init];
+    beautyCenter.asset = asset;
+    [self presentViewController:beautyCenter animated:YES completion:nil];
 }
 
 - (void)createAlbum:(NSString *)title resultBlock:(CSPhotoKitManagerResultBlock)resultBlock

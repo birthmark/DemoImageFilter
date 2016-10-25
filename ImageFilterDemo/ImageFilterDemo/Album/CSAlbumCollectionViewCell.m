@@ -10,5 +10,23 @@
 
 @implementation CSAlbumCollectionViewCell
 
+- (void)awakeFromNib {
+    [super awakeFromNib];
+    // Initialization code
+    
+    _imageRequestID = PHInvalidImageRequestID;
+    
+    _downloadMaskView.hidden = YES;
+}
+
+- (void)prepareForReuse
+{
+    [super prepareForReuse];
+    
+    _imageRequestID = PHInvalidImageRequestID;
+    
+    _downloadMaskView.hidden = YES;
+    [_pieProgress stopProgress];
+}
 
 @end

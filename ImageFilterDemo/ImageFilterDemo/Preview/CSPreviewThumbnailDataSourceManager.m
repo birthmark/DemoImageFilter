@@ -55,8 +55,8 @@
     CGFloat widthCell = (kCSScreenWidth - kCellOffset * (kCellCountOfALine - 1)) / kCellCountOfALine;
     CGSize targetSize = CGSizeMake(widthCell * 2, widthCell * 2);
     
-    [[PHImageManager defaultManager] cancelImageRequest:cell.imageRqeustID];
-    cell.imageRqeustID = [[PHImageManager defaultManager] requestImageForAsset:_photoAssets[indexPath.item]
+    [[PHImageManager defaultManager] cancelImageRequest:cell.imageRequestID];
+    cell.imageRequestID = [[PHImageManager defaultManager] requestImageForAsset:_photoAssets[indexPath.item]
                                                                     targetSize:targetSize
                                                                    contentMode:PHImageContentModeAspectFit
                                                                        options:nil

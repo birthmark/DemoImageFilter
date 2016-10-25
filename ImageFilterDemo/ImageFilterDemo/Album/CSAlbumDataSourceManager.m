@@ -23,6 +23,8 @@
 @implementation CSAlbumDataSourceManager {
     
     dispatch_once_t onceTokenForScrollToEnd;
+    
+    PHImageRequestID _imageRequestIDSelected;
 }
 
 + (instancetype)sharedInstance {
@@ -66,8 +68,8 @@
     CGFloat widthCell = (kCSScreenWidth - kCellOffset * (kCellCountOfALine - 1)) / kCellCountOfALine;
     CGSize targetSize = CGSizeMake(widthCell * 2, widthCell * 2);
     
-    [[PHImageManager defaultManager] cancelImageRequest:cell.imageRqeustID];
-    cell.imageRqeustID = [[PHImageManager defaultManager] requestImageForAsset:_photoAssets[indexPath.item]
+    [[PHImageManager defaultManager] cancelImageRequest:cell.imageRequestID];
+    cell.imageRequestID = [[PHImageManager defaultManager] requestImageForAsset:_photoAssets[indexPath.item]
                                                                     targetSize:targetSize
                                                                    contentMode:PHImageContentModeAspectFit
                                                                        options:nil
@@ -115,11 +117,40 @@
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     CSAlbumCollectionViewCell *cell = (CSAlbumCollectionViewCell *)[collectionView cellForItemAtIndexPath:indexPath];
     
+    PHImageRequestOptions *options = [[PHImageRequestOptions alloc] init];
+    options.progressHandler = ^(double progress, NSError *error, BOOL *stop, NSDictionary *info){
+        if (error) {
+            *stop = YES;
+        } else {
+            printf("%f\n", progress);
+            dispatch_async(dispatch_get_main_queue(), ^{
+                cell.downloadMaskView.hidden = NO;
+                [cell.pieProgress startProgress];
+                cell.pieProgress.progressValue = progress;
+                if (progress == 1.f) {
+                    cell.downloadMaskView.hidden = YES;
+                    [cell.pieProgress stopProgress];
+                }
+            });
+        }
+    };
+    options.networkAccessAllowed = YES;
+    options.deliveryMode = PHImageRequestOptionsDeliveryModeFastFormat;
+    options.synchronous = NO; // 不能设置YES
+    
     PHAsset *selectedPHAsset = _photoAssets[indexPath.item];
-    CGRect fromRect = [collectionView convertRect:cell.frame toView:collectionView.superview];
-    if (_delegate && [_delegate respondsToSelector:@selector(didSelectPHAsset:fromRect:)]) {
-        [_delegate didSelectPHAsset:selectedPHAsset fromRect:fromRect];
-    }
+    cell.imageRequestID = [[PHImageManager defaultManager] requestImageForAsset:selectedPHAsset targetSize:PHImageManagerMaximumSize contentMode:PHImageContentModeAspectFit options:options resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
+        
+        //
+        if (_imageRequestIDSelected == cell.imageRequestID) {
+            CGRect fromRect = [collectionView convertRect:cell.frame toView:collectionView.superview];
+            if (_delegate && [_delegate respondsToSelector:@selector(didSelectPHAsset:fromRect:)]) {
+                [_delegate didSelectPHAsset:selectedPHAsset fromRect:fromRect];
+            }
+        }
+    }];
+    
+    _imageRequestIDSelected = cell.imageRequestID;
 
     [collectionView deselectItemAtIndexPath:indexPath animated:YES];
 }

@@ -153,7 +153,7 @@
     CSAlbumCollectionViewCell *cell = (CSAlbumCollectionViewCell *)[collectionView dequeueReusableCellWithReuseIdentifier:@"kCSPreviewCollectionViewCellPreview" forIndexPath:indexPath];
     
     PHAsset *asset = thumbnailDataSourceManager.photoAssets[indexPath.item];
-    [[PHImageManager defaultManager] cancelImageRequest:cell.imageRqeustID];
+    [[PHImageManager defaultManager] cancelImageRequest:cell.imageRequestID];
     [[PHImageManager defaultManager] requestImageForAsset:asset
                                                targetSize:cell.frame.size
                                               contentMode:PHImageContentModeAspectFit
