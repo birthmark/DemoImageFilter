@@ -70,8 +70,15 @@
 
 - (void)actionCamera:(UIButton *)sender {
     CSCameraViewController *cameraVC = [[CSCameraViewController alloc] init];
-    cameraVC.delegate = self;
-    [self presentViewController:cameraVC animated:YES completion:nil];
+    
+    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:cameraVC];
+    nav.navigationBarHidden = YES;
+    
+    [self presentViewController:nav animated:YES completion:nil];
+    
+//    CSCameraViewController *cameraVC = [[CSCameraViewController alloc] init];
+//    cameraVC.delegate = self;
+//    [self presentViewController:cameraVC animated:YES completion:nil];
 }
 
 - (void)actionAlbum:(UIButton *)sender {

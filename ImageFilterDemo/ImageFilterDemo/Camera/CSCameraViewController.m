@@ -19,6 +19,10 @@
 #import <AssetsLibrary/AssetsLibrary.h>
 #import "UIImage+CSCategory.h"
 
+// transition animation
+#import "TestViewController.h"
+#import "AnimatorPushPopTransition.h"
+
 
 #ifndef COMPARE_SYSTEM_VERSION
 #define COMPARE_SYSTEM_VERSION(v)    ([[[UIDevice currentDevice] systemVersion] compare:(v) options:NSNumericSearch])
@@ -63,7 +67,8 @@ typedef NS_ENUM(NSInteger, CameraProportionType) {
 
     GPUImageVideoCameraDelegate,
     CSSliderDelegate,
-    CLLocationManagerDelegate
+    CLLocationManagerDelegate,
+    UINavigationControllerDelegate
 >
 
 @end
@@ -97,6 +102,8 @@ typedef NS_ENUM(NSInteger, CameraProportionType) {
     CLLocation *_currentLocation;
     
     AVAudioPlayer *_audioPlayer;
+    
+    UIVisualEffectView *_blurView;
 }
 
 - (void)viewDidLoad {
@@ -118,6 +125,14 @@ typedef NS_ENUM(NSInteger, CameraProportionType) {
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
+    if (!_blurView) {
+        UIBlurEffect *blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleLight];
+        _blurView = [[UIVisualEffectView alloc] initWithFrame:previewView.bounds];
+        _blurView.effect = blurEffect;
+        [self.view insertSubview:_blurView aboveSubview:previewView];
+    }
+    _blurView.alpha = 1.f;
+    
     [stillCamera startCameraCapture];
     
     [self listenAVCaptureDeviceSubjectAreaDidChangeNotification];
@@ -130,12 +145,20 @@ typedef NS_ENUM(NSInteger, CameraProportionType) {
     [_locationManager requestAlwaysAuthorization];
     
     [_locationManager startUpdatingLocation];
+    
+    [UIView animateWithDuration:0.3f animations:^{
+        _blurView.alpha = 0.f;
+    }];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     
     [stillCamera stopCameraCapture];
+    
+    [UIView animateWithDuration:0.3f animations:^{
+        _blurView.alpha = 1.f;
+    }];
     
     [[NSNotificationCenter defaultCenter] removeObserver:self name:AVCaptureDeviceSubjectAreaDidChangeNotification object:nil];
     
@@ -205,7 +228,9 @@ typedef NS_ENUM(NSInteger, CameraProportionType) {
 }
 
 - (void)actionSettings:(UIButton *)sender {
-    
+    TestViewController *testVC = [[TestViewController alloc] init];
+    self.navigationController.delegate = self;
+    [self.navigationController pushViewController:testVC animated:YES];
 }
 
 - (void)actionClose:(UIButton *)sender {
@@ -859,6 +884,24 @@ typedef NS_ENUM(NSInteger, CameraProportionType) {
         
         [_locationManager stopUpdatingHeading];
     }
+}
+
+#pragma mark - <UINavigationControllerDelegate>
+
+- (nullable id <UIViewControllerAnimatedTransitioning>)navigationController:(UINavigationController *)navigationController
+                                            animationControllerForOperation:(UINavigationControllerOperation)operation
+                                                         fromViewController:(UIViewController *)fromVC
+                                                           toViewController:(UIViewController *)toVC {
+    // Push/Pop
+    AnimatorPushPopTransition *pushPopTransition = [[AnimatorPushPopTransition alloc] init];
+    
+    if (operation == UINavigationControllerOperationPush) {
+        pushPopTransition.animatorTransitionType = kAnimatorTransitionTypePush;
+    } else {
+        pushPopTransition.animatorTransitionType = kAnimatorTransitionTypePop;
+    }
+    
+    return pushPopTransition;
 }
 
 @end
