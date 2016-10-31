@@ -1,12 +1,15 @@
 PODS:
   - GPUImage (0.1.7)
+  - MGBenchmark (0.3.0)
 
 DEPENDENCIES:
   - GPUImage
+  - MGBenchmark
 
 SPEC CHECKSUMS:
   GPUImage: 733a5f0fab92df9de1c37ba9df520a833ccb406d
+  MGBenchmark: cd9862fa00b0aa081c75441fd3edadeb909d2c3c
 
-PODFILE CHECKSUM: dd68e19aab647ea5221728cdbb4cefca65c43d84
+PODFILE CHECKSUM: 10eace981f07614e1e4331acf91ccd8f859efac3
 
 COCOAPODS: 1.0.1

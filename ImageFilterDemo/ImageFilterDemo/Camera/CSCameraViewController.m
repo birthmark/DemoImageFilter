@@ -23,6 +23,8 @@
 #import "TestViewController.h"
 #import "AnimatorPushPopTransition.h"
 
+#import <MGBenchmark/MGBenchmark.h>
+#import <MGBenchmark/MGBenchmarkSession.h>
 
 #ifndef COMPARE_SYSTEM_VERSION
 #define COMPARE_SYSTEM_VERSION(v)    ([[[UIDevice currentDevice] systemVersion] compare:(v) options:NSNumericSearch])
@@ -109,6 +111,9 @@ typedef NS_ENUM(NSInteger, CameraProportionType) {
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    MGBenchStart(@"Test");
+    MGBenchStep(@"Test", @"1");
+    
     [self initCameraView];
     
     [self initExposureSlider];
@@ -120,10 +125,14 @@ typedef NS_ENUM(NSInteger, CameraProportionType) {
     _locationManager.delegate = self;
     
     [self initAudioPlayer];
+    
+    MGBenchStep(@"Test", @"2");
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    
+    MGBenchStep(@"Test", @"3");
     
     if (!_blurView) {
         UIBlurEffect *blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleLight];
@@ -136,11 +145,15 @@ typedef NS_ENUM(NSInteger, CameraProportionType) {
     [stillCamera startCameraCapture];
     
     [self listenAVCaptureDeviceSubjectAreaDidChangeNotification];
+    
+    MGBenchStep(@"Test", @"4");
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
+    
+    MGBenchStep(@"Test", @"5");
     
     [_locationManager requestAlwaysAuthorization];
     
@@ -149,6 +162,9 @@ typedef NS_ENUM(NSInteger, CameraProportionType) {
     [UIView animateWithDuration:0.3f animations:^{
         _blurView.alpha = 0.f;
     }];
+    
+    MGBenchStep(@"Test", @"6");
+    MGBenchEnd(@"Test");
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -398,6 +414,9 @@ typedef NS_ENUM(NSInteger, CameraProportionType) {
         [[UIApplication sharedApplication] beginIgnoringInteractionEvents];
     }
     
+    MGBenchStart(@"Capture");
+    MGBenchStep(@"Capture", @"start");
+    
     [stillCamera capturePhotoAsImageProcessedUpToFilter:filter withOrientation:UIImageOrientationUp withCompletionHandler:^(UIImage *processedImage, NSError *error) {
         
         _thumbnailAlbum.image = nil;
@@ -410,7 +429,10 @@ typedef NS_ENUM(NSInteger, CameraProportionType) {
             
             [stillCamera resumeCameraCapture];
             
+            MGBenchStep(@"Capture", @"end");
+            
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                MGBenchStep(@"Capture", @"anim begin");
                 [_activityIndicator stopAnimating];
                 _maskViewCapture.hidden = YES;
                 
@@ -424,9 +446,12 @@ typedef NS_ENUM(NSInteger, CameraProportionType) {
                         [[UIApplication sharedApplication] endIgnoringInteractionEvents];
                     }
                 }];
+                MGBenchStep(@"Capture", @"anim end");
             });
             
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                MGBenchStep(@"Capture", @"save begin");
+                
                 NSDictionary *metadata = [self metadataForImage:processedImage withCLLocation:_currentLocation];
                 
 //                // 仅此方法可以保存GPS信息。其他都不行。
@@ -436,6 +461,8 @@ typedef NS_ENUM(NSInteger, CameraProportionType) {
 //                }];
                 
                 [self writeImageData:UIImageJPEGRepresentation(processedImage, 1.f) metadata:metadata toAlbum:nil resultBlock:nil];
+                
+                MGBenchStep(@"Capture", @"save end");
             });
         }
     }];

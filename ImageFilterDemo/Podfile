@@ -2,6 +2,8 @@ platform :ios, '7.0'
 
 pod 'GPUImage'
 
+pod 'MGBenchmark'
+
 target 'ImageFilterDemo' do
 
 end
