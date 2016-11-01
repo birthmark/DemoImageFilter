@@ -31,6 +31,7 @@
 		A44EB7311D4B2B0C00EF5F8E /* Model.png in Resources */ = {isa = PBXBuildFile; fileRef = A44EB7281D4B2B0C00EF5F8E /* Model.png */; };
 		A44EB7331D4B2B0C00EF5F8E /* ItemViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A44EB72D1D4B2B0C00EF5F8E /* ItemViewController.m */; };
 		A44EB7341D4B2B0C00EF5F8E /* RootTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A44EB72F1D4B2B0C00EF5F8E /* RootTableViewController.m */; };
+		A47C6D701DC878AB00997DD2 /* LUT_Snap.png in Resources */ = {isa = PBXBuildFile; fileRef = A47C6D6F1DC878AB00997DD2 /* LUT_Snap.png */; };
 		A47F5A241D703759002B4F3E /* customToneCurve.acv in Resources */ = {isa = PBXBuildFile; fileRef = A47F5A231D703759002B4F3E /* customToneCurve.acv */; };
 		A47F5A281D703D51002B4F3E /* LUT_Bleach.png in Resources */ = {isa = PBXBuildFile; fileRef = A47F5A261D703D51002B4F3E /* LUT_Bleach.png */; };
 		A47F5A291D703D51002B4F3E /* LUT_Original.png in Resources */ = {isa = PBXBuildFile; fileRef = A47F5A271D703D51002B4F3E /* LUT_Original.png */; };
@@ -122,6 +123,7 @@
 		A44EB72D1D4B2B0C00EF5F8E /* ItemViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ItemViewController.m; sourceTree = "<group>"; };
 		A44EB72E1D4B2B0C00EF5F8E /* RootTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RootTableViewController.h; sourceTree = "<group>"; };
 		A44EB72F1D4B2B0C00EF5F8E /* RootTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RootTableViewController.m; sourceTree = "<group>"; };
+		A47C6D6F1DC878AB00997DD2 /* LUT_Snap.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LUT_Snap.png; sourceTree = "<group>"; };
 		A47F5A231D703759002B4F3E /* customToneCurve.acv */ = {isa = PBXFileReference; lastKnownFileType = file; path = customToneCurve.acv; sourceTree = "<group>"; };
 		A47F5A261D703D51002B4F3E /* LUT_Bleach.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LUT_Bleach.png; sourceTree = "<group>"; };
 		A47F5A271D703D51002B4F3E /* LUT_Original.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LUT_Original.png; sourceTree = "<group>"; };
@@ -384,6 +386,7 @@
 				A47F5A2A1D704058002B4F3E /* LUT_Moonlight.png */,
 				A47F5A261D703D51002B4F3E /* LUT_Bleach.png */,
 				A47F5A2F1D70466D002B4F3E /* LUT_From_PS_ATN_File.png */,
+				A47C6D6F1DC878AB00997DD2 /* LUT_Snap.png */,
 			);
 			path = LUTs;
 			sourceTree = "<group>";
@@ -575,6 +578,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				834C52FB1B92DABE000690FD /* Main.storyboard in Resources */,
+				A47C6D701DC878AB00997DD2 /* LUT_Snap.png in Resources */,
 				A47F5A3E1D704A7D002B4F3E /* texture_colorBurnBlend_1.png in Resources */,
 				A47F5A421D704A7D002B4F3E /* texture_normalBlend_2.png in Resources */,
 				A4DE3AEB1DBDDB6900CC8896 /* magic_animation.m4a in Resources */,
