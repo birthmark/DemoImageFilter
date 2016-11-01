@@ -665,9 +665,13 @@ typedef NS_ENUM(NSInteger, CameraProportionType) {
 }
 
 - (void)actionFilter:(UIButton *)sender {
-    if (_audioPlayer) {
-        [_audioPlayer play];
-    }
+//    if (_audioPlayer) {
+//        [_audioPlayer play];
+//    }
+    
+    TestViewController *testVC = [[TestViewController alloc] init];
+    self.navigationController.delegate = self;
+    [self.navigationController pushViewController:testVC animated:YES];
 }
 
 - (void)initAudioPlayer
