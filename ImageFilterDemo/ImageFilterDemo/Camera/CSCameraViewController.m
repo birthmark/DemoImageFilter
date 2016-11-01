@@ -11,6 +11,7 @@
 #import "CLLocation+GPSDictionary.h"
 
 #import "GPUImage.h"
+#import "GPUImageSnapchatFilter.h"
 #import "GPUImageMoonlightFilter.h"
 #import "CameraFocusView.h"
 #import "CSSlider.h"
@@ -83,7 +84,7 @@ typedef NS_ENUM(NSInteger, CameraProportionType) {
     GPUImageFilterGroup *_filterGroup;
     GPUImageFilterPipeline *_filterPipeline;
     
-    GPUImageFilter *filter;
+    GPUImageOutput<GPUImageInput> *filter;
     
     NSInteger cameraProportionType;
     
@@ -733,7 +734,8 @@ typedef NS_ENUM(NSInteger, CameraProportionType) {
     
     // TODO: 有时候使用LUT的滤镜没有效果。原因未知。
     // filter = [[GPUImageSepiaFilter alloc] init];
-    filter = [[GPUImageToonFilter alloc] init];
+//    filter = [[GPUImageToonFilter alloc] init];
+    filter = [[GPUImageSnapchatFilter alloc] init];
     
     [filter addTarget:previewView];
     
