@@ -30,7 +30,7 @@
     
     GPUImageMovieWriter *movieWriter;
     
-    GPUImageFilter *filter;
+    GPUImageOutput <GPUImageInput> *filter;
     
     NSString *videoPath;
     
@@ -244,9 +244,9 @@
     previewView.fillMode = kGPUImageFillModePreserveAspectRatio;
     [self.view insertSubview:previewView atIndex:0];
     
-    videoCamera = [[GPUImageVideoCamera alloc] initWithSessionPreset:AVCaptureSessionPreset640x480 cameraPosition:AVCaptureDevicePositionBack];
+    videoCamera = [[GPUImageVideoCamera alloc] initWithSessionPreset:AVCaptureSessionPreset640x480 cameraPosition:AVCaptureDevicePositionFront];
     videoCamera.outputImageOrientation = UIInterfaceOrientationPortrait;
-    videoCamera.horizontallyMirrorFrontFacingCamera = NO;
+    videoCamera.horizontallyMirrorFrontFacingCamera = YES;
     videoCamera.horizontallyMirrorRearFacingCamera = NO;
     videoCamera.delegate = self;
     
@@ -254,12 +254,43 @@
 //    [stillCamera addTarget:previewView];
     //
     
-    // 添加滤镜
-    filter = [[GPUImageSepiaFilter alloc] init];
-    [filter addTarget:previewView];
-
+    // 添加水印
+    UIView *view = [[UIView alloc] initWithFrame:previewView.bounds];
+    
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 50, 200, 30)];
+    label.textColor = [UIColor whiteColor];
+    label.font = [UIFont systemFontOfSize:30.f];
+    label.text = @"这是水印";
+    [view addSubview:label];
+    
+    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 300, 200)];
+    imageView.image = [UIImage imageNamed:@"ear.jpg"];
+    imageView.contentMode = UIViewContentModeScaleToFill;
+    imageView.center = view.center;
+    [view addSubview:imageView];
+    
+    GPUImageUIElement *uiElement = [[GPUImageUIElement alloc] initWithView:view];
+    
+    // filter和uiElement都输入至blendFilter，然后输出至preview即可。
+    GPUImageAlphaBlendFilter *blendFilter = [[GPUImageAlphaBlendFilter alloc] init];
+    blendFilter.mix = 1.f;
+    
+    // 视频添加滤镜
+    filter = [[GPUImageFilter alloc] init];
     [videoCamera addTarget:filter];
-    //
+    
+    // 添加输入至blendFilter
+    [filter addTarget:blendFilter];
+    [uiElement addTarget:blendFilter];
+    
+    // blendFilter输出至preview
+    [blendFilter addTarget:previewView];
+//    [filter addTarget:previewView];
+    
+    [filter setFrameProcessingCompletionBlock:^(GPUImageOutput *filter, CMTime frameTime) {
+        // 一定要update
+        [uiElement update];
+    }];
     
     [videoCamera startCameraCapture];
 }
