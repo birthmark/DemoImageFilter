@@ -21,6 +21,10 @@
 		A41585221DADCA220058204E /* CSPreviewThumbnailDataSourceManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A415851F1DADCA220058204E /* CSPreviewThumbnailDataSourceManager.m */; };
 		A41585231DADCA220058204E /* CSPreviewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A41585211DADCA220058204E /* CSPreviewViewController.m */; };
 		A41587431DAE44AA0058204E /* LUT_NOSTALGIA.png in Resources */ = {isa = PBXBuildFile; fileRef = A41587421DAE44AA0058204E /* LUT_NOSTALGIA.png */; };
+		A42378401DCC2D5F0040CC3E /* 66.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A423783C1DCC2D5F0040CC3E /* 66.jpg */; };
+		A42378411DCC2D5F0040CC3E /* 67.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A423783D1DCC2D5F0040CC3E /* 67.jpg */; };
+		A42378421DCC2D5F0040CC3E /* 68.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A423783E1DCC2D5F0040CC3E /* 68.jpg */; };
+		A42378431DCC2D5F0040CC3E /* 69.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A423783F1DCC2D5F0040CC3E /* 69.jpg */; };
 		A42C9D331DB07243002D8AFF /* ViewImageCrop.m in Sources */ = {isa = PBXBuildFile; fileRef = A42C9D321DB07243002D8AFF /* ViewImageCrop.m */; };
 		A42C9D351DB0948F002D8AFF /* Shiny_2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A42C9D341DB0948F002D8AFF /* Shiny_2.jpg */; };
 		A42D28AE1D598DAC00FEE114 /* CSAlbumCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A42D28AD1D598DAC00FEE114 /* CSAlbumCollectionViewCell.m */; };
@@ -33,6 +37,8 @@
 		A44EB7341D4B2B0C00EF5F8E /* RootTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A44EB72F1D4B2B0C00EF5F8E /* RootTableViewController.m */; };
 		A47C6D701DC878AB00997DD2 /* LUT_Snap.png in Resources */ = {isa = PBXBuildFile; fileRef = A47C6D6F1DC878AB00997DD2 /* LUT_Snap.png */; };
 		A47C6D731DC87D0600997DD2 /* GPUImageSnapchatFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = A47C6D721DC87D0600997DD2 /* GPUImageSnapchatFilter.m */; };
+		A47C6DD41DCB2E7600997DD2 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A47C6DD31DCB2E7600997DD2 /* MainViewController.m */; };
+		A47C6DD71DCB417500997DD2 /* UIImage+WaterMark.m in Sources */ = {isa = PBXBuildFile; fileRef = A47C6DD61DCB417500997DD2 /* UIImage+WaterMark.m */; };
 		A47F5A241D703759002B4F3E /* customToneCurve.acv in Resources */ = {isa = PBXBuildFile; fileRef = A47F5A231D703759002B4F3E /* customToneCurve.acv */; };
 		A47F5A281D703D51002B4F3E /* LUT_Bleach.png in Resources */ = {isa = PBXBuildFile; fileRef = A47F5A261D703D51002B4F3E /* LUT_Bleach.png */; };
 		A47F5A291D703D51002B4F3E /* LUT_Original.png in Resources */ = {isa = PBXBuildFile; fileRef = A47F5A271D703D51002B4F3E /* LUT_Original.png */; };
@@ -107,6 +113,10 @@
 		A41585201DADCA220058204E /* CSPreviewViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSPreviewViewController.h; sourceTree = "<group>"; };
 		A41585211DADCA220058204E /* CSPreviewViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSPreviewViewController.m; sourceTree = "<group>"; };
 		A41587421DAE44AA0058204E /* LUT_NOSTALGIA.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LUT_NOSTALGIA.png; sourceTree = "<group>"; };
+		A423783C1DCC2D5F0040CC3E /* 66.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 66.jpg; sourceTree = "<group>"; };
+		A423783D1DCC2D5F0040CC3E /* 67.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 67.jpg; sourceTree = "<group>"; };
+		A423783E1DCC2D5F0040CC3E /* 68.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 68.jpg; sourceTree = "<group>"; };
+		A423783F1DCC2D5F0040CC3E /* 69.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 69.jpg; sourceTree = "<group>"; };
 		A42C9D311DB07243002D8AFF /* ViewImageCrop.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewImageCrop.h; sourceTree = "<group>"; };
 		A42C9D321DB07243002D8AFF /* ViewImageCrop.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewImageCrop.m; sourceTree = "<group>"; };
 		A42C9D341DB0948F002D8AFF /* Shiny_2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Shiny_2.jpg; sourceTree = "<group>"; };
@@ -127,6 +137,10 @@
 		A47C6D6F1DC878AB00997DD2 /* LUT_Snap.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LUT_Snap.png; sourceTree = "<group>"; };
 		A47C6D711DC87D0600997DD2 /* GPUImageSnapchatFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GPUImageSnapchatFilter.h; sourceTree = "<group>"; };
 		A47C6D721DC87D0600997DD2 /* GPUImageSnapchatFilter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GPUImageSnapchatFilter.m; sourceTree = "<group>"; };
+		A47C6DD21DCB2E7600997DD2 /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
+		A47C6DD31DCB2E7600997DD2 /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
+		A47C6DD51DCB417500997DD2 /* UIImage+WaterMark.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+WaterMark.h"; sourceTree = "<group>"; };
+		A47C6DD61DCB417500997DD2 /* UIImage+WaterMark.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+WaterMark.m"; sourceTree = "<group>"; };
 		A47F5A231D703759002B4F3E /* customToneCurve.acv */ = {isa = PBXFileReference; lastKnownFileType = file; path = customToneCurve.acv; sourceTree = "<group>"; };
 		A47F5A261D703D51002B4F3E /* LUT_Bleach.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LUT_Bleach.png; sourceTree = "<group>"; };
 		A47F5A271D703D51002B4F3E /* LUT_Original.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LUT_Original.png; sourceTree = "<group>"; };
@@ -355,6 +369,10 @@
 		A44EB7271D4B2B0C00EF5F8E /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				A423783C1DCC2D5F0040CC3E /* 66.jpg */,
+				A423783D1DCC2D5F0040CC3E /* 67.jpg */,
+				A423783E1DCC2D5F0040CC3E /* 68.jpg */,
+				A423783F1DCC2D5F0040CC3E /* 69.jpg */,
 				A44EB7281D4B2B0C00EF5F8E /* Model.png */,
 			);
 			path = Images;
@@ -416,6 +434,8 @@
 		A4CDE55C1D99FFC50009F1F0 /* OCCategory */ = {
 			isa = PBXGroup;
 			children = (
+				A47C6DD51DCB417500997DD2 /* UIImage+WaterMark.h */,
+				A47C6DD61DCB417500997DD2 /* UIImage+WaterMark.m */,
 				A4CDE55D1D99FFDD0009F1F0 /* UIImage+CSCategory.h */,
 				A4CDE55E1D99FFE60009F1F0 /* UIImage+CSCategory.m */,
 				A4F225101DB6300D00310FB9 /* CLLocation+GPSDictionary.h */,
@@ -438,6 +458,8 @@
 				A4880B5E1D814AC40016B619 /* CameraFocusView.m */,
 				A4D8AEBB1D50456600060E5F /* CameraViewController.h */,
 				A4D8AEBC1D50456600060E5F /* CameraViewController.m */,
+				A47C6DD21DCB2E7600997DD2 /* MainViewController.h */,
+				A47C6DD31DCB2E7600997DD2 /* MainViewController.m */,
 			);
 			path = Camera;
 			sourceTree = "<group>";
@@ -582,6 +604,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A42378431DCC2D5F0040CC3E /* 69.jpg in Resources */,
 				834C52FB1B92DABE000690FD /* Main.storyboard in Resources */,
 				A47C6D701DC878AB00997DD2 /* LUT_Snap.png in Resources */,
 				A47F5A3E1D704A7D002B4F3E /* texture_colorBurnBlend_1.png in Resources */,
@@ -592,6 +615,7 @@
 				A47F5A451D704A7D002B4F3E /* texture_overlayBlend_1.png in Resources */,
 				A42D28B01D598E5B00FEE114 /* CSAlbumCollectionViewCell.xib in Resources */,
 				A44EB7311D4B2B0C00EF5F8E /* Model.png in Resources */,
+				A42378411DCC2D5F0040CC3E /* 67.jpg in Resources */,
 				A47F5A301D70466D002B4F3E /* LUT_From_PS_ATN_File.png in Resources */,
 				A42C9D351DB0948F002D8AFF /* Shiny_2.jpg in Resources */,
 				A47F5A431D704A7D002B4F3E /* texture_normalBlend_3.png in Resources */,
@@ -600,6 +624,7 @@
 				834C53001B92DABE000690FD /* LaunchScreen.xib in Resources */,
 				A47F5A471D704A7D002B4F3E /* texture_screenBlend_1.png in Resources */,
 				A47F5A461D704A7D002B4F3E /* texture_overlayBlend_2.png in Resources */,
+				A42378401DCC2D5F0040CC3E /* 66.jpg in Resources */,
 				A47F5A411D704A7D002B4F3E /* texture_normalBlend_1.png in Resources */,
 				834C52FD1B92DABE000690FD /* Images.xcassets in Resources */,
 				A41587431DAE44AA0058204E /* LUT_NOSTALGIA.png in Resources */,
@@ -608,6 +633,7 @@
 				A47F5A291D703D51002B4F3E /* LUT_Original.png in Resources */,
 				A47F5A441D704A7D002B4F3E /* texture_normalBlend_4.png in Resources */,
 				A47F5A3F1D704A7D002B4F3E /* texture_linearBurnBlend_1.png in Resources */,
+				A42378421DCC2D5F0040CC3E /* 68.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -673,6 +699,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A47C6DD71DCB417500997DD2 /* UIImage+WaterMark.m in Sources */,
 				A41585231DADCA220058204E /* CSPreviewViewController.m in Sources */,
 				A4DE3BA21DC0C09800CC8896 /* AnimatorPushPopTransition.m in Sources */,
 				A4D8AEC71D5091A700060E5F /* DemoGPUImageCameraViewController.m in Sources */,
@@ -692,6 +719,7 @@
 				A4D8AECA1D51A8D500060E5F /* CSVideoCameraViewController.m in Sources */,
 				A44EB7331D4B2B0C00EF5F8E /* ItemViewController.m in Sources */,
 				A4D8AECD1D51A96200060E5F /* DemoGPUImageVideoCameraViewController.m in Sources */,
+				A47C6DD41DCB2E7600997DD2 /* MainViewController.m in Sources */,
 				A4D8AEBD1D50456600060E5F /* CameraViewController.m in Sources */,
 				A4D8AED01D51BD0500060E5F /* CSViewVideoCameraDuration.m in Sources */,
 				A47F5A2E1D704113002B4F3E /* GPUImageMoonlightFilter.m in Sources */,

@@ -32,6 +32,7 @@
 #import "CSPreviewViewController.h"
 
 #import "ViewImageCrop.h"
+#import "MainViewController.h"
 
 typedef NS_ENUM(NSInteger, enumDemoImageFilter) {
     demoCPUImageFilter = 0,
@@ -46,6 +47,8 @@ typedef NS_ENUM(NSInteger, enumDemoImageFilter) {
     demoGPUImageBrightnessFilter,
     demoGPUImageFilterGroup,
     demoGPUImageFilterPipeline,
+    
+    demoGPUImageAlphaBlend,
     
     demoGPUImageStillCamera,
     demoGPUImageVideoCamera,
@@ -124,6 +127,8 @@ typedef NS_ENUM(NSInteger, enumDemoImageFilter) {
                               @"GPUImage Brightness Filter",
                               @"GPUImage Filter Group",
                               @"GPUImage Filter Pipeline",
+                              
+                              @"GPUImage Alpha Blend",
                               
                               @"GPUImage Still Camera",
                               @"GPUImage Video Camera",
@@ -208,6 +213,10 @@ typedef NS_ENUM(NSInteger, enumDemoImageFilter) {
             break;
         case demoGPUImageFilterPipeline:
             [self demoGPUImageFilterPipeline];
+            break;
+            
+        case demoGPUImageAlphaBlend:
+            [self demoGPUImageAlphaBlend];
             break;
             
         case demoGPUImageStillCamera:
@@ -708,11 +717,44 @@ typedef NS_ENUM(NSInteger, enumDemoImageFilter) {
     _filteredImageView.image = _filteredImage;
 }
 
+#pragma mark - GPUImage blend
+
+- (void)demoGPUImageAlphaBlend
+{
+    [self displayOriginImage:nil];
+    
+    GPUImageAlphaBlendFilter *blendFilter = [[GPUImageAlphaBlendFilter alloc] init];
+    blendFilter.mix = 0.5f;
+    
+    UIImage *image = [UIImage imageNamed:@"Model.png"];
+    GPUImagePicture *picture = [[GPUImagePicture alloc] initWithImage:image];
+    
+    UIImage *image2 = [UIImage imageNamed:@"66.jpg"];
+    GPUImagePicture *picture2 = [[GPUImagePicture alloc] initWithImage:image2];
+    
+    // 最后一个addTarget至filter的视为主输出。
+    // 因此，如果mix为1，则输出为picture2
+    [picture addTarget:blendFilter];
+    [picture2 addTarget:blendFilter];
+    
+    [blendFilter useNextFrameForImageCapture];
+    
+    [picture processImage];
+    [picture2 processImage];
+    
+    _filteredImage = [blendFilter imageFromCurrentFramebuffer];
+    
+    _filteredImageView.image = _filteredImage;
+}
+
 #pragma mark - GPUImage Still Camera
 
 - (void)demoGPUImageStillCamera {
-    DemoGPUImageCameraViewController *camera = [[DemoGPUImageCameraViewController alloc] init];
-    [self presentViewController:camera animated:YES completion:nil];
+//    DemoGPUImageCameraViewController *camera = [[DemoGPUImageCameraViewController alloc] init];
+//    [self presentViewController:camera animated:YES completion:nil];
+    
+    MainViewController *mainVC = [[MainViewController alloc] init];
+    [self presentViewController:mainVC animated:YES completion:nil];
     
     return;
     

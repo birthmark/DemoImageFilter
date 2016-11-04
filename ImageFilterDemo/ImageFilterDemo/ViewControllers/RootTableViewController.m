@@ -37,6 +37,8 @@
                               @"GPUImage Filter Group",
                               @"GPUImage Filter Pipeline",
                               
+                              @"GPUImage Alpha Blend",
+                              
                               @"GPUImage Still Camera",
                               @"GPUImage Video Camera",
                               
