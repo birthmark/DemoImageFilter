@@ -21,6 +21,12 @@
     GPUImageVideoCameraDelegate
 >
 
+@property (nonatomic, strong) CIDetector *faceDetector;
+@property (nonatomic, assign) CGRect faceBounds;
+
+@property (nonatomic, strong) GPUImageUIElement *uiElement;
+@property (nonatomic, strong) UIImageView *watermarkImageView;
+
 @end
 
 @implementation CSVideoCameraViewController {
@@ -263,13 +269,13 @@
     label.text = @"这是水印";
     [view addSubview:label];
     
-    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 300, 200)];
-    imageView.image = [UIImage imageNamed:@"ear.jpg"];
-    imageView.contentMode = UIViewContentModeScaleToFill;
-    imageView.center = view.center;
-    [view addSubview:imageView];
+    _watermarkImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 300, 200)];
+    _watermarkImageView.image = [UIImage imageNamed:@"ear.png"];
+    _watermarkImageView.contentMode = UIViewContentModeScaleToFill;
+    _watermarkImageView.center = view.center;
+    [view addSubview:_watermarkImageView];
     
-    GPUImageUIElement *uiElement = [[GPUImageUIElement alloc] initWithView:view];
+    _uiElement = [[GPUImageUIElement alloc] initWithView:view];
     
     // filter和uiElement都输入至blendFilter，然后输出至preview即可。
     GPUImageAlphaBlendFilter *blendFilter = [[GPUImageAlphaBlendFilter alloc] init];
@@ -281,15 +287,21 @@
     
     // 添加输入至blendFilter
     [filter addTarget:blendFilter];
-    [uiElement addTarget:blendFilter];
+    [_uiElement addTarget:blendFilter];
     
     // blendFilter输出至preview
     [blendFilter addTarget:previewView];
 //    [filter addTarget:previewView];
     
+    __weak typeof(self) weakSelf = self;
     [filter setFrameProcessingCompletionBlock:^(GPUImageOutput *filter, CMTime frameTime) {
+        // 根据得到的faceBounds来更新水印的位置
+        CGFloat centerXFace = CGRectGetMinX(weakSelf.faceBounds) + CGRectGetWidth(weakSelf.faceBounds) / 2;
+        // 因为图片的原因要加offset
+        weakSelf.watermarkImageView.center = CGPointMake(centerXFace, CGRectGetMinY(weakSelf.faceBounds) - CGRectGetHeight(weakSelf.watermarkImageView.frame) / 2 + 50);
+        
         // 一定要update
-        [uiElement update];
+        [weakSelf.uiElement update];
     }];
     
     [videoCamera startCameraCapture];
@@ -298,7 +310,154 @@
 #pragma mark - GPUImageVideoCameraDelegate
 
 - (void)willOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer {
+    CFAllocatorRef allocator = CFAllocatorGetDefault();
+    CMSampleBufferRef sampleBufferRef;
+    CMSampleBufferCreateCopy(allocator, sampleBuffer, &sampleBufferRef);
+    [self performSelectorInBackground:@selector(faceDetecting:) withObject:CFBridgingRelease(sampleBufferRef)];
+}
+
+// 参考博客：http://www.jianshu.com/p/ba1f79f8f6fa
+- (CIDetector *)faceDetector
+{
+    if (!_faceDetector) {
+        NSDictionary *options = @{
+                                  CIDetectorAccuracy: CIDetectorAccuracyLow
+                                  };
+        _faceDetector = [CIDetector detectorOfType:CIDetectorTypeFace context:nil options:options];
+    }
+    return _faceDetector;
+}
+
+- (void)faceDetecting:(CMSampleBufferRef)sampleBuffer
+{
+    // 将摄像头数据转换成CIImage，对其使用CIDetector进行人脸检测
+    CVPixelBufferRef pixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer);
+    CFDictionaryRef attachments = CMCopyDictionaryOfAttachments(kCFAllocatorDefault, sampleBuffer, kCMAttachmentMode_ShouldPropagate);
+    CIImage *convertedImage = [[CIImage alloc] initWithCVPixelBuffer:pixelBuffer options:(__bridge NSDictionary *)attachments];
     
+    if (attachments)
+        CFRelease(attachments);
+    NSDictionary *imageOptions = nil;
+    UIDeviceOrientation curDeviceOrientation = [[UIDevice currentDevice] orientation];
+    int exifOrientation;
+    
+    /* kCGImagePropertyOrientation values
+     The intended display orientation of the image. If present, this key is a CFNumber value with the same value as defined
+     by the TIFF and EXIF specifications -- see enumeration of integer constants.
+     The value specified where the origin (0,0) of the image is located. If not present, a value of 1 is assumed.
+     
+     used when calling featuresInImage: options: The value for this key is an integer NSNumber from 1..8 as found in kCGImagePropertyOrientation.
+     If present, the detection will be done based on that orientation but the coordinates in the returned features will still be based on those of the image. */
+    
+    enum {
+        PHOTOS_EXIF_0ROW_TOP_0COL_LEFT			= 1, //   1  =  0th row is at the top, and 0th column is on the left (THE DEFAULT).
+        PHOTOS_EXIF_0ROW_TOP_0COL_RIGHT			= 2, //   2  =  0th row is at the top, and 0th column is on the right.
+        PHOTOS_EXIF_0ROW_BOTTOM_0COL_RIGHT      = 3, //   3  =  0th row is at the bottom, and 0th column is on the right.
+        PHOTOS_EXIF_0ROW_BOTTOM_0COL_LEFT       = 4, //   4  =  0th row is at the bottom, and 0th column is on the left.
+        PHOTOS_EXIF_0ROW_LEFT_0COL_TOP          = 5, //   5  =  0th row is on the left, and 0th column is the top.
+        PHOTOS_EXIF_0ROW_RIGHT_0COL_TOP         = 6, //   6  =  0th row is on the right, and 0th column is the top.
+        PHOTOS_EXIF_0ROW_RIGHT_0COL_BOTTOM      = 7, //   7  =  0th row is on the right, and 0th column is the bottom.
+        PHOTOS_EXIF_0ROW_LEFT_0COL_BOTTOM       = 8  //   8  =  0th row is on the left, and 0th column is the bottom.
+    };
+    
+    BOOL isUsingFrontFacingCamera = FALSE;
+    AVCaptureDevicePosition currentCameraPosition = [videoCamera cameraPosition];
+    
+    if (currentCameraPosition != AVCaptureDevicePositionBack)
+    {
+        isUsingFrontFacingCamera = TRUE;
+    }
+    
+    switch (curDeviceOrientation) {
+        case UIDeviceOrientationPortraitUpsideDown:  // Device oriented vertically, home button on the top
+            exifOrientation = PHOTOS_EXIF_0ROW_LEFT_0COL_BOTTOM;
+            break;
+        case UIDeviceOrientationLandscapeLeft:       // Device oriented horizontally, home button on the right
+            if (isUsingFrontFacingCamera)
+                exifOrientation = PHOTOS_EXIF_0ROW_BOTTOM_0COL_RIGHT;
+            else
+                exifOrientation = PHOTOS_EXIF_0ROW_TOP_0COL_LEFT;
+            break;
+        case UIDeviceOrientationLandscapeRight:      // Device oriented horizontally, home button on the left
+            if (isUsingFrontFacingCamera)
+                exifOrientation = PHOTOS_EXIF_0ROW_TOP_0COL_LEFT;
+            else
+                exifOrientation = PHOTOS_EXIF_0ROW_BOTTOM_0COL_RIGHT;
+            break;
+        case UIDeviceOrientationPortrait:            // Device oriented vertically, home button on the bottom
+        default:
+            exifOrientation = PHOTOS_EXIF_0ROW_RIGHT_0COL_TOP;
+            break;
+    }
+    
+    imageOptions = [NSDictionary dictionaryWithObject:[NSNumber numberWithInt:exifOrientation] forKey:CIDetectorImageOrientation];
+    // 得到CIFaceFeature，根据其计算出人脸的位置，从而调整水印的位置。
+    NSArray *features = [self.faceDetector featuresInImage:convertedImage options:imageOptions];
+    
+    // get the clean aperture
+    // the clean aperture is a rectangle that defines the portion of the encoded pixel dimensions
+    // that represents image data valid for display.
+    CMFormatDescriptionRef fdesc = CMSampleBufferGetFormatDescription(sampleBuffer);
+    CGRect clap = CMVideoFormatDescriptionGetCleanAperture(fdesc, false /*originIsTopLeft == false*/);
+    
+    [self willOutputFeatures:features forClap:clap withOrientation:curDeviceOrientation];
+}
+
+- (void)willOutputFeatures:(NSArray *)features forClap:(CGRect)clap withOrientation:(UIDeviceOrientation)curDeviceOrientation
+{
+    dispatch_async(dispatch_get_main_queue(), ^{
+        CGRect previewBox = previewView.frame;
+        if (features.count) {
+            self.watermarkImageView.hidden = NO;
+        } else {
+            self.watermarkImageView.hidden = YES;
+        }
+        
+        for (CIFaceFeature *faceFeature in features) {
+            // find the correct position for the square layer within the previewLayer
+            // the feature box originates in the bottom left of the video frame.
+            // (Bottom right if mirroring is turned on)
+            //Update face bounds for iOS Coordinate System
+            CGRect faceRect = faceFeature.bounds;
+            
+            // flip preview width and height
+            CGFloat temp = faceRect.size.width;
+            faceRect.size.width = faceRect.size.height;
+            faceRect.size.height = temp;
+            temp = faceRect.origin.x;
+            faceRect.origin.x = faceRect.origin.y;
+            faceRect.origin.y = temp;
+            // scale coordinates so they fit in the preview box, which may be scaled
+            CGFloat widthScaleBy = previewBox.size.width / clap.size.height;
+            CGFloat heightScaleBy = previewBox.size.height / clap.size.width;
+            faceRect.size.width *= widthScaleBy;
+            faceRect.size.height *= heightScaleBy;
+            faceRect.origin.x *= widthScaleBy;
+            faceRect.origin.y *= heightScaleBy;
+            
+            faceRect = CGRectOffset(faceRect, previewBox.origin.x, previewBox.origin.y);
+            
+            //mirror
+            CGRect rect = CGRectMake(previewBox.size.width - faceRect.origin.x - faceRect.size.width, faceRect.origin.y, faceRect.size.width, faceRect.size.height);
+            if (fabs(rect.origin.x - self.faceBounds.origin.x) > 5.0) {
+                self.faceBounds = rect;
+                //                if (self.faceView) {
+                //                    [self.faceView removeFromSuperview];
+                //                    self.faceView =  nil;
+                //                }
+                //
+                //                // create a UIView using the bounds of the face
+                //                self.faceView = [[UIView alloc] initWithFrame:self.faceBounds];
+                //
+                //                // add a border around the newly created UIView
+                //                self.faceView.layer.borderWidth = 1;
+                //                self.faceView.layer.borderColor = [[UIColor redColor] CGColor];
+                //
+                //                // add the new view to create a box around the face
+                //                [self.view addSubview:self.faceView];
+            }
+        }
+    });
 }
 
 @end
