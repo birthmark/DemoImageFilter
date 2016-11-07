@@ -21,4 +21,7 @@
 
 @property (nonatomic, weak) id<CSCameraViewControllerDelegate> delegate;
 
+@property (nonatomic, strong) UIView *cameraView;       // 拍照的预览view
+@property (nonatomic, strong) UIView *operationView;    // 拍照的操作view
+
 @end

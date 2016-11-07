@@ -78,7 +78,7 @@ typedef NS_ENUM(NSInteger, CameraProportionType) {
 
 @implementation CSCameraViewController {
     
-    GPUImageView *previewView;
+    GPUImageView *_previewView;
     GPUImageStillCamera *stillCamera;
     
     GPUImageFilterGroup *_filterGroup;
@@ -137,9 +137,9 @@ typedef NS_ENUM(NSInteger, CameraProportionType) {
     
     if (!_blurView) {
         UIBlurEffect *blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleLight];
-        _blurView = [[UIVisualEffectView alloc] initWithFrame:previewView.bounds];
+        _blurView = [[UIVisualEffectView alloc] initWithFrame:_previewView.bounds];
         _blurView.effect = blurEffect;
-        [self.view insertSubview:_blurView aboveSubview:previewView];
+        [self.view insertSubview:_blurView aboveSubview:_previewView];
     }
     _blurView.alpha = 1.f;
     
@@ -209,7 +209,7 @@ typedef NS_ENUM(NSInteger, CameraProportionType) {
 
 - (void)updateLayoutAfterRotationViaSize:(CGSize)size {
     NSLog(@"%@", NSStringFromCGSize(size));
-//    previewView.frame = CGRectMake(0, 0, size.width, size.height);
+//    _previewView.frame = CGRectMake(0, 0, size.width, size.height);
 //    topBar.frame = CGRectMake(0, 0, size.width, 40);
 //    toolBar.frame = CGRectMake(0, size.height - 100, size.width, 100);
 }
@@ -219,7 +219,7 @@ typedef NS_ENUM(NSInteger, CameraProportionType) {
 - (void)initTopBar {
     topBar = [[UIView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.frame), 40)];
     topBar.backgroundColor = [UIColor clearColor];
-    [self.view addSubview:topBar];
+    [_operationView addSubview:topBar];
     
     // Settings
     UIButton *btnSettings = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 40, 40)];
@@ -263,7 +263,7 @@ typedef NS_ENUM(NSInteger, CameraProportionType) {
 - (void)initToolBar {
     toolBar = [[UIView alloc] initWithFrame:CGRectMake(0, CGRectGetHeight(self.view.frame) - 100, CGRectGetWidth(self.view.frame), 100)];
     toolBar.backgroundColor = [UIColor clearColor];
-    [self.view addSubview:toolBar];
+    [_operationView addSubview:toolBar];
     
     // Capture
     UIButton *btnCapture = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 70, 70)];
@@ -649,7 +649,7 @@ typedef NS_ENUM(NSInteger, CameraProportionType) {
 }
 
 - (void)actionProportion:(UIButton *)sender {
-    CGFloat width = previewView.frame.size.width;
+    CGFloat width = _previewView.frame.size.width;
     switch (cameraProportionType) {
         case CameraProportionType11:
             cameraProportionType = CameraProportionType34;
@@ -686,17 +686,23 @@ typedef NS_ENUM(NSInteger, CameraProportionType) {
 #pragma mark - Camera View
 
 - (void)initCameraView {
-    previewView = [[GPUImageView alloc] initWithFrame:self.view.frame];
+    _cameraView = [[UIView alloc] initWithFrame:self.view.frame];
+    [self.view addSubview:_cameraView];
+    
+    _previewView = [[GPUImageView alloc] initWithFrame:_cameraView.bounds];
     // 保持与iOS系统相机的位置一致。
     cameraProportionType = CameraProportionType34;
-    previewView.backgroundColor = [UIColor whiteColor];
-    previewView.fillMode = kGPUImageFillModePreserveAspectRatioAndFill;
-    [self.view insertSubview:previewView atIndex:0];
+    _previewView.backgroundColor = [UIColor whiteColor];
+    _previewView.fillMode = kGPUImageFillModePreserveAspectRatioAndFill;
+    [_cameraView addSubview:_previewView];
     
-    _maskViewCapture = [[UIView alloc] initWithFrame:previewView.bounds];
-    [self.view insertSubview:_maskViewCapture aboveSubview:previewView];
+    _maskViewCapture = [[UIView alloc] initWithFrame:_previewView.bounds];
+    [_cameraView insertSubview:_maskViewCapture aboveSubview:_previewView];
     _maskViewCapture.backgroundColor = [UIColor blackColor];
     _maskViewCapture.hidden = YES;
+    
+    _operationView = [[UIView alloc] initWithFrame:self.view.frame];
+    [self.view addSubview:_operationView];
     
     [self addFocusTapGesture];
     
@@ -706,7 +712,7 @@ typedef NS_ENUM(NSInteger, CameraProportionType) {
     stillCamera.delegate = self;
     
     // 此处曾因错误添加，导致闪屏
-    // [stillCamera addTarget:previewView];
+    // [stillCamera addTarget:_previewView];
     
     CGPoint focusPoint = CGPointMake(0.5f, 0.5f);
     [stillCamera.inputCamera lockForConfiguration:nil];
@@ -721,7 +727,7 @@ typedef NS_ENUM(NSInteger, CameraProportionType) {
     
     // TODO: 不加滤镜, 如何获取图片？
     /*
-    [stillCamera addTarget:previewView];
+    [stillCamera addTarget:_previewView];
     [stillCamera startCameraCapture];
     */
     
@@ -737,7 +743,7 @@ typedef NS_ENUM(NSInteger, CameraProportionType) {
 //    filter = [[GPUImageToonFilter alloc] init];
     filter = [[GPUImageSnapchatFilter alloc] init];
     
-    [filter addTarget:previewView];
+    [filter addTarget:_previewView];
     
     [stillCamera addTarget:filter];
     
@@ -755,7 +761,7 @@ typedef NS_ENUM(NSInteger, CameraProportionType) {
     _filterGroup.initialFilters = @[filter];
     _filterGroup.terminalFilter = filter1;
     
-    [_filterGroup addTarget:previewView];
+    [_filterGroup addTarget:_previewView];
     
     [stillCamera addTarget:_filterGroup];
     
@@ -767,7 +773,7 @@ typedef NS_ENUM(NSInteger, CameraProportionType) {
     GPUImageFilter *filter1 = [[GPUImageToonFilter alloc] init];
     GPUImageMoonlightFilter *filter2 = [[GPUImageMoonlightFilter alloc] init];
     NSArray *filterArr = @[filter2, filter1];
-    _filterPipeline = [[GPUImageFilterPipeline alloc] initWithOrderedFilters:filterArr input:stillCamera output:previewView];
+    _filterPipeline = [[GPUImageFilterPipeline alloc] initWithOrderedFilters:filterArr input:stillCamera output:_previewView];
     
     [stillCamera startCameraCapture];
      */
@@ -777,7 +783,7 @@ typedef NS_ENUM(NSInteger, CameraProportionType) {
     csSlider = [[CSSlider alloc] initWithFrame:CGRectMake(0, 0, 300, 40)];
     csSlider.center = CGPointMake(CGRectGetWidth(self.view.frame) - 40, self.view.center.y);
     csSlider.value = 0.5f;
-    [self.view addSubview:csSlider];
+    [_operationView addSubview:csSlider];
     csSlider.delegate = self;
     //    csSlider.thumbTintColor = [UIColor greenColor];
     
@@ -822,16 +828,16 @@ typedef NS_ENUM(NSInteger, CameraProportionType) {
 
 - (void)addFocusTapGesture {
     UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(actionFocus:)];
-    [previewView addGestureRecognizer:tapGesture];
+    [_operationView addGestureRecognizer:tapGesture];
 }
 
 - (void)actionFocus:(UITapGestureRecognizer *)sender {
     if (!cameraFocusView) {
         cameraFocusView = [[CameraFocusView alloc] initWithFrame:CGRectMake(0, 0, 50, 50)];
-        [self.view addSubview:cameraFocusView];
+        [_operationView addSubview:cameraFocusView];
     }
     
-    CGPoint touchpoint = [sender locationInView:previewView];
+    CGPoint touchpoint = [sender locationInView:_previewView];
     
     cameraFocusView.center = touchpoint;
     
@@ -859,11 +865,11 @@ typedef NS_ENUM(NSInteger, CameraProportionType) {
 {
     CGPoint realPoint = CGPointZero;
     if (stillCamera.isBackFacingCameraPresent) {
-        realPoint = CGPointMake(point.y / previewView.frame.size.height,
-                                1 - point.x / previewView.frame.size.width);
+        realPoint = CGPointMake(point.y / _previewView.frame.size.height,
+                                1 - point.x / _previewView.frame.size.width);
     } else {
-        realPoint = CGPointMake(point.y / previewView.frame.size.height,
-                                point.x / previewView.frame.size.width);
+        realPoint = CGPointMake(point.y / _previewView.frame.size.height,
+                                point.x / _previewView.frame.size.width);
     }
     return realPoint;
 }
