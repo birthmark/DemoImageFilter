@@ -12,7 +12,7 @@
 #import "UIImage+CSCategory.h"
 
 #import "CSPreviewThumbnailDataSourceManager.h"
-
+#import "CSPreviewCollectionViewCell.h"
 
 @interface CSPreviewViewController () <
 
@@ -137,7 +137,7 @@
     _collectionViewPreview.pagingEnabled = YES;
     [self.view insertSubview:_collectionViewPreview atIndex:0];
     
-    [_collectionViewPreview registerNib:[UINib nibWithNibName:@"CSAlbumCollectionViewCell" bundle:nil] forCellWithReuseIdentifier:@"kCSPreviewCollectionViewCellPreview"];
+    [_collectionViewPreview registerClass:[CSPreviewCollectionViewCell class] forCellWithReuseIdentifier:kCSPreviewCollectionViewCellIdentifier];
     
     _collectionViewPreview.dataSource = self;
     _collectionViewPreview.delegate = self;
@@ -151,9 +151,9 @@
     return thumbnailDataSourceManager.photoAssets.count;
 }
 
-- (CSAlbumCollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
+- (CSPreviewCollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     
-    CSAlbumCollectionViewCell *cell = (CSAlbumCollectionViewCell *)[collectionView dequeueReusableCellWithReuseIdentifier:@"kCSPreviewCollectionViewCellPreview" forIndexPath:indexPath];
+    CSPreviewCollectionViewCell *cell = (CSPreviewCollectionViewCell *)[collectionView dequeueReusableCellWithReuseIdentifier:kCSPreviewCollectionViewCellIdentifier forIndexPath:indexPath];
     
     PHAsset *asset = thumbnailDataSourceManager.photoAssets[indexPath.item];
     [[PHImageManager defaultManager] cancelImageRequest:cell.imageRequestID];
@@ -165,7 +165,6 @@
                                                                      
          NSLog(@"data source result size : %@", NSStringFromCGSize(result.size));
          dispatch_async(dispatch_get_main_queue(), ^{
-             cell.imageView.contentMode = UIViewContentModeScaleAspectFit;
              cell.imageView.image = result;
          });
          

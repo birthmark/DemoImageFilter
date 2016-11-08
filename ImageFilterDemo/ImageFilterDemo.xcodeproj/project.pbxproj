@@ -68,6 +68,7 @@
 		A4D8AECD1D51A96200060E5F /* DemoGPUImageVideoCameraViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A4D8AECC1D51A96200060E5F /* DemoGPUImageVideoCameraViewController.m */; };
 		A4D8AED01D51BD0500060E5F /* CSViewVideoCameraDuration.m in Sources */ = {isa = PBXBuildFile; fileRef = A4D8AECF1D51BD0500060E5F /* CSViewVideoCameraDuration.m */; };
 		A4D8AF081D582B1E00060E5F /* CSAlbumDataSourceManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A4D8AF071D582B1E00060E5F /* CSAlbumDataSourceManager.m */; };
+		A4DD4C651DD16BC80078A7FD /* CSPreviewCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A4DD4C631DD16BC80078A7FD /* CSPreviewCollectionViewCell.m */; };
 		A4DE3AEB1DBDDB6900CC8896 /* magic_animation.m4a in Resources */ = {isa = PBXBuildFile; fileRef = A4DE3AEA1DBDDB6900CC8896 /* magic_animation.m4a */; };
 		A4DE3AED1DBDDE1900CC8896 /* countdown.wav in Resources */ = {isa = PBXBuildFile; fileRef = A4DE3AEC1DBDDE1900CC8896 /* countdown.wav */; };
 		A4DE3B471DBF2D5000CC8896 /* ABPieProgress.m in Sources */ = {isa = PBXBuildFile; fileRef = A4DE3B461DBF2D5000CC8896 /* ABPieProgress.m */; };
@@ -183,6 +184,8 @@
 		A4D8AECF1D51BD0500060E5F /* CSViewVideoCameraDuration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSViewVideoCameraDuration.m; sourceTree = "<group>"; };
 		A4D8AF061D582B1E00060E5F /* CSAlbumDataSourceManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSAlbumDataSourceManager.h; sourceTree = "<group>"; };
 		A4D8AF071D582B1E00060E5F /* CSAlbumDataSourceManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSAlbumDataSourceManager.m; sourceTree = "<group>"; };
+		A4DD4C621DD16BC80078A7FD /* CSPreviewCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSPreviewCollectionViewCell.h; sourceTree = "<group>"; };
+		A4DD4C631DD16BC80078A7FD /* CSPreviewCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSPreviewCollectionViewCell.m; sourceTree = "<group>"; };
 		A4DE3AEA1DBDDB6900CC8896 /* magic_animation.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = magic_animation.m4a; sourceTree = "<group>"; };
 		A4DE3AEC1DBDDE1900CC8896 /* countdown.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = countdown.wav; sourceTree = "<group>"; };
 		A4DE3B451DBF2D5000CC8896 /* ABPieProgress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ABPieProgress.h; sourceTree = "<group>"; };
@@ -343,6 +346,8 @@
 				A415851F1DADCA220058204E /* CSPreviewThumbnailDataSourceManager.m */,
 				A41585201DADCA220058204E /* CSPreviewViewController.h */,
 				A41585211DADCA220058204E /* CSPreviewViewController.m */,
+				A4DD4C621DD16BC80078A7FD /* CSPreviewCollectionViewCell.h */,
+				A4DD4C631DD16BC80078A7FD /* CSPreviewCollectionViewCell.m */,
 				A4DE3B481DBF334F00CC8896 /* NSIndexSet+Convenience.h */,
 				A4DE3B491DBF334F00CC8896 /* NSIndexSet+Convenience.m */,
 			);
@@ -708,6 +713,7 @@
 				A4DE3BA21DC0C09800CC8896 /* AnimatorPushPopTransition.m in Sources */,
 				A4D8AEC71D5091A700060E5F /* DemoGPUImageCameraViewController.m in Sources */,
 				A4DE3B9B1DC0BF2100CC8896 /* TestViewController.m in Sources */,
+				A4DD4C651DD16BC80078A7FD /* CSPreviewCollectionViewCell.m in Sources */,
 				A4DE3B471DBF2D5000CC8896 /* ABPieProgress.m in Sources */,
 				A4F225121DB6301700310FB9 /* CLLocation+GPSDictionary.m in Sources */,
 				A4CDE55F1D99FFE60009F1F0 /* UIImage+CSCategory.m in Sources */,
