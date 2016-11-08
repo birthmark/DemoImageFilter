@@ -726,6 +726,8 @@ typedef NS_ENUM(NSInteger, enumDemoImageFilter) {
     GPUImageAlphaBlendFilter *blendFilter = [[GPUImageAlphaBlendFilter alloc] init];
     blendFilter.mix = 0.5f;
     
+    
+    /*
     UIImage *image = [UIImage imageNamed:@"Model.png"];
     GPUImagePicture *picture = [[GPUImagePicture alloc] initWithImage:image];
     
@@ -741,8 +743,55 @@ typedef NS_ENUM(NSInteger, enumDemoImageFilter) {
     
     [picture processImage];
     [picture2 processImage];
-    
+     
     _filteredImage = [blendFilter imageFromCurrentFramebuffer];
+    */
+    
+    
+    /*
+    // 添加水印, 暂未完成
+    UIImage *image = [UIImage imageNamed:@"Model.png"];
+    GPUImagePicture *picture = [[GPUImagePicture alloc] initWithImage:image];
+    
+    UIView *view = [[UIView alloc] initWithFrame:_filteredImageView.bounds];
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 50, 30)];
+    label.backgroundColor = [UIColor lightGrayColor];
+    label.textColor = [UIColor redColor];
+    label.text = @"水印";
+    label.center = view.center;
+    [view addSubview:label];
+
+    GPUImageUIElement *uiElement = [[GPUImageUIElement alloc] initWithView:view];
+    [uiElement addTarget:blendFilter];
+    [picture addTarget:blendFilter];
+    
+    [blendFilter useNextFrameForImageCapture];
+    [picture processImage];
+    
+    [blendFilter setFrameProcessingCompletionBlock:^(GPUImageOutput *output, CMTime frameTime) {
+        [uiElement update];
+    }];
+     
+    _filteredImage = [blendFilter imageFromCurrentFramebuffer];
+    */
+    
+    
+    UIImageView *imageview = [[UIImageView alloc] initWithFrame:_filteredImageView.bounds];
+    imageview.image = [UIImage imageNamed:@"Model.png"];
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 100, 30)];
+    [imageview addSubview:label];
+    label.text = @"水印";
+    label.textColor = [UIColor whiteColor];
+    label.font = [UIFont systemFontOfSize:30.f];
+    [imageview addSubview:label];
+    label.center = imageview.center;
+    
+    UIGraphicsBeginImageContextWithOptions(imageview.bounds.size, NO, 0);
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    [imageview.layer renderInContext:context];
+    _filteredImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
     
     _filteredImageView.image = _filteredImage;
 }
