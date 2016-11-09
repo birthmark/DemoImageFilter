@@ -69,6 +69,7 @@
 		A4D8AED01D51BD0500060E5F /* CSViewVideoCameraDuration.m in Sources */ = {isa = PBXBuildFile; fileRef = A4D8AECF1D51BD0500060E5F /* CSViewVideoCameraDuration.m */; };
 		A4D8AF081D582B1E00060E5F /* CSAlbumDataSourceManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A4D8AF071D582B1E00060E5F /* CSAlbumDataSourceManager.m */; };
 		A4DD4C651DD16BC80078A7FD /* CSPreviewCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A4DD4C631DD16BC80078A7FD /* CSPreviewCollectionViewCell.m */; };
+		A4DD4CC91DD3109B0078A7FD /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = A4DD4CC81DD3109B0078A7FD /* Icon.png */; };
 		A4DE3AEB1DBDDB6900CC8896 /* magic_animation.m4a in Resources */ = {isa = PBXBuildFile; fileRef = A4DE3AEA1DBDDB6900CC8896 /* magic_animation.m4a */; };
 		A4DE3AED1DBDDE1900CC8896 /* countdown.wav in Resources */ = {isa = PBXBuildFile; fileRef = A4DE3AEC1DBDDE1900CC8896 /* countdown.wav */; };
 		A4DE3B471DBF2D5000CC8896 /* ABPieProgress.m in Sources */ = {isa = PBXBuildFile; fileRef = A4DE3B461DBF2D5000CC8896 /* ABPieProgress.m */; };
@@ -186,6 +187,7 @@
 		A4D8AF071D582B1E00060E5F /* CSAlbumDataSourceManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSAlbumDataSourceManager.m; sourceTree = "<group>"; };
 		A4DD4C621DD16BC80078A7FD /* CSPreviewCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSPreviewCollectionViewCell.h; sourceTree = "<group>"; };
 		A4DD4C631DD16BC80078A7FD /* CSPreviewCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSPreviewCollectionViewCell.m; sourceTree = "<group>"; };
+		A4DD4CC81DD3109B0078A7FD /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
 		A4DE3AEA1DBDDB6900CC8896 /* magic_animation.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = magic_animation.m4a; sourceTree = "<group>"; };
 		A4DE3AEC1DBDDE1900CC8896 /* countdown.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = countdown.wav; sourceTree = "<group>"; };
 		A4DE3B451DBF2D5000CC8896 /* ABPieProgress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ABPieProgress.h; sourceTree = "<group>"; };
@@ -306,6 +308,7 @@
 		834C52EF1B92DABE000690FD /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				A4DD4CC81DD3109B0078A7FD /* Icon.png */,
 				834C52F01B92DABE000690FD /* Info.plist */,
 				834C52F11B92DABE000690FD /* main.m */,
 			);
@@ -620,6 +623,7 @@
 				A4DE3AEB1DBDDB6900CC8896 /* magic_animation.m4a in Resources */,
 				A4DE3AED1DBDDE1900CC8896 /* countdown.wav in Resources */,
 				A4D8AEC41D50918F00060E5F /* GPUImageCustomFilter.fsh in Resources */,
+				A4DD4CC91DD3109B0078A7FD /* Icon.png in Resources */,
 				A47F5A451D704A7D002B4F3E /* texture_overlayBlend_1.png in Resources */,
 				A42D28B01D598E5B00FEE114 /* CSAlbumCollectionViewCell.xib in Resources */,
 				A44EB7311D4B2B0C00EF5F8E /* Model.png in Resources */,
