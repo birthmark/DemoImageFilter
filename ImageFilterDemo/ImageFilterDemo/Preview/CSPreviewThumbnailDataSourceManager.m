@@ -55,7 +55,7 @@
     PHFetchResult<PHAssetCollection *> *albums = [PHAssetCollection fetchAssetCollectionsWithType:PHAssetCollectionTypeSmartAlbum subtype:PHAssetCollectionSubtypeAlbumRegular options:options];
     
     for (PHAssetCollection *album in albums) {
-        if ([album.localizedTitle isEqualToString:@"Camera Roll"]) {
+        if ([album.localizedTitle isEqualToString:@"All Photos"]) {
             PHFetchOptions *options = [[PHFetchOptions alloc] init];
             options.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"creationDate"
                                                                       ascending:YES]];

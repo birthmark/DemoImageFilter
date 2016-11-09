@@ -16,12 +16,16 @@
 @end
 
 @implementation CSPreviewCollectionViewCell
+{
+    UITapGestureRecognizer *_tapGesture;
+}
 
 - (instancetype)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
     if (self) {
         [self initScrollView];
+        [self initTapGesture];
     }
     return self;
 }
@@ -32,12 +36,28 @@
     _scrollView.bounces = NO;
     _scrollView.delegate = self;
     _scrollView.minimumZoomScale = 1.f;
-    _scrollView.maximumZoomScale = 10.f;
+    _scrollView.maximumZoomScale = 4.f;
     [self addSubview:_scrollView];
     
     _imageView = [[UIImageView alloc] initWithFrame:_scrollView.bounds];
     _imageView.contentMode = UIViewContentModeScaleAspectFit;
     [_scrollView addSubview:_imageView];
+}
+
+- (void)initTapGesture
+{
+    _tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(actionTapGesture:)];
+    _tapGesture.numberOfTapsRequired = 2;
+    [_scrollView addGestureRecognizer:_tapGesture];
+}
+
+- (void)actionTapGesture:(UITapGestureRecognizer *)sender
+{
+    if (_scrollView.zoomScale > _scrollView.minimumZoomScale) {
+        [_scrollView setZoomScale:_scrollView.minimumZoomScale animated:YES];
+    } else {
+        [_scrollView setZoomScale:_scrollView.maximumZoomScale animated:YES];
+    }
 }
 
 #pragma mark - <UIScrollViewDelegate>

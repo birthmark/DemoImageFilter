@@ -158,7 +158,7 @@
     PHAsset *asset = thumbnailDataSourceManager.photoAssets[indexPath.item];
     [[PHImageManager defaultManager] cancelImageRequest:cell.imageRequestID];
     [[PHImageManager defaultManager] requestImageForAsset:asset
-                                               targetSize:cell.frame.size
+                                               targetSize:CGSizeMake(256, 256)
                                               contentMode:PHImageContentModeAspectFit
                                                   options:nil
                                             resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
