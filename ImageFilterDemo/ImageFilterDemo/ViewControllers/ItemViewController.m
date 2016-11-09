@@ -724,10 +724,11 @@ typedef NS_ENUM(NSInteger, enumDemoImageFilter) {
     [self displayOriginImage:nil];
     
     GPUImageAlphaBlendFilter *blendFilter = [[GPUImageAlphaBlendFilter alloc] init];
-    blendFilter.mix = 0.5f;
+    blendFilter.mix = 1.f;
     
     
     /*
+    // GPUImagePicture+GPUImagePicture
     UIImage *image = [UIImage imageNamed:@"Model.png"];
     GPUImagePicture *picture = [[GPUImagePicture alloc] initWithImage:image];
     
@@ -748,40 +749,41 @@ typedef NS_ENUM(NSInteger, enumDemoImageFilter) {
     */
     
     
-    /*
-    // 添加水印, 暂未完成
+    // GPUImagePicture+GPUImageUIElement
     UIImage *image = [UIImage imageNamed:@"Model.png"];
     GPUImagePicture *picture = [[GPUImagePicture alloc] initWithImage:image];
     
     UIView *view = [[UIView alloc] initWithFrame:_filteredImageView.bounds];
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 50, 30)];
-    label.backgroundColor = [UIColor lightGrayColor];
-    label.textColor = [UIColor redColor];
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 100, 30)];
     label.text = @"水印";
-    label.center = view.center;
+    label.textColor = [UIColor whiteColor];
+    label.textAlignment = NSTextAlignmentCenter;
+    label.font = [UIFont systemFontOfSize:30.f];
     [view addSubview:label];
+    label.center = view.center;
 
     GPUImageUIElement *uiElement = [[GPUImageUIElement alloc] initWithView:view];
-    [uiElement addTarget:blendFilter];
+    
     [picture addTarget:blendFilter];
+    [uiElement addTarget:blendFilter];
     
     [blendFilter useNextFrameForImageCapture];
+    
     [picture processImage];
+    [uiElement update]; // 不能少
     
-    [blendFilter setFrameProcessingCompletionBlock:^(GPUImageOutput *output, CMTime frameTime) {
-        [uiElement update];
-    }];
-     
     _filteredImage = [blendFilter imageFromCurrentFramebuffer];
-    */
     
     
+    
+    /*
+    // CoreGraphics
     UIImageView *imageview = [[UIImageView alloc] initWithFrame:_filteredImageView.bounds];
     imageview.image = [UIImage imageNamed:@"Model.png"];
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 100, 30)];
-    [imageview addSubview:label];
     label.text = @"水印";
     label.textColor = [UIColor whiteColor];
+    label.textAlignment = NSTextAlignmentCenter;
     label.font = [UIFont systemFontOfSize:30.f];
     [imageview addSubview:label];
     label.center = imageview.center;
@@ -791,6 +793,7 @@ typedef NS_ENUM(NSInteger, enumDemoImageFilter) {
     [imageview.layer renderInContext:context];
     _filteredImage = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
+    */
     
     
     _filteredImageView.image = _filteredImage;
