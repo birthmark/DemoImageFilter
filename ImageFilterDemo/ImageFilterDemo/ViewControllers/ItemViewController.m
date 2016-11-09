@@ -748,7 +748,7 @@ typedef NS_ENUM(NSInteger, enumDemoImageFilter) {
     _filteredImage = [blendFilter imageFromCurrentFramebuffer];
     */
     
-    
+    /*
     // GPUImagePicture+GPUImageUIElement
     UIImage *image = [UIImage imageNamed:@"Model.png"];
     GPUImagePicture *picture = [[GPUImagePicture alloc] initWithImage:image];
@@ -773,27 +773,35 @@ typedef NS_ENUM(NSInteger, enumDemoImageFilter) {
     [uiElement update]; // 不能少
     
     _filteredImage = [blendFilter imageFromCurrentFramebuffer];
+    */
     
     
     
-    /*
     // CoreGraphics
-    UIImageView *imageview = [[UIImageView alloc] initWithFrame:_filteredImageView.bounds];
+    UIView *view = [[UIView alloc] initWithFrame:_filteredImageView.bounds];
+    
+    UIImageView *imageview = [[UIImageView alloc] initWithFrame:view.bounds];
     imageview.image = [UIImage imageNamed:@"Model.png"];
+    [view addSubview:imageview];
+    
+    UIImageView *iconView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
+    iconView.image = [UIImage imageNamed:@"btnFilter"];
+    [view addSubview:iconView];
+    
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 100, 30)];
     label.text = @"水印";
     label.textColor = [UIColor whiteColor];
     label.textAlignment = NSTextAlignmentCenter;
     label.font = [UIFont systemFontOfSize:30.f];
-    [imageview addSubview:label];
-    label.center = imageview.center;
+    [view addSubview:label];
+    label.center = view.center;
     
-    UIGraphicsBeginImageContextWithOptions(imageview.bounds.size, NO, 0);
+    UIGraphicsBeginImageContextWithOptions(view.bounds.size, NO, 0);
     CGContextRef context = UIGraphicsGetCurrentContext();
-    [imageview.layer renderInContext:context];
+    [view.layer renderInContext:context];
     _filteredImage = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-    */
+    
     
     
     _filteredImageView.image = _filteredImage;
