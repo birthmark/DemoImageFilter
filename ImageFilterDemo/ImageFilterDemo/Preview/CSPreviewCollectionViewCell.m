@@ -53,11 +53,48 @@
 
 - (void)actionTapGesture:(UITapGestureRecognizer *)sender
 {
+    CGPoint touchPoint = [sender locationInView:_scrollView];
+    
     if (_scrollView.zoomScale > _scrollView.minimumZoomScale) {
         [_scrollView setZoomScale:_scrollView.minimumZoomScale animated:YES];
     } else {
-        [_scrollView setZoomScale:_scrollView.maximumZoomScale animated:YES];
+        CGRect rect = [self zoomRectWillPoint:touchPoint
+                                      toScale:_scrollView.maximumZoomScale];
+        [_scrollView zoomToRect:rect animated:YES];
+//        [_scrollView setZoomScale:_scrollView.maximumZoomScale animated:YES];
     }
+}
+
+/**
+ *	@brief  获取定点放大的区域
+ *
+ *	@param point 坐标
+ *	@param tScale 放大的倍数
+ *
+ *	@return 放大区域
+ */
+- (CGRect)zoomRectWillPoint:(CGPoint)point
+                    toScale:(CGFloat)tScale {
+    
+    CGFloat width  =  CGRectGetWidth(self.bounds) / tScale;
+    CGFloat height =  CGRectGetHeight(self.bounds) / tScale;
+    CGFloat ox = point.x - width / 2.f;
+    CGFloat oy = point.y - height / 2.f;
+    
+    // 计算偏移量
+    CGSize showSize;
+    showSize.width = MIN(CGRectGetWidth(self.bounds), CGRectGetWidth(_scrollView.frame));
+    showSize.height = MIN(CGRectGetHeight(self.bounds), CGRectGetHeight(_scrollView.frame));
+    
+    CGFloat scale = showSize.width / showSize.height;
+    
+    if (width / height > scale) {
+        width = height * scale;
+    } else {
+        height = width / scale;
+    }
+    
+    return CGRectMake(ox, oy, width, height);
 }
 
 #pragma mark - <UIScrollViewDelegate>
