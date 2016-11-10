@@ -802,8 +802,6 @@ typedef NS_ENUM(NSInteger, enumDemoImageFilter) {
     _filteredImage = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
     
-    
-    
     _filteredImageView.image = _filteredImage;
 }
 
