@@ -58,6 +58,8 @@
 		A47F5A471D704A7D002B4F3E /* texture_screenBlend_1.png in Resources */ = {isa = PBXBuildFile; fileRef = A47F5A3D1D704A7D002B4F3E /* texture_screenBlend_1.png */; };
 		A4880B5F1D814AC40016B619 /* CameraFocusView.m in Sources */ = {isa = PBXBuildFile; fileRef = A4880B5E1D814AC40016B619 /* CameraFocusView.m */; };
 		A4880B621D816B600016B619 /* CSSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = A4880B601D816B600016B619 /* CSSlider.m */; };
+		A4AE9FE01DD5615800832412 /* CSWatermarkViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A4AE9FDD1DD5615800832412 /* CSWatermarkViewController.m */; };
+		A4AE9FE81DD5652000832412 /* CSWatermarkCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A4AE9FE71DD5652000832412 /* CSWatermarkCollectionViewCell.m */; };
 		A4CDE55B1D9939940009F1F0 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A4CDE55A1D9939940009F1F0 /* CoreMotion.framework */; };
 		A4CDE55F1D99FFE60009F1F0 /* UIImage+CSCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = A4CDE55E1D99FFE60009F1F0 /* UIImage+CSCategory.m */; };
 		A4D8AEBD1D50456600060E5F /* CameraViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A4D8AEBC1D50456600060E5F /* CameraViewController.m */; };
@@ -166,6 +168,10 @@
 		A4880B5E1D814AC40016B619 /* CameraFocusView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CameraFocusView.m; sourceTree = "<group>"; };
 		A4880B601D816B600016B619 /* CSSlider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSSlider.m; sourceTree = "<group>"; };
 		A4880B611D816B600016B619 /* CSSlider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSSlider.h; sourceTree = "<group>"; };
+		A4AE9FDC1DD5615800832412 /* CSWatermarkViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSWatermarkViewController.h; sourceTree = "<group>"; };
+		A4AE9FDD1DD5615800832412 /* CSWatermarkViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSWatermarkViewController.m; sourceTree = "<group>"; };
+		A4AE9FE61DD5652000832412 /* CSWatermarkCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSWatermarkCollectionViewCell.h; sourceTree = "<group>"; };
+		A4AE9FE71DD5652000832412 /* CSWatermarkCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSWatermarkCollectionViewCell.m; sourceTree = "<group>"; };
 		A4CDE55A1D9939940009F1F0 /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
 		A4CDE55D1D99FFDD0009F1F0 /* UIImage+CSCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+CSCategory.h"; sourceTree = "<group>"; };
 		A4CDE55E1D99FFE60009F1F0 /* UIImage+CSCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+CSCategory.m"; sourceTree = "<group>"; };
@@ -293,6 +299,7 @@
 				A4D8AEBA1D50453400060E5F /* Video */,
 				A415851D1DADCA220058204E /* Preview */,
 				A42C9D301DB07226002D8AFF /* Crop */,
+				A4AE9FDB1DD5615800832412 /* Watermark */,
 				834C52F31B92DABE000690FD /* AppDelegate.h */,
 				834C52F41B92DABE000690FD /* AppDelegate.m */,
 				A4DE3B991DC0BF2000CC8896 /* TestViewController.h */,
@@ -440,6 +447,25 @@
 				A47F5A3D1D704A7D002B4F3E /* texture_screenBlend_1.png */,
 			);
 			path = Textures;
+			sourceTree = "<group>";
+		};
+		A4AE9FDB1DD5615800832412 /* Watermark */ = {
+			isa = PBXGroup;
+			children = (
+				A4AE9FE21DD5649400832412 /* View */,
+				A4AE9FDC1DD5615800832412 /* CSWatermarkViewController.h */,
+				A4AE9FDD1DD5615800832412 /* CSWatermarkViewController.m */,
+			);
+			path = Watermark;
+			sourceTree = "<group>";
+		};
+		A4AE9FE21DD5649400832412 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				A4AE9FE61DD5652000832412 /* CSWatermarkCollectionViewCell.h */,
+				A4AE9FE71DD5652000832412 /* CSWatermarkCollectionViewCell.m */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 		A4CDE55C1D99FFC50009F1F0 /* OCCategory */ = {
@@ -721,6 +747,7 @@
 				A4DE3B471DBF2D5000CC8896 /* ABPieProgress.m in Sources */,
 				A4F225121DB6301700310FB9 /* CLLocation+GPSDictionary.m in Sources */,
 				A4CDE55F1D99FFE60009F1F0 /* UIImage+CSCategory.m in Sources */,
+				A4AE9FE01DD5615800832412 /* CSWatermarkViewController.m in Sources */,
 				A42D28B31D5994ED00FEE114 /* BeautyCenterViewController.m in Sources */,
 				A44EB7341D4B2B0C00EF5F8E /* RootTableViewController.m in Sources */,
 				A4D8AF081D582B1E00060E5F /* CSAlbumDataSourceManager.m in Sources */,
@@ -734,6 +761,7 @@
 				A44EB7331D4B2B0C00EF5F8E /* ItemViewController.m in Sources */,
 				A4D8AECD1D51A96200060E5F /* DemoGPUImageVideoCameraViewController.m in Sources */,
 				A47C6DD41DCB2E7600997DD2 /* MainViewController.m in Sources */,
+				A4AE9FE81DD5652000832412 /* CSWatermarkCollectionViewCell.m in Sources */,
 				A4D8AEBD1D50456600060E5F /* CameraViewController.m in Sources */,
 				A4D8AED01D51BD0500060E5F /* CSViewVideoCameraDuration.m in Sources */,
 				A47F5A2E1D704113002B4F3E /* GPUImageMoonlightFilter.m in Sources */,

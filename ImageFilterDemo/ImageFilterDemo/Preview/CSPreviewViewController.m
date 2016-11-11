@@ -13,6 +13,7 @@
 
 #import "CSPreviewThumbnailDataSourceManager.h"
 #import "CSPreviewCollectionViewCell.h"
+#import "CSWatermarkViewController.h"
 
 @interface CSPreviewViewController () <
 
@@ -82,23 +83,27 @@
     [btnClose addTarget:self action:@selector(actionClose:) forControlEvents:UIControlEventTouchUpInside];
     [_toolBar addSubview:btnClose];
     
-    // Camera
-    UIButton *btnCamera = [[UIButton alloc] initWithFrame:CGRectMake(CGRectGetWidth(_toolBar.frame) - 40, 0, 40, 40)];
-    [btnCamera setBackgroundImage:[UIImage imageNamed:@"btnCamera"] forState:UIControlStateNormal];
-    [btnCamera addTarget:self action:@selector(actionCamera:) forControlEvents:UIControlEventTouchUpInside];
-    [_toolBar addSubview:btnCamera];
+    // watermark
+    UIButton *btnWatermark = [[UIButton alloc] initWithFrame:CGRectMake(CGRectGetWidth(_toolBar.frame) - 100, 0, 100, 40)];
+    [btnWatermark setTitle:@"Watermark" forState:UIControlStateNormal];
+    [btnWatermark addTarget:self action:@selector(actionBtnWatermark:) forControlEvents:UIControlEventTouchUpInside];
+    [_toolBar addSubview:btnWatermark];
     
     lbAlbum.center      = _toolBar.center;
     btnClose.center     = CGPointMake(btnClose.center.x, lbAlbum.center.y);
-    btnCamera.center    = CGPointMake(btnCamera.center.x, lbAlbum.center.y);
+    btnWatermark.center = CGPointMake(btnWatermark.center.x, lbAlbum.center.y);
 }
 
 - (void)actionClose:(UIButton *)sender {
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
-- (void)actionCamera:(UIButton *)sender {
+- (void)actionBtnWatermark:(UIButton *)sender {
+    CSPreviewCollectionViewCell *cell = (CSPreviewCollectionViewCell *)[[_collectionViewPreview visibleCells] firstObject];
     
+    CSWatermarkViewController *watermarkVC = [[CSWatermarkViewController alloc] init];
+    watermarkVC.image = cell.imageView.image;
+    [self presentViewController:watermarkVC animated:YES completion:nil];
 }
 
 #pragma mark - collectionView thumnnail
@@ -168,6 +173,19 @@
              cell.imageView.image = result;
          });
          
+                                            }];
+    
+    [[PHImageManager defaultManager] requestImageForAsset:asset
+                                               targetSize:PHImageManagerMaximumSize
+                                              contentMode:PHImageContentModeAspectFit
+                                                  options:nil
+                                            resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
+                                                
+                                                NSLog(@"data source result size : %@", NSStringFromCGSize(result.size));
+                                                dispatch_async(dispatch_get_main_queue(), ^{
+                                                    cell.imageView.image = result;
+                                                });
+                                                
                                             }];
     
     return cell;
