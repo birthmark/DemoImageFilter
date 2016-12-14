@@ -38,6 +38,8 @@
 		A44EB7341D4B2B0C00EF5F8E /* RootTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A44EB72F1D4B2B0C00EF5F8E /* RootTableViewController.m */; };
 		A479E5FD1E00DA8000DD5FC8 /* LUT_Ag.png in Resources */ = {isa = PBXBuildFile; fileRef = A479E5FB1E00DA8000DD5FC8 /* LUT_Ag.png */; };
 		A479E5FE1E00DA8000DD5FC8 /* LUT_Cu.png in Resources */ = {isa = PBXBuildFile; fileRef = A479E5FC1E00DA8000DD5FC8 /* LUT_Cu.png */; };
+		A479E6001E00E5C300DD5FC8 /* LUT_BZT.png in Resources */ = {isa = PBXBuildFile; fileRef = A479E5FF1E00E5C300DD5FC8 /* LUT_BZT.png */; };
+		A479E6021E00E97A00DD5FC8 /* LUT_Cloud.png in Resources */ = {isa = PBXBuildFile; fileRef = A479E6011E00E97A00DD5FC8 /* LUT_Cloud.png */; };
 		A47C6D701DC878AB00997DD2 /* LUT_Snap.png in Resources */ = {isa = PBXBuildFile; fileRef = A47C6D6F1DC878AB00997DD2 /* LUT_Snap.png */; };
 		A47C6D731DC87D0600997DD2 /* GPUImageSnapchatFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = A47C6D721DC87D0600997DD2 /* GPUImageSnapchatFilter.m */; };
 		A47C6DD41DCB2E7600997DD2 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A47C6DD31DCB2E7600997DD2 /* MainViewController.m */; };
@@ -146,6 +148,8 @@
 		A44EB72F1D4B2B0C00EF5F8E /* RootTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RootTableViewController.m; sourceTree = "<group>"; };
 		A479E5FB1E00DA8000DD5FC8 /* LUT_Ag.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LUT_Ag.png; sourceTree = "<group>"; };
 		A479E5FC1E00DA8000DD5FC8 /* LUT_Cu.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LUT_Cu.png; sourceTree = "<group>"; };
+		A479E5FF1E00E5C300DD5FC8 /* LUT_BZT.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LUT_BZT.png; sourceTree = "<group>"; };
+		A479E6011E00E97A00DD5FC8 /* LUT_Cloud.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LUT_Cloud.png; sourceTree = "<group>"; };
 		A47C6D6F1DC878AB00997DD2 /* LUT_Snap.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LUT_Snap.png; sourceTree = "<group>"; };
 		A47C6D711DC87D0600997DD2 /* GPUImageSnapchatFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GPUImageSnapchatFilter.h; sourceTree = "<group>"; };
 		A47C6D721DC87D0600997DD2 /* GPUImageSnapchatFilter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GPUImageSnapchatFilter.m; sourceTree = "<group>"; };
@@ -426,6 +430,8 @@
 		A47F5A251D703D51002B4F3E /* LUTs */ = {
 			isa = PBXGroup;
 			children = (
+				A479E6011E00E97A00DD5FC8 /* LUT_Cloud.png */,
+				A479E5FF1E00E5C300DD5FC8 /* LUT_BZT.png */,
 				A479E5FB1E00DA8000DD5FC8 /* LUT_Ag.png */,
 				A479E5FC1E00DA8000DD5FC8 /* LUT_Cu.png */,
 				A47F5A2C1D704113002B4F3E /* GPUImageMoonlightFilter.h */,
@@ -655,6 +661,7 @@
 			files = (
 				A42378431DCC2D5F0040CC3E /* 69.jpg in Resources */,
 				834C52FB1B92DABE000690FD /* Main.storyboard in Resources */,
+				A479E6001E00E5C300DD5FC8 /* LUT_BZT.png in Resources */,
 				A47C6D701DC878AB00997DD2 /* LUT_Snap.png in Resources */,
 				A47F5A3E1D704A7D002B4F3E /* texture_colorBurnBlend_1.png in Resources */,
 				A47F5A421D704A7D002B4F3E /* texture_normalBlend_2.png in Resources */,
@@ -673,6 +680,7 @@
 				A47F5A431D704A7D002B4F3E /* texture_normalBlend_3.png in Resources */,
 				A47F5A401D704A7D002B4F3E /* texture_multiplyBlend_1.png in Resources */,
 				A47F5A281D703D51002B4F3E /* LUT_Bleach.png in Resources */,
+				A479E6021E00E97A00DD5FC8 /* LUT_Cloud.png in Resources */,
 				834C53001B92DABE000690FD /* LaunchScreen.xib in Resources */,
 				A47F5A471D704A7D002B4F3E /* texture_screenBlend_1.png in Resources */,
 				A47F5A461D704A7D002B4F3E /* texture_overlayBlend_2.png in Resources */,
