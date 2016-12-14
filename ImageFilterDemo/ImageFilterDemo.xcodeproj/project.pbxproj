@@ -36,6 +36,8 @@
 		A44EB7311D4B2B0C00EF5F8E /* Model.png in Resources */ = {isa = PBXBuildFile; fileRef = A44EB7281D4B2B0C00EF5F8E /* Model.png */; };
 		A44EB7331D4B2B0C00EF5F8E /* ItemViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A44EB72D1D4B2B0C00EF5F8E /* ItemViewController.m */; };
 		A44EB7341D4B2B0C00EF5F8E /* RootTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A44EB72F1D4B2B0C00EF5F8E /* RootTableViewController.m */; };
+		A479E5FD1E00DA8000DD5FC8 /* LUT_Ag.png in Resources */ = {isa = PBXBuildFile; fileRef = A479E5FB1E00DA8000DD5FC8 /* LUT_Ag.png */; };
+		A479E5FE1E00DA8000DD5FC8 /* LUT_Cu.png in Resources */ = {isa = PBXBuildFile; fileRef = A479E5FC1E00DA8000DD5FC8 /* LUT_Cu.png */; };
 		A47C6D701DC878AB00997DD2 /* LUT_Snap.png in Resources */ = {isa = PBXBuildFile; fileRef = A47C6D6F1DC878AB00997DD2 /* LUT_Snap.png */; };
 		A47C6D731DC87D0600997DD2 /* GPUImageSnapchatFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = A47C6D721DC87D0600997DD2 /* GPUImageSnapchatFilter.m */; };
 		A47C6DD41DCB2E7600997DD2 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A47C6DD31DCB2E7600997DD2 /* MainViewController.m */; };
@@ -142,6 +144,8 @@
 		A44EB72D1D4B2B0C00EF5F8E /* ItemViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ItemViewController.m; sourceTree = "<group>"; };
 		A44EB72E1D4B2B0C00EF5F8E /* RootTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RootTableViewController.h; sourceTree = "<group>"; };
 		A44EB72F1D4B2B0C00EF5F8E /* RootTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RootTableViewController.m; sourceTree = "<group>"; };
+		A479E5FB1E00DA8000DD5FC8 /* LUT_Ag.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LUT_Ag.png; sourceTree = "<group>"; };
+		A479E5FC1E00DA8000DD5FC8 /* LUT_Cu.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LUT_Cu.png; sourceTree = "<group>"; };
 		A47C6D6F1DC878AB00997DD2 /* LUT_Snap.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LUT_Snap.png; sourceTree = "<group>"; };
 		A47C6D711DC87D0600997DD2 /* GPUImageSnapchatFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GPUImageSnapchatFilter.h; sourceTree = "<group>"; };
 		A47C6D721DC87D0600997DD2 /* GPUImageSnapchatFilter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GPUImageSnapchatFilter.m; sourceTree = "<group>"; };
@@ -422,6 +426,8 @@
 		A47F5A251D703D51002B4F3E /* LUTs */ = {
 			isa = PBXGroup;
 			children = (
+				A479E5FB1E00DA8000DD5FC8 /* LUT_Ag.png */,
+				A479E5FC1E00DA8000DD5FC8 /* LUT_Cu.png */,
 				A47F5A2C1D704113002B4F3E /* GPUImageMoonlightFilter.h */,
 				A47F5A2D1D704113002B4F3E /* GPUImageMoonlightFilter.m */,
 				A47C6D711DC87D0600997DD2 /* GPUImageSnapchatFilter.h */,
@@ -660,6 +666,7 @@
 				A42D28B01D598E5B00FEE114 /* CSAlbumCollectionViewCell.xib in Resources */,
 				A44EB7311D4B2B0C00EF5F8E /* Model.png in Resources */,
 				A42378411DCC2D5F0040CC3E /* 67.jpg in Resources */,
+				A479E5FE1E00DA8000DD5FC8 /* LUT_Cu.png in Resources */,
 				A47F5A301D70466D002B4F3E /* LUT_From_PS_ATN_File.png in Resources */,
 				A42C9D351DB0948F002D8AFF /* Shiny_2.jpg in Resources */,
 				A423784B1DCC8FCE0040CC3E /* ear.png in Resources */,
@@ -670,6 +677,7 @@
 				A47F5A471D704A7D002B4F3E /* texture_screenBlend_1.png in Resources */,
 				A47F5A461D704A7D002B4F3E /* texture_overlayBlend_2.png in Resources */,
 				A4D392991DE7D60A00DA2879 /* LUT_Time.jpg in Resources */,
+				A479E5FD1E00DA8000DD5FC8 /* LUT_Ag.png in Resources */,
 				A42378401DCC2D5F0040CC3E /* 66.jpg in Resources */,
 				A47F5A411D704A7D002B4F3E /* texture_normalBlend_1.png in Resources */,
 				834C52FD1B92DABE000690FD /* Images.xcassets in Resources */,
