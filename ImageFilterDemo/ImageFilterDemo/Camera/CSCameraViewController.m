@@ -741,7 +741,35 @@ typedef NS_ENUM(NSInteger, CameraProportionType) {
     // TODO: 有时候使用LUT的滤镜没有效果。原因未知。
     // filter = [[GPUImageSepiaFilter alloc] init];
 //    filter = [[GPUImageToonFilter alloc] init];
-    filter = [[GPUImageSnapchatFilter alloc] init];
+//    filter = [[GPUImageSmoothToonFilter alloc] init];
+//    filter = [[GPUImageSnapchatFilter alloc] init];
+//    filter = [[GPUImageSketchFilter alloc] init];
+    
+    
+    // 交叉线阴影
+//    filter = [[GPUImageCrosshatchFilter alloc] init];
+    
+    // 暗角
+//    filter = [[GPUImageVignetteFilter alloc] init];
+    
+    // 水晶球
+//    filter = [[GPUImageGlassSphereFilter alloc] init];
+    // 哈哈镜
+//    filter = [[GPUImageStretchDistortionFilter alloc] init];
+    // 浮雕
+//    filter = [[GPUImageEmbossFilter alloc] init];
+    
+    // 水粉画
+//    filter = [[GPUImageKuwaharaFilter alloc] init];
+    
+    // 黑色，普瑞维特(Prewitt)边缘检测(效果与Sobel差不多，貌似更平滑)
+//    filter = [[GPUImagePrewittEdgeDetectionFilter alloc] init];
+    
+    // 像素化，Mosaic
+    filter = [[GPUImagePixellateFilter alloc] init];
+    // 同心圆像素化
+//    filter = [[GPUImagePolarPixellateFilter alloc] init];
+    
     
     [filter addTarget:_previewView];
     
