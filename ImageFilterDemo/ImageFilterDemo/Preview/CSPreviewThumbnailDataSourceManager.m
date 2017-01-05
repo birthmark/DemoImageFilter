@@ -55,6 +55,11 @@
     PHFetchResult<PHAssetCollection *> *albums = [PHAssetCollection fetchAssetCollectionsWithType:PHAssetCollectionTypeSmartAlbum subtype:PHAssetCollectionSubtypeAlbumRegular options:options];
     
     PHAssetCollection *album = [albums firstObject];
+    for (PHAssetCollection *assetCollection in albums) {
+        if ([assetCollection.localizedTitle isEqualToString:@"All Photos"]) {
+            album = assetCollection;
+        }
+    }
     PHFetchOptions *op = [[PHFetchOptions alloc] init];
     op.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"creationDate"
                                                          ascending:YES]];
