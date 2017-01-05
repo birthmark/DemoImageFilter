@@ -6,6 +6,10 @@
 //  Copyright © 2016年 icetime17. All rights reserved.
 //
 
+
+// Video camera using GPUImage
+
+
 #import "CSVideoCameraViewController.h"
 
 #import "CSViewVideoCameraDuration.h"

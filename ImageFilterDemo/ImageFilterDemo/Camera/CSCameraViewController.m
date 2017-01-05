@@ -6,6 +6,9 @@
 //  Copyright © 2016年 icetime17. All rights reserved.
 //
 
+
+// Custom camera using GPUImage
+
 #import "CSCameraViewController.h"
 
 #import "CLLocation+GPSDictionary.h"

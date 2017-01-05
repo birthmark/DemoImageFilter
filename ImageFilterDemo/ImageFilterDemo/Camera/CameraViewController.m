@@ -6,6 +6,9 @@
 //  Copyright © 2016年 icetime17. All rights reserved.
 //
 
+
+// Camera using UIImagePickerController
+
 #import "CameraViewController.h"
 
 #import <AVFoundation/AVFoundation.h>
