@@ -775,13 +775,14 @@ typedef NS_ENUM(NSInteger, enumDemoImageFilter) {
     _filteredImage = [blendFilter imageFromCurrentFramebuffer];
     */
     
-    
+    UIImage *image = [UIImage imageNamed:@"Model.png"];
     
     // CoreGraphics
+    /*
     UIView *view = [[UIView alloc] initWithFrame:_filteredImageView.bounds];
     
     UIImageView *imageview = [[UIImageView alloc] initWithFrame:view.bounds];
-    imageview.image = [UIImage imageNamed:@"Model.png"];
+    imageview.image = image;
     [view addSubview:imageview];
     
     UIImageView *iconView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
@@ -799,6 +800,32 @@ typedef NS_ENUM(NSInteger, enumDemoImageFilter) {
     UIGraphicsBeginImageContextWithOptions(view.bounds.size, NO, 0);
     CGContextRef context = UIGraphicsGetCurrentContext();
     [view.layer renderInContext:context];
+    _filteredImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    */
+    
+    
+    CGRect rect = CGRectMake(0, 0, image.size.width, image.size.height);
+    UIGraphicsBeginImageContextWithOptions(rect.size, NO, 0);
+    
+    // 原图
+    [image drawInRect:rect];
+    
+    // 水印图片
+    UIImage *img = [UIImage imageNamed:@"btnSettings"];
+    CGRect imgRect = CGRectMake(200, 200, 200, 200);
+    [img drawInRect:imgRect];
+    
+    // 水印文字
+    NSMutableParagraphStyle *style = [[NSMutableParagraphStyle defaultParagraphStyle] mutableCopy];
+    style.alignment = NSTextAlignmentCenter;
+    NSDictionary *attributes = @{
+                                 NSFontAttributeName:[UIFont systemFontOfSize:100],
+                                 NSParagraphStyleAttributeName:style,
+                                 NSForegroundColorAttributeName:[UIColor whiteColor]
+                                 };
+    [@"水印文字" drawAtPoint:CGPointMake(10, 10) withAttributes:attributes];
+    
     _filteredImage = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
     
